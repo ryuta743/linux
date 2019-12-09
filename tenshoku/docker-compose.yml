@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  work:
+    container_name: Tenshoku
+    build: work/
+    command: yarn dev
+    volumes:
+      - ./work:/app
+    ports:
+      - 3000:3000
