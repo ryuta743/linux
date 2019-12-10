@@ -1,6 +1,6 @@
-# hew2020
+# vuex_j
 
-> My majestic Nuxt.js project
+> My shining Nuxt.js project
 
 ## Build Setup
 

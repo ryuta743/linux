@@ -1,9 +1,8 @@
 {
-  "name": "hew2020",
+  "name": "vuex_j",
   "version": "1.0.0",
-  "description": "My majestic Nuxt.js project",
-  "author": "takashi",
-  "license": "UNLICENSED",
+  "description": "My shining Nuxt.js project",
+  "author": "Ryuta",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
@@ -13,14 +12,17 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/vuetify": "^1.9.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "firebase": "^6.6.0",
+    "global": "^4.4.0",
+    "mysql": "^2.17.1",
     "nuxt": "^2.0.0",
-    "vue-croppa": "^1.3.8"
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
-    "@nuxtjs/vuetify": "^1.0.0"
+    "nodemon": "^1.18.9"
   }
 }
