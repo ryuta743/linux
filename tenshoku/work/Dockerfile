@@ -8,12 +8,9 @@ RUN apk update && \
   apk upgrade && \
   npm update -g &&\
   npm install -g yarn &&\
-  yarn add global @vue/cli &&\
-  yarn add global @nuxtjs/vuetify &&\
-  yarn add global firebase &&\
-  yarn add global vue-croppa &&\
-  yarn upgrade &&\
-  yarn install
+  yarn install &&\
+  yarn add global mysql &&\
+  yarn upgrade
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
