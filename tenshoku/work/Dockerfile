@@ -7,8 +7,16 @@ WORKDIR ${HOME}
 RUN apk update && \
   apk upgrade && \
   npm update -g &&\
-  npm install -g yarn &&\
-  yarn install &&\
+  apk add git && \
+  apk add --no-cache curl && \
+  curl -o- -L https://yarnpkg.com/install.sh | sh
+
+ENV PATH $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
+
+# ホットリロード
+ENV CHOKIDAR_USEPOLLING=true
+
+RUN yarn install &&\
   yarn add global mysql &&\
   yarn upgrade
 

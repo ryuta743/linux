@@ -13,9 +13,9 @@ var mysql = require('mysql');
 
 // mysqlと接続する
 var db = mysql.createConnection({
-  host: 'localhost',
+  host: '',
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'mydb'
 });
 
