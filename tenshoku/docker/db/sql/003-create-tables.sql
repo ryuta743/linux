@@ -1,9 +1,7 @@
 use mydb;
 
-CREATE TABLE users (
-  id int(10) unsigned not null auto_increment,
-  name varchar(255) not null,
-  created_time datetime not null default current_timestamp,
-  updated_time datetime not null default current_timestamp on update current_timestamp,
+CREATE TABLE userLists (
+  id int(10) not null,
+  password varchar(60) not null,
   primary key (id)
 );
