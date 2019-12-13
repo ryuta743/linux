@@ -19,9 +19,18 @@ services:
     restart: always
     volumes:
     - ./docker/db/data:/var/lib/mysql
-    - ./docker/db/my.cnf:/etc/mysql/conf.d /my.cnf
+    - ./docker/db/cnf:/etc/mysql/conf.d
     - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
     - 3306:3306
-    #tty: true
-    #command: --innodb-use-native-aio=0
+
+  api:
+    build: docker/api
+    container_name: ex-api
+    environment:
+      - development
+    ports:
+      - 5200:5200
+    volumes:
+      - ./docker/api/src:/src
+    command: yarn start

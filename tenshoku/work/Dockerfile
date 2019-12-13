@@ -16,7 +16,8 @@ ENV PATH $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
 # ホットリロード
 ENV CHOKIDAR_USEPOLLING=true
 
-RUN yarn install &&\
+RUN yarn add global yarn &&\
+  yarn install &&\
   yarn add global mysql &&\
   yarn upgrade
 
