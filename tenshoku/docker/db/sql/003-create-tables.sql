@@ -1,6 +1,3 @@
-CREATE DATABASE mydb;
-USE mydb;
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
