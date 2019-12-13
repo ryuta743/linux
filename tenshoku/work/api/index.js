@@ -13,7 +13,8 @@ var mysql = require('mysql');
 
 // mysqlと接続する
 var db = mysql.createConnection({
-  host: 'db',
+  // host: 'mariadb',
+  host: '172.18.0.2'
   user: 'root',
   password: 'root',
   database: 'mydb'
