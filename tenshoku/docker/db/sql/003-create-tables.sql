@@ -1,12 +1,15 @@
+USE mydb;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+DROP table IF EXISTS userLists;
+
 ---- create ----
-create table IF not exists `userLists`
+create table userLists
 (
-    `id` INT(10) NOT NULL,
-    `password` VARCHAR(60) NOT NULL,
-    PRIMARY KEY (`id`)
+    id INT(10) NOT NULL,
+    password VARCHAR(60) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 ---- record of userLists ----
