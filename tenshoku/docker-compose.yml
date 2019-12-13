@@ -14,15 +14,12 @@ services:
     build: docker/db
     container_name: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: docker
-      TZ: 'Asia/Tokyo'
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: mydb
     restart: always
     volumes:
     - ./docker/db/data:/var/lib/mysql
-    - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./docker/db/my.cnf:/etc/mysql/conf.d /my.cnf
     - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
     - 3306:3306

@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: mariadb
+    build: docker/db
+    volumes:
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
