@@ -18,7 +18,7 @@ ENV PATH $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
 # ホットリロード
 ENV CHOKIDAR_USEPOLLING=true
 
-RUN yarn add global yarn && \
+RUN yarn global add yarn && \
   yarn upgrade --latest && \
   yarn install
 

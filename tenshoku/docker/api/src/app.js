@@ -25,9 +25,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+//app.use(function (req, res, next) {
+//  next(createError(404));
+//});
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -48,10 +48,11 @@ var mysql = require('mysql');
 // mysqlと接続する
 var db = mysql.createConnection({
   // host: 'mariadb',
-  host: 'http://db:3306/',
+  host: 'db',
   user: 'root',
   password: 'root',
-  database: 'mydb'
+  database: 'mydb',
+  port: '3306'
 });
 
 // userListsを表示
@@ -63,4 +64,16 @@ app.get('/showUserLists', function (req, res) {
     res.json(results);
     //console.log(results);
   })
-})
+});
+
+app.get('/snow', function (req, res) {
+  db.connect();
+  db.query('SELECT * FROM userLists;', function (error, results, fields) {
+    if (error) throw error;
+    res.json({
+      id: results[0].id,
+      password: results[0].password
+    });
+  });
+  db.end();
+});
