@@ -29,8 +29,6 @@ services:
   api:
     build: docker/api
     container_name: ex-api
-    #environment:
-    #  - development
     ports:
       - 5200:5200
     volumes:
