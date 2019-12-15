@@ -19,6 +19,7 @@ ENV PATH $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
 ENV CHOKIDAR_USEPOLLING=true
 
 RUN yarn install && \
+  yarn add yarn && \
   yarn upgrade --latest
 
 ENV HOST 0.0.0.0
