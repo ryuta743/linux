@@ -14,7 +14,7 @@ var mysql = require('mysql');
 // mysqlと接続する
 var db = mysql.createConnection({
   // host: 'mariadb',
-  host: '172.18.0.2'
+  host: 'http://db:3306/',
   user: 'root',
   password: 'root',
   database: 'mydb'
@@ -36,7 +36,7 @@ app.get('/createAccount', function (req, res) {
 // userListsを表示
 app.get('/showUserLists', function (req, res) {
   const id = req.query.id;
-  const sql = `SELECT * FROM userLists WHERE id = '${id}';`;
+  const sql = `SELECT * FROM userLists;`;
   db.query(sql, function (error, results) {
     if (error) return res.json(error);
     res.json(results);
