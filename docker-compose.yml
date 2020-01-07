@@ -1,13 +1,13 @@
 version: "3"
 services:
-  #nuxt:
-   # container_name: nuxt
-   # build: src/nuxt
+  nuxt:
+    container_name: nuxt
+    build: src/nuxt
     #command: yarn start
     #volumes:
     #  - ./src/nuxt:/app
-   # ports:
-   #   - '80:3000'
+    ports:
+      - '80:3000'
 
   api:
     build: src/api
