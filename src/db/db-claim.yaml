@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nuxt-claim
+  name: db-claim
   labels:
-    io.kompose.service: nuxt-claim0
+    io.kompose.service: db-claim
   creationTimestamp: null
   annotations:
     kompose.cmd: kompose convert -f docker-compose.yml
     kompose.version: 1.20.0 (f3d54d784)
 spec:
-  storageClassName: manual
+  storageClassName: db-volume
   accessModes:
     - ReadWriteOnce
   resources:
