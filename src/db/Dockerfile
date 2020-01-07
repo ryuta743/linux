@@ -6,7 +6,7 @@ COPY /sql/001-create-tables.sql /docker-entrypoint-initdb.d
 COPY /sql/002-insert-records.sql /docker-entrypoint-initdb.d
 # COPY ./src/db/data /var/lib/mysql
 
-ENV MYSQL_USER=root \
+ENV MYSQL_USER=user \
   MYSQL_ALLOW_EMPTY_PASSWORD=true \
   MYSQL_DATABASE=tenshoku
 
