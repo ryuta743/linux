@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -7,9 +7,13 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: db
+    app: db
   name: db
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: db
   strategy:
     type: Recreate
   template:
@@ -19,36 +23,32 @@ spec:
         kompose.version: 1.20.0 (f3d54d784)
       creationTimestamp: null
       labels:
+        app: db
         io.kompose.service: db
     spec:
       containers:
-      - args:
-        - mysqld
-        - --character-set-server=utf8mb4
-        - --collation-server=utf8mb4_unicode_ci
-        env:
-        - name: MYSQL_ALLOW_EMPTY_PASSWORD
-          value: "true"
-        - name: MYSQL_DATABASE
-          value: tenshoku
-        - name: MYSQL_USER
-          value: root
-        image: db
+      - image: ryutaterada/k8s-mariadb
+        #args:
+        #- mysqld
+        #- --character-set-server=utf8mb4
+        #- --collation-server=utf8mb4_unicode_ci
+        #env:
+        #- name: MYSQL_ALLOW_EMPTY_PASSWORD
+        #  value: "true"
+        #- name: MYSQL_DATABASE
+        #  value: tenshoku
+        #- name: MYSQL_USER
+        #  value: user
         name: db
         ports:
         - containerPort: 3306
         resources: {}
         volumeMounts:
-        - mountPath: /etc/mysql/conf.d
-          name: db-claim0
-        - mountPath: /docker-entrypoint-initdb.d
-          name: db-claim1
+        - mountPath: /var/lib/mysql
+          name: db-claim
       restartPolicy: Always
       volumes:
-      - name: db-claim0
+      - name: db-claim
         persistentVolumeClaim:
-          claimName: db-claim0
-      - name: db-claim1
-        persistentVolumeClaim:
-          claimName: db-claim1
+          claimName: db-claim
 status: {}

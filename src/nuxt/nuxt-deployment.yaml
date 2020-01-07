@@ -27,24 +27,19 @@ spec:
         io.kompose.service: nuxt
     spec:
       containers:
-        # argsはコンテナ起動時の引数を設定できる
-      - args:
-          - yarn
-          - dev
-        # imageはDocker-hubを参照する
-        image: ryutaterada/k8s-nodejs
+      - image: ryutaterada/k8s-nodejs
         name: nuxt
         ports:
           - containerPort: 3000
         resources: {}
         # コンテナ側のvolumeディレクトリの設定
-        volumeMounts:
-          - mountPath: /app
-            name: nuxt-storage
+        #volumeMounts:
+        #  - mountPath: /app
+        #    name: nuxt-storage
       restartPolicy: Always
       # サーバー側のvolumeディレクトリの設定
-      volumes:
-        - name: nuxt-storage
-          persistentVolumeClaim:
-            claimName: nuxt-claim
+     #volumes:
+        #- name: nuxt-storage
+        #  persistentVolumeClaim:
+        #    claimName: nuxt-claim
 status: {}
