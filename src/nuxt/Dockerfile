@@ -27,6 +27,7 @@ RUN git clone https://github.com/RyutaTerada/HEW-2019.git && \
 FROM node:lts-alpine
 
 WORKDIR /app
+#COPY --from=builder ./app .
 COPY --from=builder ./app/package.json .
 COPY --from=builder ./app/nuxt.config.js .
 COPY --from=builder ./app/server ./server

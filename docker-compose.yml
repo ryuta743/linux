@@ -1,18 +1,18 @@
 version: "3"
 services:
-  nuxt:
-    container_name: nuxt
-    build: src/nuxt
+  #nuxt:
+   # container_name: nuxt
+   # build: src/nuxt
     #command: yarn start
     #volumes:
     #  - ./src/nuxt:/app
-    ports:
-      - '80:3000'
+   # ports:
+   #   - '80:3000'
 
   api:
     build: src/api
-    depends_on:
-      - db
+    #depends_on:
+    #  - db
     container_name: api
     ports:
       - '5000:5000'
@@ -21,15 +21,15 @@ services:
 
   db:
     build: src/db
-    environment:
-      MYSQL_USER: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-      MYSQL_DATABASE: tenshoku
+    #environment:
+    #  MYSQL_USER: root
+    #  MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    #  MYSQL_DATABASE: tenshoku
     container_name: db
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    volumes:
+    #command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    #volumes:
       #- ./src/db/data:/var/lib/mysql
-      - ./src/db/cnf:/etc/mysql/conf.d
-      - ./src/db/sql:/docker-entrypoint-initdb.d
+      #- ./src/db/cnf:/etc/mysql/conf.d
+      #- ./src/db/sql:/docker-entrypoint-initdb.d
     ports:
       - '3306:3306'
