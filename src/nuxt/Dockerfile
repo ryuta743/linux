@@ -35,12 +35,13 @@ COPY --from=builder ./app/node_modules ./node_modules
 COPY --from=builder ./app/.nuxt ./.nuxt
 
 # Add Tini
-#ENV TINI_VERSION v0.18.0
-#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-#RUN chmod +x /tini
-#ENTRYPOINT ["/tini", "--"]
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+#ENTRYPOINT ["/sbin/tini", "-e", "143", "--"]
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD yarn start
+CMD ["yarn", "start"]

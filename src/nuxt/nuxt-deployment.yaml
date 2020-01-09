@@ -1,59 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  name: nuxt
   labels:
     app: nuxt
-  name: nuxt
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: nuxt
   strategy:
-    type: Recreate
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: nuxt
     spec:
       containers:
-      - image: ryutaterada/k8s-nodejs
-        name: nuxt
+      - name: nuxt
+        image: ryutaterada/k8s-nodejs
+        resources:
+            limits:
+              cpu: "1"
+              memory: "1000Mi"
         ports:
           - containerPort: 3000
-        env:
-            - name: GITHUB_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: github-oauth
-                  key: GITHUB_CLIENT_ID
-            - name: GITHUB_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: github-oauth
-                  key: GITHUB_CLIENT_SECRET
-            - name: CALLBACK_URL
-              value: http://microservice.test/callback
-            - name: BASE_URL
-              value: http://microservice.test
-            - name: NUXT_HOST
-              value: 0.0.0.0
-            - name: API_SERVICE
-              value: http://api-service:3000
-      dnsConfig:
-        nameservers:
-          - 8.8.8.8
-        #resources: {}
-        # コンテナ側のvolumeディレクトリの設定
-        #volumeMounts:
-        #  - mountPath: /app
-        #    name: nuxt-storage
-      #restartPolicy: Always
-      # サーバー側のvolumeディレクトリの設定
-     #volumes:
-        #- name: nuxt-storage
-        #  persistentVolumeClaim:
-        #    claimName: nuxt-claim
-status: {}
