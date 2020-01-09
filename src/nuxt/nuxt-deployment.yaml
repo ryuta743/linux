@@ -1,16 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.20.0 (f3d54d784)
   creationTimestamp: null
   labels:
     app: nuxt
-    io.kompose.service: nuxt
   name: nuxt
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nuxt
@@ -18,25 +14,43 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.20.0 (f3d54d784)
       creationTimestamp: null
       labels:
         app: nuxt
-        io.kompose.service: nuxt
     spec:
       containers:
       - image: ryutaterada/k8s-nodejs
         name: nuxt
         ports:
           - containerPort: 3000
-        resources: {}
+        env:
+            - name: GITHUB_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github-oauth
+                  key: GITHUB_CLIENT_ID
+            - name: GITHUB_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: github-oauth
+                  key: GITHUB_CLIENT_SECRET
+            - name: CALLBACK_URL
+              value: http://microservice.test/callback
+            - name: BASE_URL
+              value: http://microservice.test
+            - name: NUXT_HOST
+              value: 0.0.0.0
+            - name: API_SERVICE
+              value: http://api-service:3000
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+        #resources: {}
         # コンテナ側のvolumeディレクトリの設定
         #volumeMounts:
         #  - mountPath: /app
         #    name: nuxt-storage
-      restartPolicy: Always
+      #restartPolicy: Always
       # サーバー側のvolumeディレクトリの設定
      #volumes:
         #- name: nuxt-storage
