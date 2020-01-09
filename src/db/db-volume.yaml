@@ -3,12 +3,8 @@ kind: PersistentVolume
 metadata:
   name: db-volume
   creationTimestamp: null
-  annotations:
-    kompose.cmd: kompose convert -f docker-comose.yml
-    kompose.version: 1.20.0 (f3d54d784)
   labels:
     app: nuxt
-    io.kompose.service: nuxt
 spec:
   storageClassName: db-volume
   capacity:

@@ -1,16 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.20.0 (f3d54d784)
   creationTimestamp: null
   labels:
     app: api
-    io.kompose.service: api
   name: api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api
@@ -18,19 +14,17 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.20.0 (f3d54d784)
       creationTimestamp: null
       labels:
         app: api
-        io.kompose.service: api
     spec:
       containers:
       - image: ryutaterada/k8s-express
         name: api
         ports:
         - containerPort: 5000
-        resources: {}
-      restartPolicy: Always
-status: {}
+        env:
+            - name: DB_URL
+              value: db://db:3306/user?replicaSet=rs0
+            - name: WAIT_HOSTS
+              value: db:3306
