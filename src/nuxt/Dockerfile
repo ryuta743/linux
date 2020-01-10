@@ -21,27 +21,34 @@ RUN git clone https://github.com/RyutaTerada/HEW-2019.git && \
   cp HEW-2019/hew2020/package.json . && \
   cp HEW-2019/hew2020/yarn.lock . && \
   yarn install  && \
+  yarn cache clean && \
   cp -f -r HEW-2019/hew2020/* . && \
   yarn build
 
 FROM node:lts-alpine
 
 WORKDIR /app
-#COPY --from=builder ./app .
-COPY --from=builder ./app/package.json .
-COPY --from=builder ./app/nuxt.config.js .
-COPY --from=builder ./app/server ./server
-COPY --from=builder ./app/node_modules ./node_modules
-COPY --from=builder ./app/.nuxt ./.nuxt
+COPY --from=builder ./app .
+#COPY --from=builder ./app/package.json .
+#COPY --from=builder ./app/nuxt.config.js .
+#COPY --from=builder ./app/server ./server
+#COPY --from=builder ./app/node_modules ./node_modules
+#COPY --from=builder ./app/.nuxt ./.nuxt
+
+#RUN yarn install && \
+#  yarn cache clean
 
 # Add Tini
 ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 #ENTRYPOINT ["/sbin/tini", "-e", "143", "--"]
 
+RUN chmod 777 /app
+
 ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD ["yarn", "start"]
+CMD ["node", "./server/index.js"]
+#CMD [ "node", "./server.js" ]
