@@ -3,7 +3,7 @@
 up:
 	docker-compose up -d --build
 
-up:
+logs:
 	docker-compose logs
 
 down:
