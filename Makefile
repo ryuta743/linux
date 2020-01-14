@@ -1,24 +1,26 @@
 .PHONY: build clean deploy
 
-build:
+ba:
 	docker build -t ryutaterada/k8s-express ./src/api
 	docker push ryutaterada/k8s-express
+
+bn:
 	docker build -t ryutaterada/k8s-nodejs ./src/nuxt
 	docker push ryutaterada/k8s-nodejs
 
-deploy:
+da:
 	kubectl apply -f src/api/api-deployment.yaml
 	kubectl apply -f src/api/api-service.yaml
 
-nuxt:
+dn:
 	kubectl apply -f src/nuxt/nuxt-deployment.yaml
 	kubectl apply -f src/nuxt/nuxt-service.yaml
 
-clean:
+ca:
 	kubectl delete -f src/api/api-deployment.yaml
 	kubectl delete -f src/api/api-service.yaml
 
-next:
+cn:
 	kubectl delete -f src/nuxt/nuxt-deployment.yaml
 	kubectl delete -f src/nuxt/nuxt-service.yaml
 
