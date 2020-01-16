@@ -21,6 +21,10 @@ bd:
 	docker build -t ryutaterada/k8s-mysql ./src/db
 	docker push ryutaterada/k8s-mysql
 
+ist:
+	istioctl manifest apply --set profile=demo
+	kubectl label namespace default istio-injection=enabled
+
 da:
 	kubectl apply -f src/api/api-deployment.yaml
 	kubectl apply -f src/api/api-service.yaml
@@ -50,6 +54,9 @@ cd:
 	kubectl delete -f src/db/db-claim.yaml
 	kubectl delete -f src/db/db-volume.yaml
 	kubectl delete -f src/db/db-config.yaml
+
+is:
+	kubectl label namespace tenshoku istio-injection-enabled
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
