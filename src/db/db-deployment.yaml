@@ -15,15 +15,19 @@ spec:
     spec:
       containers:
         - name: mysql
-          #image: ryutaterada/k8s-mariadb
-          image: mysql:5.6
+          image: ryutaterada/k8s-mariadb
+          #image: mysql:5.6
           resources:
             limits:
               cpu: "1"
               memory: 1000Mi
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: password
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+            - name: MYSQL_DATABASE
+              value: tenshoku
           ports:
             - containerPort: 3306
               name: mysql
@@ -33,6 +37,8 @@ spec:
             - name: mysql-config
               mountPath: /etc/mysql/conf.d
               readOnly: true
+            #- name: mysql-initdb
+            #  mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
@@ -43,3 +49,6 @@ spec:
             items:
               - key: charset.cnf
                 path: charset.cnf
+        #- name: mysql-initdb
+        #  persistentVolumeClaim:
+        #    claimName: mysql-initdb-pv-claim
