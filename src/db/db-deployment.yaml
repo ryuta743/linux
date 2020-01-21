@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: ryutaterada/k8s-mariadb
+          image: ryutaterada/k8s-mysql
           #image: mysql:5.6
           resources:
             limits:
