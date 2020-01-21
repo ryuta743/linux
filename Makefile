@@ -9,6 +9,21 @@ logs:
 down:
 	docker-compose down
 
+init:
+	kubeadm init --pod-network-cidr=10.244.0.0/16
+
+canal:
+	kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/canal/rbac.yaml
+	kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/canal/canal.yaml
+
+metal:
+	kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.2/manifests/metallb.yaml
+	kubectl apply -f src/ingress/configmap.yaml
+
+ingress:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/mandatory.yaml
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/provider/baremetal/service-nodeport.yaml
+
 ba:
 	docker build -t ryutaterada/k8s-express ./src/api
 	docker push ryutaterada/k8s-express
@@ -28,10 +43,12 @@ ist:
 da:
 	kubectl apply -f src/api/api-deployment.yaml
 	kubectl apply -f src/api/api-service.yaml
+	kubectl apply -f src/api/api-ingress.yaml
 
 dn:
 	kubectl apply -f src/nuxt/nuxt-deployment.yaml
 	kubectl apply -f src/nuxt/nuxt-service.yaml
+	kubectl apply -f src/nuxt/nuxt-ingress.yaml
 
 dd:
 	kubectl apply -f src/db/db-deployment.yaml
@@ -43,10 +60,12 @@ dd:
 ca:
 	kubectl delete -f src/api/api-deployment.yaml
 	kubectl delete -f src/api/api-service.yaml
+	kubectl delete -f src/api/api-ingress.yaml
 
 cn:
 	kubectl delete -f src/nuxt/nuxt-deployment.yaml
 	kubectl delete -f src/nuxt/nuxt-service.yaml
+	kubectl delete -f src/nuxt/nuxt-ingress.yaml
 
 cd:
 	kubectl delete -f src/db/db-deployment.yaml
