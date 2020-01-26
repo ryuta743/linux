@@ -81,6 +81,7 @@ mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
 
 nuxt:
+	PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 	kubectl apply -f src/nuxt/nuxt-deployment.yaml
 	kubectl apply -f src/nuxt/nuxt-service.yaml
 	kubectl apply -f src/nuxt/nuxt-account.yaml

@@ -39,6 +39,6 @@ spec:
             prefix: /customer
       route:
         - destination:
-            host: "*"
+            host: web
             port:
               number: 9080
