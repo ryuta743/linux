@@ -1,22 +1,31 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sample-node-app
+  name: web
   labels:
-    app: sample-node-app
+    app: web
+    version: v1
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: web
+      version: v1
   template:
     metadata:
       labels:
-        app: sample-node-app
+        app: web
+        version: v1
     spec:
+      serviceAccountName: tenshoku-web
       containers:
-        - name: sample-node-app
+        - name: web
           image: ryutaterada/k8s-nodejs
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               cpu: "1"
               memory: 1000Mi
           ports:
             - containerPort: 3000
+            #- containerPort: 9080

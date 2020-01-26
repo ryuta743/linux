@@ -79,3 +79,15 @@ is:
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
+
+nuxt:
+	kubectl apply -f src/nuxt/nuxt-deployment.yaml
+	kubectl apply -f src/nuxt/nuxt-service.yaml
+	kubectl apply -f src/nuxt/nuxt-account.yaml
+	kubectl apply -f src/ingress/gateway.yaml
+
+dnuxt:
+	kubectl delete -f src/nuxt/nuxt-deployment.yaml
+	kubectl delete -f src/nuxt/nuxt-service.yaml
+	kubectl delete -f src/nuxt/nuxt-account.yaml
+	kubectl delete -f src/ingress/gateway.yaml

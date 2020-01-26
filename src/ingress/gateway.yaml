@@ -1,0 +1,44 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: tenshoku-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tenshoku
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - tenshoku-gateway
+  http:
+    - match:
+        # exact: "value" 完全に一致する文字列
+        # prefix: "value" プレフィックスベースの一致の場合
+        # regex: "value" ECMAscriptスタイルの正規表現ベースの一致の場合
+        - uri:
+            prefix: /shop
+        - uri:
+            prefix: /mall
+        - uri:
+            prefix: /contact
+        - uri:
+            prefix: /client
+        - uri:
+            prefix: /customer
+      route:
+        - destination:
+            host:
+            port:
+              number: 9080

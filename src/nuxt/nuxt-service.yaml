@@ -1,12 +1,14 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: sample-node-app-service
+  name: web
+  labels:
+    app: web
+    service: web
 spec:
-  type: LoadBalancer
   selector:
-    app: sample-node-app
+    app: web
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 9080
       targetPort: 3000
+      name: http
