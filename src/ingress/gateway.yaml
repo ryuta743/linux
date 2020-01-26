@@ -28,11 +28,11 @@ spec:
         # prefix: "value" プレフィックスベースの一致の場合
         # regex: "value" ECMAscriptスタイルの正規表現ベースの一致の場合
         - uri:
-            prefix: /shop
+            exact: /shop
         - uri:
-            prefix: /mall
+            exact: /mall
         - uri:
-            prefix: /contact
+            exact: /contact
         - uri:
             prefix: /client
         - uri:
