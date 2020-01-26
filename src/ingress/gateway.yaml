@@ -37,3 +37,8 @@ spec:
             prefix: /client
         - uri:
             prefix: /customer
+      route:
+        - destination:
+            host: shop
+            port:
+              number: 9080
