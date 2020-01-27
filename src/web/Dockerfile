@@ -8,11 +8,10 @@ RUN apk update && \
   apk upgrade && \
   npm install -g npm && \
   npm update -g && \
-  npm cache clean --force
-
-RUN yarn install && \
-  yarn cache clean
-RUN yarn build
+  npm cache clean --force && \
+  yarn install && \
+  yarn cache clean && \
+  yarn build
 
 FROM node:lts-alpine as runner
 
