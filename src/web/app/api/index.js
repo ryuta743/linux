@@ -3,16 +3,19 @@ import express from 'express'
 // expressの読み込み
 var app = express();
 
+const bodyParser = require('body-parser')
+
+
 // var express = require('express');
 
 const router = express.Router();
 
-export default {
+module.exports={
     path: '/api',
-    handler: router
+    handler: app
 }
 
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     Object.setPrototypeOf(req, app.request)
     Object.setPrototypeOf(res, app.response)
     req.res = res
@@ -20,13 +23,19 @@ router.use((req, res, next) => {
     next()
 })
 
+app.use(
+    bodyParser.json()
+)
 
 // セッション登録用
-router.post('/sessionin', function (req, res) {
+app.post('/sessionin', function (req, res) {
     console.log('セッションスタート');
     const user_data = req.body.kekka;
+    console.log(user_data)
     if(user_data){
+      console.log('true')
       req.session.loginuserdata = {user_data : user_data[0]}
+      console.log('true2')
       console.log(req.session.loginuserdata)
       return res.json({user_data : user_data[0]})
     }
@@ -34,7 +43,7 @@ router.post('/sessionin', function (req, res) {
 })
 
 // ログアウト
-router.post('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     delete req.session.loginuserdata
     res.json({ ok: true })
   })

@@ -4,10 +4,24 @@ const http = require('http')
 const { Nuxt, Builder } = require('nuxt')
 const { createTerminus } = require('@godaddy/terminus')
 const app = express()
+const session = require('express-session')
+var MemoryStore = require('memorystore')(session)
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
+
+app.use(
+  session({
+    secret: 'tenshoku',
+    store: new MemoryStore({
+      checkPeriod: 86400000
+    }),
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 6000000}
+  })
+)
 
 async function start () {
   // Init Nuxt.js
