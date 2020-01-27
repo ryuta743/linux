@@ -1,19 +1,19 @@
 version: "3"
 services:
-  nuxt:
-    container_name: nuxt
-    build: src/nuxt
+  web:
+    container_name: web
+    build: src/web
     ports:
-      - '80:3000'
+      - "80:3000"
 
-  #api:
-  #  build: src/api
-  #  container_name: api
-  #  ports:
-  #    - '5000:5000'
+  api:
+    build: src/api
+    container_name: api
+    ports:
+      - "5000:5000"
 
-  #db:
-  #  build: src/db
-  #  container_name: db
-  #  ports:
-  #    - '3306:3306'
+  db:
+    build: src/db
+    container_name: db
+    ports:
+      - "3306:3306"

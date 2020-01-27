@@ -10,6 +10,9 @@ var usersRouter = require('./routes/users');
 var hello = require('./routes/hello');
 var linebot = require('./routes/linebot');
 var workshopManage = require('./routes/workshopManage');
+var account = require('./routes/account');
+var product = require('./routes/product');
+var workshop = require('./routes/workshop');
 
 var session = require('express-session');
 var app = express();
@@ -41,6 +44,9 @@ app.use('/users', usersRouter);
 app.use('/hello', hello);
 app.use('/linebot', linebot);
 app.use('/workshopManage', workshopManage);
+app.use('/account' , account);
+app.use('/product' , product);
+app.use('/workshop' , workshop);
 
 // Crossを有効
 app.use((req, res, next) => {

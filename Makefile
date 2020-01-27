@@ -28,8 +28,8 @@ ba:
 	docker build -t ryutaterada/k8s-express ./src/api
 	docker push ryutaterada/k8s-express
 
-bn:
-	docker build -t ryutaterada/k8s-nodejs ./src/nuxt
+bw:
+	docker build -t ryutaterada/k8s-nodejs ./src/web
 	docker push ryutaterada/k8s-nodejs
 
 bd:
@@ -82,20 +82,15 @@ mm:
 
 nuxt:
 	kubectl label namespace default isito-injection=enabled --overwrite
-	kubectl apply -f src/nuxt/nuxt-deployment.yaml
-	kubectl apply -f src/nuxt/nuxt-service.yaml
-	kubectl apply -f src/nuxt/nuxt-account.yaml
+	kubectl apply -f src/web/web-deployment.yaml
+	kubectl apply -f src/web/web-service.yaml
+	kubectl apply -f src/web/web-account.yaml
 	kubectl apply -f src/k8s/gateway.yaml
 	kubectl apply -f src/k8s/vservice.yaml
-	export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
-	export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
-	export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
-	export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
-	echo $GATEWAY_URL
 
 dnuxt:
-	kubectl delete -f src/nuxt/nuxt-deployment.yaml
-	kubectl delete -f src/nuxt/nuxt-service.yaml
-	kubectl delete -f src/nuxt/nuxt-account.yaml
+	kubectl delete -f src/web/web-deployment.yaml
+	kubectl delete -f src/web/web-service.yaml
+	kubectl delete -f src/web/web-account.yaml
 	kubectl delete -f src/k8s/gateway.yaml
 	kubectl delete -f src/k8s/vservice.yaml

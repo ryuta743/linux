@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+  labels:
+    app: web
+    service: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 9080
+      targetPort: 3000
+      name: http
