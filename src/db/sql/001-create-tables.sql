@@ -48,11 +48,12 @@ create table `product_lists`
   `product_id` INT(8) AUTO_INCREMENT NOT NULL,
   `shop_id` INT(8) NOT NULL,
   `product_name` VARCHAR(20) NOT NULL,
+  `product_name_en` VARCHAR(50) NOT NULL,
   `product_number` INT(4),
   `price`	INT(10) NOT NULL,
   `record_date` DATE NOT NULL,
   `product_detail` VARCHAR(150),
-  `product_img` VARCHAR(200),
+  `product_img` VARCHAR(600),
   `stock` INT(10) NOT NULL,
   `safety` INT(10) NOT NULL,
   PRIMARY KEY (`product_id`)
@@ -94,3 +95,12 @@ create table `line_link`
   `line_id` VARCHAR(60) NOT NULL
 ) DEFAULT CHARSET=utf8mb4;
 
+create table `discount`
+(
+  `sale_id` VARCHAR(50) NOT NULL,
+  `product_id` INT(8) NOT NULL,
+  `shop_id` INT(8) NOT NULL,
+  `rate` INT(2) NOT NULL,
+  `sale_name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`sale_id`,`product_id`)
+) DEFAULT CHARSET=utf8mb4;
