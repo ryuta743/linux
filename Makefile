@@ -81,15 +81,24 @@ mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
 
 nuxt:
+	kubectl label namespace default isito-injection=enabled
 	kubectl apply -f src/nuxt/nuxt-deployment.yaml
 	kubectl apply -f src/nuxt/nuxt-service.yaml
 	kubectl apply -f src/nuxt/nuxt-account.yaml
-	kubectl apply -f src/ingress/gateway.yaml
-	kubectl apply -f src/ingress/vservice.yaml
+	kubectl apply -f src/k8s/gateway.yaml
+	kubectl apply -f src/k8s/vservice.yaml
+	export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+	export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+	export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
+	export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+	echo $GATEWAY_URL
+
+
+
 
 dnuxt:
 	kubectl delete -f src/nuxt/nuxt-deployment.yaml
 	kubectl delete -f src/nuxt/nuxt-service.yaml
 	kubectl delete -f src/nuxt/nuxt-account.yaml
-	kubectl delete -f src/ingress/gateway.yaml
-	kubectl delete -f src/ingress/vservice.yaml
+	kubectl delete -f src/k8s/gateway.yaml
+	kubectl delete -f src/k8s/vservice.yaml
