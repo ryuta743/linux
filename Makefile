@@ -81,7 +81,7 @@ mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
 
 nuxt:
-	kubectl label namespace default isito-injection=enabled
+	kubectl label namespace default isito-injection=enabled --overwrite
 	kubectl apply -f src/nuxt/nuxt-deployment.yaml
 	kubectl apply -f src/nuxt/nuxt-service.yaml
 	kubectl apply -f src/nuxt/nuxt-account.yaml
@@ -92,9 +92,6 @@ nuxt:
 	export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
 	export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 	echo $GATEWAY_URL
-
-
-
 
 dnuxt:
 	kubectl delete -f src/nuxt/nuxt-deployment.yaml
