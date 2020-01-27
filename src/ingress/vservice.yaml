@@ -1,21 +1,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: tenshoku
+  name: web
 spec:
   hosts:
     - "*"
   gateways:
-    - tenshoku-gateway
+    - web-gateway
   http:
-    - match:
-        # exact: "value" 完全に一致する文字列
-        # prefix: "value" プレフィックスベースの一致の場合
-        # regex: "value" ECMAscriptスタイルの正規表現ベースの一致の場合
-        - uri:
-            prefix: /
-      route:
-        - destination:
-            host: tenshoku
-            port:
-              number: 9080
+    route:
+      - destination:
+          host: web
+          port:
+            number: 9080
