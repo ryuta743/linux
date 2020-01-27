@@ -2,6 +2,7 @@ const colors = require('vuetify/es5/util/colors').default
 
 const bodyParser = require('body-parser')
 const session = require('express-session')
+var MemoryStore = require('memorystore')(session)
 
 module.exports = {
   mode: 'universal',
@@ -12,9 +13,12 @@ module.exports = {
     // session middleware
     session({
       secret: 'tenshoku',
+      store: new MemoryStore({
+        checkPeriod: 86400000
+      }),
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 6000000000000000 }
+      cookie: { maxAge: 6000000}
     }),
     // Api middleware
     // We add /api/login & /api/logout routes
