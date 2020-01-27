@@ -8,8 +8,14 @@ spec:
   gateways:
     - web-gateway
   http:
-    route:
-      - destination:
-          host: web
-          port:
-            number: 9080
+    - match:
+        # exact: "value" 完全に一致する文字列
+        # prefix: "value" プレフィックスベースの一致の場合
+        # regex: "value" ECMAscriptスタイルの正規表現ベースの一致の場合
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: web
+            port:
+              number: 9080
