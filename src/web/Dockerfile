@@ -22,6 +22,7 @@ COPY --from=builder ./app/nuxt.config.js .
 COPY --from=builder ./app/server ./server
 COPY --from=builder ./app/node_modules ./node_modules
 COPY --from=builder ./app/.nuxt ./.nuxt
+COPY --from=builder ./app/api ./api
 
 ENV HOST 0.0.0.0
 EXPOSE 3000
