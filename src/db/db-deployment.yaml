@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: db
 spec:
   selector:
     matchLabels:
-      app: mysql
+      app: db
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: mysql
+        app: db
     spec:
       containers:
-        - name: mysql
+        - name: db
           image: ryutaterada/k8s-mysql
           #image: mysql:5.6
           resources:
@@ -30,22 +30,22 @@ spec:
               value: tenshoku
           ports:
             - containerPort: 3306
-              name: mysql
+              name: db
           volumeMounts:
-            - name: mysql-persistent-storage
+            - name: db-persistent-storage
               mountPath: /var/lib/db
-            - name: mysql-config
+            - name: db-config
               mountPath: /etc/mysql/conf.d
               readOnly: true
             #- name: mysql-initdb
             #  mountPath: /docker-entrypoint-initdb.d
       volumes:
-        - name: mysql-persistent-storage
+        - name: db-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
-        - name: mysql-config
+            claimName: db-pv-claim
+        - name: db-config
           configMap:
-            name: mysql-config
+            name: db-config
             items:
               - key: charset.cnf
                 path: charset.cnf
