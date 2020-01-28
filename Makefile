@@ -59,7 +59,7 @@ cd:
 	kubectl delete -f src/db/db-config.yaml
 
 mm:
-	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h mysql -p
+	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
 
 all:
 	kubectl label namespace default isito-injection=enabled --overwrite

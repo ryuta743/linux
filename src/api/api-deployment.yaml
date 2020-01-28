@@ -30,6 +30,10 @@ spec:
             - containerPort: 5000
           env:
             - name: DB_URL
-              value: db://db:3306/user?replicaSet=rs0
+              value: mysql://mysql:3306/user?replicaSet=rs0
             - name: WAIT_HOSTS
-              value: db:3306
+              value: mysql:3306
+            - name: DB_HOST
+              value: mysql
+            - name: DB_PORT
+              value: "3306"
