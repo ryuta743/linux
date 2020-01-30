@@ -13,6 +13,7 @@ var workshopManage = require('./routes/workshopManage');
 var account = require('./routes/account');
 var product = require('./routes/product');
 var workshop = require('./routes/workshop');
+var cart = require('./routes/cart');
 
 var session = require('express-session');
 var app = express();
@@ -47,6 +48,7 @@ app.use('/workshopManage', workshopManage);
 app.use('/account' , account);
 app.use('/product' , product);
 app.use('/workshop' , workshop);
+app.use('/cart' , cart);
 
 // Crossを有効
 app.use((req, res, next) => {

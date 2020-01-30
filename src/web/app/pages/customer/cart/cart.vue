@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import {mapActions,mapGetters} from 'vuex';
+
 export default {
   data() {
     return {
@@ -101,11 +103,44 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.cart_upreq()
+  },
   methods:{
-      cartKill(i){
-          this.products.splice(i,1)
+    
+    async cart_upreq(){
+      var p_data = {
+        product_id : this.$route.params.product
       }
+      console.log(p_data);
+
+      try{
+        await this.getproductdetails({p_data})
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+    },
+
+    circleOpen(){
+      this.circle = true
+      FYU.add("7u5u1lu09a", "fyu_7u5u1lu09a", { nologo: 1 });
+    },
+    reload() {
+        this.$router.go({path: this.$router.currentRoute.path, force: true});
+    },
+    ...mapActions('products',['getproductdetails']),
+    ...mapActions([])
+  },
+  computed: {
+    ...mapGetters('products',['productdetails']),
+    ...mapGetters(['loginuserdata'])
   }
+  // methods:{
+  //     cartKill(i){
+  //         this.products.splice(i,1)
+  //     }
+  // }
 };
 </script>
 

@@ -1,6 +1,6 @@
 export const state = () =>({
     data: null,
-    productdetails: null,
+    productdetails: {},
 })
 
 export const getters = {
@@ -23,9 +23,12 @@ export const actions = {
     async select_product({commit},{payload}){
         console.log('お前は最強だ正都様');
         console.log(payload.product);
-        const productname = await this.$axios.$get(`http://133.18.194.128:5000/product/get_product?pro_data=${payload.product}`);
+        var productname = await this.$axios.$get(`http://133.18.194.128:5000/product/get_product?pro_data=${payload.product}`);
         console.log('APIから戻ってきた');
         console.log(productname);
+        /* for(var i=0 ; i<productname.length ; i++ ){        
+            productname[i].tags = await this.$axios.$get(`http://133.18.194.128:5000/product/get_product?pro_data=${productname[i].product_id}`);//product_idでタグを持ってくるAPI
+        } */
         commit("setData", productname)
     },
 

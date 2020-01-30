@@ -56,6 +56,9 @@ create table `product_lists`
   `product_img` VARCHAR(600),
   `stock` INT(10) NOT NULL,
   `safety` INT(10) NOT NULL,
+  `size` VARCHAR(50) NOT NULL,
+  `material` VARCHAR(80) NOT NULL,
+  `weight` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`product_id`)
 ) DEFAULT CHARSET=utf8mb4;
 
@@ -103,4 +106,13 @@ create table `discount`
   `rate` INT(2) NOT NULL,
   `sale_name` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`sale_id`,`product_id`)
+) DEFAULT CHARSET=utf8mb4;
+
+create table `cart_list`
+(
+  `user_id` INT(8) NOT NULL,
+  `product_id` INT(8) NOT NULL,
+  `count` INT(3) NOT NULL,
+  `add_date` DATE NOT NULL,
+  PRIMARY KEY (`user_id`,`product_id`)
 ) DEFAULT CHARSET=utf8mb4;

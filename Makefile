@@ -39,7 +39,6 @@ dd:
 	kubectl apply -f src/db/db-claim.yaml
 	kubectl apply -f src/db/db-volume.yaml
 	kubectl apply -f src/db/db-config.yaml
-	kubectl apply -f src/db/db-storage.yaml
 
 ca:
 	kubectl delete -f src/api/api-deployment.yaml
@@ -58,7 +57,6 @@ cd:
 	kubectl delete -f src/db/db-claim.yaml
 	kubectl delete -f src/db/db-volume.yaml
 	kubectl delete -f src/db/db-config.yaml
-	kubectl delete -f src/db/db-storage.yaml
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p

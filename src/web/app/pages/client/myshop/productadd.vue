@@ -43,8 +43,8 @@
                     v-model="myCroppa"
                     placeholder="画像を選択"
                     :placeholder-font-size=20
-                    :width=400
-                    :height=400
+                    :width=500
+                    :height=500
                     canvas-color="#777"
                     :file-size-limit="700000"
                     :remove-button-size="30"
@@ -103,6 +103,20 @@
             <v-flex xs12 md12>
               <h3 style="padding-bottom: 10px;">商品説明</h3>
               <v-text-field outlined label="商品説明" v-model="formData.description"></v-text-field>
+            </v-flex>
+            <v-divider style="padding-bottom: 20px;"></v-divider>
+            <v-flex xs12 md12>
+              <h3 style="padding-bottom: 10px;">サイズ</h3>
+              <v-text-field outlined label="サイズ" v-model="formData.size"></v-text-field>
+            </v-flex>
+            <v-divider style="padding-bottom: 20px;"></v-divider>
+            <v-flex xs12 md12>
+              <h3 style="padding-bottom: 10px;">素材</h3>
+              <v-text-field outlined label="素材" v-model="formData.mate"></v-text-field>
+            </v-flex>
+            <v-flex xs12 md12>
+              <h3 style="padding-bottom: 10px;">重量</h3>
+              <v-text-field outlined label="重量" v-model="formData.weight"></v-text-field>
             </v-flex>
             <v-divider style="padding-bottom: 20px;"></v-divider>
             <h3 style="padding-bottom: 10px;">
@@ -247,7 +261,10 @@ export default {
         description: '',
         tag: "",
         tags: ["陶器"],
-        img: ""
+        img: "",
+        size:"",
+        mate:"",
+        weight:"",
       }
     };
   },
@@ -283,7 +300,7 @@ export default {
     },
     async upload() {
 
-      if(!this.formData.product_name && !this.formData.product_name_en && !this.formData.price && !this.formData.stock && !this.formData.safety && !this.formData.description) return alert('未入力内容があります')
+      if(!this.formData.product_name && !this.formData.product_name_en && !this.formData.price && !this.formData.stock && !this.formData.safety && !this.formData.description && !this.formData.size && !this.formData.mate && !this.formData.weight) return alert('未入力内容があります')
 
       var strong = 1000;
       const name = new Date().getTime().toString(16) + Math.floor(strong * Math.random()).toString(16);

@@ -192,9 +192,12 @@ router.get('/addProduct', (req, res, next) => {
     const product_img = req.query.product_img
     const stock = req.query.stock
     const safety = req.query.safety
+    const size = req.query.size
+    const mate = req.query.mate
+    const weight = req.query.weight
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?)', [shop_id,product_name,product_name_en,product_number,price,record_date,product_detail,product_img,stock,safety],
+    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)', [shop_id,product_name,product_name_en,product_number,price,record_date,product_detail,product_img,stock,safety,size,mate,weight],
         function (error) {
             if (error == null) {
                 return res.status(200);

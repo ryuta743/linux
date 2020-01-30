@@ -27,14 +27,16 @@ router.get('/createuser', function (req, res) {
   const password = req.query.pass;
   const mail = req.query.mail;
   const gender = req.query.gender;
-  const countory = req.query.countory;
+  const country = req.query.country;
   const type = req.query.user_type;
-  const sql = `INSERT INTO user_lists(user_id,user_name,user_pass,user_mail,nationality,gender,birth,user_type,createday) VALUES (null,'${name}','${password}','${mail}','${countory}',${gender},'2019/12/07','${type}','GETDATA()');`
+  const now = req.query.date;
+  const sql = `INSERT INTO user_lists(user_id,user_name,user_pass,user_mail,nationality,gender,birth,user_type,create_day) VALUES (null,'${name}','${password}','${mail}',${country},${gender},'2019/12/07',${type},'${now}');`
   console.log(sql)
   connection.query(sql, function (error) {
     if (error) return res.json(error);
     res.json(1);
   })
+  connection.end();
 })
 
 router.get('/loginuser', function (req, res) {
