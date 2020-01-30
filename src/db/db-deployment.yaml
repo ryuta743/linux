@@ -33,7 +33,7 @@ spec:
               name: db
           volumeMounts:
             - name: db-persistent-storage
-              mountPath: /var/lib/db
+              mountPath: /var/lib/mysql
             - name: db-config
               mountPath: /etc/mysql/conf.d
               readOnly: true
