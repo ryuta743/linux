@@ -91,6 +91,7 @@ call:
 	kubectl delete -f src/db/db-config.yaml
 
 test:
+	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 	kubectl label namespace default isito-injection=enabled --overwrite
 	kubectl apply -f src/api/api-deployment.yaml
 	kubectl apply -f src/api/api-service.yaml
