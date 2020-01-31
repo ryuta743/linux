@@ -62,7 +62,6 @@ mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
 
 all:
-	kubectl label namespace default isito-injection=enabled --overwrite
 	kubectl apply -f src/api/api-deployment.yaml
 	kubectl apply -f src/api/api-service.yaml
 	kubectl apply -f src/web/web-deployment.yaml
@@ -75,6 +74,7 @@ all:
 	kubectl apply -f src/db/db-claim.yaml
 	kubectl apply -f src/db/db-volume.yaml
 	kubectl apply -f src/db/db-config.yaml
+	kubectl apply -f src/k8s/prometheus.yaml
 
 call:
 	kubectl delete -f src/api/api-deployment.yaml
@@ -89,6 +89,7 @@ call:
 	kubectl delete -f src/db/db-claim.yaml
 	kubectl delete -f src/db/db-volume.yaml
 	kubectl delete -f src/db/db-config.yaml
+	kubectl delete -f src/k8s/prometheus.yaml
 
 test:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
