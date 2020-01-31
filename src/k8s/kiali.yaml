@@ -1,15 +1,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: prometheus-gateway
+  name: kiali-gateway
   namespace: istio-system
 spec:
   selector:
     istio: ingressgateway
   servers:
     - port:
-        number: 15030
-        name: http-prom
+        number: 15029
+        name: http-kiali
         protocol: HTTP
       hosts:
         - "*"
@@ -17,29 +17,29 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: prometheus-vs
+  name: kiali-vs
   namespace: istio-system
 spec:
   hosts:
     - "*"
   gateways:
-    - prometheus-gateway
+    - kiali-gateway
   http:
     - match:
-        - port: 15030
+        - port: 15029
       route:
         - destination:
-            host: prometheus
+            host: kiali
             port:
-              number: 9090
+              number: 20001
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: prometheus
+  name: kiali
   namespace: istio-system
 spec:
-  host: prometheus
+  host: kiali
   trafficPolicy:
     tls:
       mode: DISABLE
