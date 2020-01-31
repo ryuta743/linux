@@ -77,6 +77,9 @@ all:
 	kubectl apply -f src/k8s/vservice.yaml
 	kubectl apply -f src/db/db-deployment.yaml
 	kubectl apply -f src/k8s/prometheus.yaml
+	kubectl apply -f src/k8s/kiali.yaml
+	kubectl apply -f src/k8s/grafana.yaml
+	kubectl apply -f src/k8s/trace.yaml
 
 call:
 	kubectl delete -f src/api/api-deployment.yaml
@@ -92,6 +95,9 @@ call:
 	kubectl delete -f src/db/db-volume.yaml
 	kubectl delete -f src/db/db-config.yaml
 	kubectl delete -f src/k8s/prometheus.yaml
+	kubectl delete -f src/k8s/kiali.yaml
+	kubectl delete -f src/k8s/grafana.yaml
+	kubectl delete -f src/k8s/trace.yaml
 
 test:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
