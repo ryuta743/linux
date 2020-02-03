@@ -38,7 +38,7 @@ spec:
             #prefix: /hello
       #route:
         #- destination:
-            #host: express
+            #host: express.default.svc.cluster.local
             #port:
               #number: 5000
 ---
