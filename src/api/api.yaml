@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: express
   labels:
-    app: api
+    app: express
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api
+      app: express
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,10 +17,10 @@ spec:
   template:
     metadata:
       labels:
-        app: api
+        app: express
     spec:
       containers:
-        - name: api
+        - name: express
           image: ryutaterada/k8s-express
           resources:
             limits:
