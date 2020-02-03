@@ -18,7 +18,7 @@ export const actions = {
         console.log('正都君素敵！！');
         console.log('天も頑張れ！！')
         console.log(payload.work_shop);
-        const shopdata = await this.$axios.$get(`http://133.18.194.128:5000/workshop/get_shop?shop_data=${payload.work_shop}`);
+        const shopdata = await this.$axios.$get(`http://db:5000/workshop/get_shop?shop_data=${payload.work_shop}`);
         console.log('APIから戻ってきた');
         console.log(shopdata);
         commit("setShop_name", shopdata)
