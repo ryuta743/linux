@@ -4,19 +4,16 @@ metadata:
   name: db
   labels:
     app: db
-    version: v1
 spec:
   selector:
     matchLabels:
       app: db
-      version: v1
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: db
-        version: v1
     spec:
       containers:
         - name: db
