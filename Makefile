@@ -63,7 +63,7 @@ mm:
 
 all:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-	kubectl label namespace default isito-injection=enabled --overwrite
+	kubectl label namespace default istio-injection=enabled --overwrite
 	kubectl apply -f src/db/db-service.yaml
 	kubectl apply -f src/db/db-claim.yaml
 	kubectl apply -f src/db/db-volume.yaml
