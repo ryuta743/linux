@@ -18,5 +18,5 @@ spec:
         - destination:
             host: api
             port:
-              #number: 9080
-              number: 5000
+              number: 9080
+              #number: 5000
