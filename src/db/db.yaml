@@ -53,7 +53,8 @@ metadata:
   name: db
 spec:
   ports:
-    - port: 3306
+    - port: 9306
+      targetPort: 3306
   clusterIP: None
   selector:
     app: db
