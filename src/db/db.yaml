@@ -55,6 +55,7 @@ spec:
   ports:
     - port: 9306
       targetPort: 3306
+      name: db
   clusterIP: None
   selector:
     app: db
