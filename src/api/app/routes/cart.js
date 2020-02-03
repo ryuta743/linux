@@ -9,7 +9,7 @@ module.exports = router;
 
 // mysqlと接続する
 var mysql_setting = {
-    host: 'db',
+    host: 'db:3306',
     user: 'root',
     password: '',
     database: 'tenshoku',

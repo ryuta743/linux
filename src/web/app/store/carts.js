@@ -22,7 +22,7 @@ export const actions = {
         const product_id = payload.product_id;
         const count = payload.count;
         const now = moment().format('YYYY-MM-DD')
-        const cartdata = await this.$axios.$get(`http://db:5000/cart/cart_up?cart_data=${product_id}&user_data=${user_id}&count=${count}&date=${now}`);
+        const cartdata = await this.$axios.$get(`http://api:5000/cart/cart_up?cart_data=${product_id}&user_data=${user_id}&count=${count}&date=${now}`);
         console.log('APIから戻ってきた!!');
         console.log(cartdata);
         commit("setCart_data", cartdata);

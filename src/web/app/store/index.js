@@ -22,7 +22,7 @@ export const actions = {
     },
     async login({commit},{payload}){
         const data = payload;
-        const kekka = await this.$axios.$get(`http://db:5000/account/loginuser?mail=${data.mail}&password=${data.password}`);
+        const kekka = await this.$axios.$get(`http://api:5000/account/loginuser?mail=${data.mail}&password=${data.password}`);
         const sessiondata = await this.$axios.$post(`/api/sessionin`,{kekka})
         console.log(sessiondata);
         commit('setLoginuserdata',sessiondata)
