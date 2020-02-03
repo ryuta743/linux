@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v1
+    spec:
+      serviceAccountName: tenshoku-web
+      containers:
+        - name: web
+          image: ryutaterada/k8s-nodejs
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1000Mi
+            requests:
+              cpu: 50m
+          ports:
+            - containerPort: 3000
+            #- containerPort: 9080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+  labels:
+    app: web
+    service: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 9080
+      targetPort: 3000
+      name: http
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tenshoku-web

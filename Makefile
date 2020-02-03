@@ -64,40 +64,16 @@ mm:
 all:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 	kubectl label namespace default istio-injection=enabled --overwrite
-	kubectl apply -f src/db/db-service.yaml
-	kubectl apply -f src/db/db-claim.yaml
-	kubectl apply -f src/db/db-volume.yaml
-	kubectl apply -f src/db/db-config.yaml
-	kubectl apply -f src/api/api-deployment.yaml
-	kubectl apply -f src/api/api-service.yaml
-	kubectl apply -f src/web/web-deployment.yaml
-	kubectl apply -f src/web/web-service.yaml
-	kubectl apply -f src/web/web-account.yaml
-	kubectl apply -f src/k8s/gateway.yaml
-	kubectl apply -f src/k8s/vservice.yaml
-	kubectl apply -f src/db/db-deployment.yaml
-	kubectl apply -f src/k8s/prometheus.yaml
-	kubectl apply -f src/k8s/kiali.yaml
-	kubectl apply -f src/k8s/grafana.yaml
-	kubectl apply -f src/k8s/trace.yaml
+	kubectl apply -f src/db/db.yaml
+	kubectl apply -f src/api/api.yaml
+	kubectl apply -f src/web/web.yaml
+	kubectl apply -f src/k8s/istio.yaml
 
 call:
-	kubectl delete -f src/api/api-deployment.yaml
-	kubectl delete -f src/api/api-service.yaml
-	kubectl delete -f src/web/web-deployment.yaml
-	kubectl delete -f src/web/web-service.yaml
-	kubectl delete -f src/web/web-account.yaml
-	kubectl delete -f src/k8s/gateway.yaml
-	kubectl delete -f src/k8s/vservice.yaml
-	kubectl delete -f src/db/db-deployment.yaml
-	kubectl delete -f src/db/db-service.yaml
-	kubectl delete -f src/db/db-claim.yaml
-	kubectl delete -f src/db/db-volume.yaml
-	kubectl delete -f src/db/db-config.yaml
-	kubectl delete -f src/k8s/prometheus.yaml
-	kubectl delete -f src/k8s/kiali.yaml
-	kubectl delete -f src/k8s/grafana.yaml
-	kubectl delete -f src/k8s/trace.yaml
+	kubectl delete -f src/api/api.yaml
+	kubectl delete -f src/web/web.yaml
+	kubectl delete -f src/k8s/istio.yaml
+	kubectl delete -f src/db/db.yaml
 
 test:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
