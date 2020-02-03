@@ -50,6 +50,6 @@ spec:
   selector:
     app: express
   ports:
-    - port: 9500
+    - port: 5000
       targetPort: 5000
       name: http-express
