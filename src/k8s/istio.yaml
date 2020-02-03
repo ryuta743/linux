@@ -28,9 +28,18 @@ spec:
             prefix: /
       route:
         - destination:
-            host: web
+            #host: web
+            host: express
             port:
-              number: 9080
+              #number: 9080
+              number: 5000
+    #- match:
+        #- uri:
+            #prefix: /hello
+      #route:
+        #- destination:
+            #host: express
+            #port:
               #number: 5000
 ---
 apiVersion: networking.istio.io/v1alpha3
