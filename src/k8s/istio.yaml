@@ -28,7 +28,7 @@ spec:
             prefix: /
       route:
         - destination:
-            host: api
+            host: web
             port:
               number: 9080
               #number: 5000

@@ -61,8 +61,10 @@ cd:
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
 
-all:
+stat
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+
+all:
 	kubectl label namespace default istio-injection=enabled --overwrite
 	kubectl apply -f src/db/db.yaml
 	kubectl apply -f src/api/api.yaml
