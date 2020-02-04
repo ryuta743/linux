@@ -52,6 +52,7 @@ metadata:
 spec:
   #type: ClusterIP
   #clusterIP: 10.152.183.5
+  clusterIP: None
   selector:
     app: express
   ports:
