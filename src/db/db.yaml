@@ -64,7 +64,7 @@ spec:
     - port: 3306
       targetPort: 3306
       name: tcp-db
-  clusterIP: None
+  #clusterIP: None
   selector:
     app: db
 ---
@@ -109,3 +109,10 @@ data:
     skip-name-resolve
     [client]
     default-character-set=utf8mb4
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tenshoku-db
+  labels:
+    account: db

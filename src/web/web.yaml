@@ -46,9 +46,11 @@ spec:
     - port: 9080
       targetPort: 3000
       name: http
-  clusterIP: None
+  #clusterIP: None
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tenshoku-web
+  labels:
+    account: web

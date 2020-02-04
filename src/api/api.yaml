@@ -52,10 +52,17 @@ metadata:
 spec:
   #type: ClusterIP
   #clusterIP: 10.152.183.5
-  clusterIP: None
+  #clusterIP: None
   selector:
     app: express
   ports:
     - port: 5000
       targetPort: 5000
       name: tcp-express
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tenshoku-express
+  labels:
+    account: express
