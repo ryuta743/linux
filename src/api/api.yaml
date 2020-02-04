@@ -51,7 +51,7 @@ metadata:
     service: express
 spec:
   type: ClusterIP
-  clusterIP: 10.11.253.81
+  clusterIP: 10.152.183.5
   selector:
     app: express
   ports:
