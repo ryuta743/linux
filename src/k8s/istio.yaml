@@ -28,11 +28,11 @@ spec:
             prefix: /
       route:
         - destination:
-            host: web
-            #host: express
+            #host: web
+            host: express
             port:
-              number: 9080
-              #number: 5000
+              #number: 9080
+              number: 5000
     #- match:
         #- uri:
             #prefix: /hello
