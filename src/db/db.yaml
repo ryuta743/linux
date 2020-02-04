@@ -63,7 +63,7 @@ spec:
   ports:
     - port: 3306
       targetPort: 3306
-      #name: http-db
+      name: tcp-db
   clusterIP: None
   selector:
     app: db
