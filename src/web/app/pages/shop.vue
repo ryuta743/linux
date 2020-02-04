@@ -1,83 +1,104 @@
 <template>
-  <v-layout>
+  <v-layout row wrap id="shop_body">
+
+    <div id="bread_list"> <!-- パンくずリスト -->
+      <div class="bread"><v-icon>mdi-home</v-icon>トップ</div>
+      <div class="bread">></div>
+      <div class="bread">ショップ</div>
+    </div>
+
     <v-container grid-list-xs>
       <v-content>
-        <h5 style="width: 100%;text-align: center;">詳細検索</h5>
-        <h4 style="width: 100%;text-align: center;">ADVANCED SEARCH</h4>
+        <h4 style="width: 100%;text-align: center;">詳細検索</h4>
         <div>{{error}}</div>
-
-        <select v-model="selected">
-          <option disabled value="">どっちを検索する？？</option>
-          <option value="0">商品検索</option>
-          <option value="1">工房検索</option>
-        </select>
 
         <v-layout row wrap justify-center style="padding-top: 10px;">
           <v-flex xs12 md6>
             <form @submit.prevent>
               <v-layout row wrap>
-                <v-text-field outlined label="検索" v-model="select_data"></v-text-field>
-                <v-btn type="submit" color="info" style="height: 55px;" @click="get_select">
+                <v-text-field outlined label="キーワード" v-model="select_data" color="grey"></v-text-field>
+                <v-btn type="submit" color="grey" style="height: 55px;" @click="get_select" depressed>
                   <v-icon>mdi-magnify</v-icon>
                 </v-btn>
               </v-layout>
             </form>
           </v-flex>
+          <div id="advance">
+                <label>検索対象:</label>
+                <select v-model="selected" id="search_select">
+                  <option disabled value="">未選択</option>
+                  <option value="0">商品</option>
+                  <option value="1">工房</option>
+                </select>
+                <label style="margin-left: 40px;">表示順(商品):</label>
+                <select v-model="howdisp_p" id="search_select">
+                  <option disabled value="">未選択</option>
+                  <option value="0">価格が安い順</option>
+                  <option value="1">評価が高い順</option>
+                </select>
+                <label style="margin-left: 40px;">表示順(工房):</label>
+                <select v-model="howdisp_w" id="search_select">
+                  <option disabled value="">未選択</option>
+                  <option value="0">新しい順</option>
+                  <option value="1">評価が高い順</option>
+                </select>
+            </div>
         </v-layout>
 
-        <div v-for="(item, index) in data" :key="index">
-          <!-- これ大事別ページに飛ぶやつで押された要素が名前になる -->
-          <div @click="$router.push(`/customer/product/${item.product_id}`)">{{item.product_name}}</div>
-          {{index}}
-        </div>
-
-        <v-divider></v-divider>
+        <v-divider style="margin-top: 15px;"></v-divider>
       </v-content>
       <v-content>
-        <v-layout row wrap>
-          <v-flex
-            xs12
-            md4
-            v-for="(item, index) in products"
-            :key="index"
-            style="padding: 0 10px 20px 10px;"
-          >
-            <v-card hover @click="$router.push(`/customer/product/${item.title}`)">
-              <v-img :src="item.src"></v-img>
-              <v-card-text style="font-weight: bold;height: 10px;">{{item.title}}</v-card-text>
-              <v-card-text style="height : 10px;">
-                <v-layout row wrap align-center>
+
+        <v-layout row wrap id="products">
+          
+            <div id="products_header">
+                <div id="search_word">{{ search_word ? search_word:'新規商品一覧' }}</div>
+                <div id="search_count">{{ '-全' + data.length + '件' }}</div>
+            </div>
+
+            <v-card id="product" @click="$router.push(`/customer/product/${item.product_id}`)" flat v-for="(item, index) in data" :key="index">
+              <div id="product_img">
+                <v-lazy-image :src="item.product_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
+              </div>
+              <v-card-text style="heigh: 150px;">
+                <div id="product_name">{{item.product_name}}</div>
+                <div id="product_price">¥{{exprice(item.price)}}</div>
+                <div id="product_rate">
                   <v-rating
-                    color="yellow darken-3"
-                    background-color="grey darken-1"
-                    v-model="item.rating"
-                    readonly
-                    size="19px"
-                    half-increments
+                      color="yellow darken-3"
+                      background-color="grey darken-1"
+                      v-model="rate"
+                      size="14px"
+                      readonly
+                      half-increments
                   ></v-rating>
-                  ({{item.rating}})
-                </v-layout>
-              </v-card-text>
-              <v-card-text>
-                <nuxt-link :to="`customer/workshop/${item.creater}`">{{item.creater}}</nuxt-link>
-              </v-card-text>
-              <v-card-text style="height: 8px;">¥{{item.price}}</v-card-text>
-              <v-card-text>
-                <v-chip
-                  class="ma-2"
-                  color="primary"
-                  label
-                  text-color="white"
-                  v-for="(item, index) in item.tags"
-                  :key="index"
-                >
-                  <v-icon left>mdi-label</v-icon>
-                  {{item}}
-                </v-chip>
-              </v-card-text>
+                </div>
+              </v-card-text>      
             </v-card>
-          </v-flex>
+
+            <v-card id="product" @click="$router.push(`/customer/workshop/${item.shop_id}`)" flat v-for="(item, index) in shop_name" :key="index">
+              <div id="product_img">
+                <v-lazy-image :src="item.shop_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
+              </div>
+              <v-card-text style="heigh: 150px;">
+                <div id="product_name">{{item.shop_name}}</div>
+                <div id="product_price" style="font-size: 12px;">{{ item.shop_description.slice(0,12) + '...' }}</div>
+                <div id="product_rate">
+                  <v-rating
+                      color="yellow darken-3"
+                      background-color="grey darken-1"
+                      v-model="rate"
+                      size="14px"
+                      readonly
+                      half-increments
+                  ></v-rating>
+                </div>
+              </v-card-text>      
+            </v-card>
+
         </v-layout>
+        
+
       </v-content>
     </v-container>
   </v-layout>
@@ -88,87 +109,113 @@ import {mapActions,mapGetters} from 'vuex';
 import { toUnicode } from 'punycode';
 
 export default {
+  async mounted() {
+  await  this.get_newproductReq()
+  },
   data() {
     return {
 
       selected: '',
 
+      howdisp_p: '',
+
+      howdisp_w: '',
+
       select_data: '',
+
+      search_word: '',
 
       error: '',
 
+      rate: 12,
+
       products: [
         {
+          product_id: 1,
           title: "陶器01",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/08/IM_KG02001-01.jpg",
           rating: 4.5,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ゆう工房"
         },
         {
+          product_id: 1,
           title: "やばいこけし",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2017/05/HR71009-2-600x600.jpg",
           rating: 2.5,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "サバンナ工房"
         },
         {
+          product_id: 1,
           title: "話題の組紐",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/07/BS99004_img.jpg",
           rating: 4.9,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "北九州組み紐工房"
         },
         {
+          product_id: 1,
           title: "組紐",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/09/KG92006_11.jpg",
           rating: 4.0,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ここに出品工房情報"
         },
         {
+          product_id: 1,
           title: "組紐",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/11/HR91003.jpg",
           rating: 3.5,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ここに出品工房情報"
         },
         {
+          product_id: 1,
           title: "組紐",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/05/7d403414bdbdea0df540431119756fb7.jpg",
           rating: 3.5,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ここに出品工房情報"
         },
         {
+          product_id: 1,
           title: "やばいこけし",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/01/IMG_1490-1.jpg",
           rating: 5.0,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ここに出品工房情報"
         },
         {
+          product_id: 1,
           title: "やばいこけし",
           src: "https://picsum.photos/id/11/500/300",
           rating: 5.0,
           price: 3000,
           tags: ["陶器", "食卓"],
           creater: "ここに出品工房情報"
-        }
+        },{
+          product_id: 1,
+          title: "やばいこけし",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/01/IMG_1490-1.jpg",
+          rating: 5.0,
+          price: 3000,
+          tags: ["陶器", "食卓"],
+          creater: "ここに出品工房情報"
+        },
       ]
     };
   },
 
   methods:{
     async get_select(){
-
       if(this.select_data == ''){
         this.error = '未入力です'
       }else{
@@ -178,6 +225,7 @@ export default {
         }
         try{
           await this.select_product({payload});
+          this.search_word = this.select_data;
         }catch(e){
           console.log('エラー発生'),
           console.log(e)
@@ -188,20 +236,22 @@ export default {
         }
         try{
           await this.search_workshop({payload});
+          this.search_word = this.select_data;
         }catch(e){
           console.log('エラー発生'),
           console.log(e)
         }
       }
     }
-
-
-
-      
-      
+    },
+    async get_newproductReq(){
+      await this.get_newproduct();
+    },
+    exprice(val){
+      return val.toLocaleString();
     },
 
-    ...mapActions('products',['select_product']),
+    ...mapActions('products',['select_product','get_newproduct']),
     ...mapActions('work_shop',['search_workshop'])
   },
 
@@ -212,12 +262,101 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.sawarabi{
+  font-family: "Sawarabi Mincho";
+}
+
+#bread_list{
+  display: flex;
+  align-items: flex-end;
+  margin: 20px 0;
+  width: 100%;
+  height: 30px;
+  border-bottom: 1.2px solid #e1e1e1;
+}
+
+.bread{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 14px;
+  cursor: pointer;
+  width: 80px;
+  color: #444444;
+}
+
 .target {
   cursor: pointer;
 }
 
 a {
   text-decoration: none;
+}
+
+#shop_body{
+  width: 1100px;
+  margin: 0 auto;
+}
+
+#products{
+  display: flex;
+  min-height: 500px;
+}
+
+#products_header{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+}
+
+#search_word{
+  box-sizing: border-box;
+  padding-left: 15px;
+  font-size: 26px;
+  min-width: 50px;
+  margin-right: 30px;
+}
+
+#search_count{
+  font-size: 13px;
+  width: 100px
+}
+
+#advance{
+  color: #444;
+}
+
+#search_select{
+  width: 70px;
+  color: #444444;
+  outline: 0;
+  border: 1.2px solid grey;
+  border-width: 0 0 1.2px 0;
+  border-radius: 1px;
+}
+
+#product{
+  width: 250px;
+  margin-bottom: 20px;
+  margin-left: 15px
+}
+
+#product_img{
+  width: 100%;
+  height: 250px; 
+}
+
+#product_name{
+  width: 100%;
+  height: 30px;
+}
+
+#product_price{
+  width: 100%;
+  height: 20px;
+  box-sizing: border-box;
+  padding-left: 8px;
 }
 </style>

@@ -2,7 +2,7 @@
   <v-container grid-list-xs style="min-height: 100vh;">
     <v-content>
       <v-content>
-        <v-card>
+        <v-card flat>
           <v-layout row wrap>
             <v-flex xs12 md10>
               <v-card-title primary-title>
@@ -10,54 +10,44 @@
               </v-card-title>
             </v-flex>
             <v-flex xs12 md2>
-              <v-card-title primary-title><v-btn color="success" style="width: 100%;" @click="$router.push('/customer/cart/cartBuy')">カート内商品を購入</v-btn></v-card-title>
+              <v-card-title primary-title><v-btn depressed color="success" style="width: 100%;" @click="$router.push('/customer/cart/cartBuy')">カート内商品を購入</v-btn></v-card-title>
             </v-flex>
           </v-layout>
           <v-divider></v-divider>
-          <v-card-text style="min-height: 80vh;">
+          <v-card-text style="min-height: 500px;">
             <v-layout row wrap>
               <v-flex
                 xs12
-                md4
-                v-for="(item, index) in products"
+                md3
+                v-for="(item, index) in getcartdata"
                 :key="index"
                 style="padding: 0 10px 20px 10px;"
               >
                 <v-card>
-                  <v-card-text>
-                    <v-btn color="error" outlined @click="cartKill(index)"><v-icon hover color="red">mdi-close</v-icon></v-btn>
+                  <v-card-text style="display: flex;">
+                    <v-btn color="error" outlined @click="cartKill(index)" small><v-icon hover color="red">mdi-close</v-icon></v-btn>
+                    <div class="item_count">
+                      <input type="number" v-model="item.count" style="width: 20px;">個
+                    </div>
                   </v-card-text>
-                  <v-img :src="item.src" class="target" @click="$router.push(`/customer/product/${item.title}`)"></v-img>
-                  <v-card-text class="target" @click="$router.push(`/customer/product/${item.title}`)" style="font-weight: bold;height: 10px;">{{item.title}}</v-card-text>
-                  <v-card-text class="target" style="height : 10px;" @click="$router.push(`/customer/product/${item.title}`)">
-                    <v-layout row wrap align-center>
-                      <v-rating
-                        color="yellow darken-3"
-                        background-color="grey darken-1"
-                        v-model="item.rating"
-                        readonly
-                        size="19px"
-                        half-increments
-                      ></v-rating>
-                      ({{item.rating}})
-                    </v-layout>
-                  </v-card-text>
-                  <v-card-text>
-                    <nuxt-link :to="`customer/workshop/${item.creater}`">{{item.creater}}</nuxt-link>
-                  </v-card-text>
-                  <v-card-text style="height: 8px;">¥{{item.price}}</v-card-text>
-                  <v-card-text>
-                    <v-chip
-                      class="ma-2"
-                      color="primary"
-                      label
-                      text-color="white"
-                      v-for="(item, index) in item.tags"
-                      :key="index"
-                    >
-                      <v-icon left>mdi-label</v-icon>
-                      {{item}}
-                    </v-chip>
+                  <div class="product_img">
+                    <v-lazy-image :src="item.product_img" class="target" @click="$router.push(`/customer/product/${item.product_id}`)" style="width: 100%;height: 100%;object-fit: cover;" />
+                  </div>
+                  <v-card-text class="target" @click="$router.push(`/customer/product/${item.product_id}`)" style="height: 10px;color: #707070;">{{item.product_name}}</v-card-text>
+                  <v-card-text class="target" @click="$router.push(`/customer/product/${item.product_id}`)">
+                    <div class="product_price" style="color: #707070;">{{ '¥' + exprice(item.price) }}</div>
+                    <div class="product_rate">
+                      <v-layout row wrap align-center>
+                        <v-rating
+                          color="yellow darken-3"
+                          background-color="grey darken-1"
+                          v-model="rate"
+                          readonly
+                          size="13px"
+                          half-increments
+                        ></v-rating>
+                      </v-layout>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -75,10 +65,11 @@ import {mapActions,mapGetters} from 'vuex';
 export default {
   data() {
     return {
+      rate: 5,
       products: [
         {
           title: "陶器01",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/11/HR91003.jpg",
           rating: 4.5,
           price: 3000,
           tags: ["陶器", "食卓"],
@@ -86,7 +77,7 @@ export default {
         },
         {
           title: "やばいこけし",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/09/KG92006_11.jpg",
           rating: 2.5,
           price: 3000,
           tags: ["陶器", "食卓"],
@@ -94,7 +85,7 @@ export default {
         },
         {
           title: "話題の組紐",
-          src: "https://picsum.photos/id/11/500/300",
+          src: "https://ichi-point.jp/wp-content/uploads/2018/07/BS99004_img.jpg",
           rating: 4.9,
           price: 3000,
           tags: ["陶器", "食卓"],
@@ -104,23 +95,34 @@ export default {
     };
   },
   mounted() {
-    this.cart_upreq()
+    this.get_cartdataReq()
   },
   methods:{
-    
-    async cart_upreq(){
-      var p_data = {
-        product_id : this.$route.params.product
-      }
-      console.log(p_data);
-
+    async get_cartdataReq(){
+      var userid = this.loginuserdata.user_data.user_id;
       try{
-        await this.getproductdetails({p_data})
+        await this.get_cartdata({userid})
       }catch(e){
-        console.log('エラー発生')
-        console.log(e)
+        console.log( 'エラー発生' + e )
       }
     },
+    exprice(val){
+      return val.toLocaleString();
+    },
+    
+    // async cart_upreq(){
+    //   var p_data = {
+    //     product_id : this.$route.params.product
+    //   }
+    //   console.log(p_data);
+
+    //   try{
+    //     await this.getproductdetails({p_data})
+    //   }catch(e){
+    //     console.log('エラー発生')
+    //     console.log(e)
+    //   }
+    // },
 
     circleOpen(){
       this.circle = true
@@ -130,10 +132,11 @@ export default {
         this.$router.go({path: this.$router.currentRoute.path, force: true});
     },
     ...mapActions('products',['getproductdetails']),
-    ...mapActions([])
+    ...mapActions('carts',['get_cartdata']),
   },
   computed: {
     ...mapGetters('products',['productdetails']),
+    ...mapGetters('carts',['getcartdata']),
     ...mapGetters(['loginuserdata'])
   }
   // methods:{
@@ -144,8 +147,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .target {
   cursor: pointer;
+}
+
+.product_img{
+  width: 100%;
+  height: 200px;
+}
+
+.product_rate{
+  width: 100%;
+  height: 20px;
+}
+
+.product_price{
+  box-sizing: border-box;
+  padding-left: 5px;
+}
+
+.item_count{
+  padding-left: 10px;
+  padding-top: 4px;
+  color: #777;
 }
 </style>

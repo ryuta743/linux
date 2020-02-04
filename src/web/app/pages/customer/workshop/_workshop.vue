@@ -243,7 +243,7 @@ export default {
           "便利だけど人為的なものが身の回りに増える現代生活。自然素材なら安心して使うことができます。陶芸は地球の一部を拝借しての楽しい手作り生活です。「ゆう工房」は人為を感じない土味ある焼きものを提案しています。"
       },
       products: [
-        {
+        /* {
           product_id: 1,
           title: "スマイル鉢植え",
           product_img: 'https://image1.shopserve.jp/taikeian.net/pic-labo/llimg/310a.jpg?t=20190824100607',
@@ -290,7 +290,7 @@ export default {
           rating: 1.5,
           price: 2500,
           tags: ["陶器", "食卓"]
-        }
+        } */
       ]
     };
   },
@@ -491,7 +491,7 @@ export default {
 
 #products_content {
   width: 100%;
-  min-height: 500px;
+  height: auto;
 }
 
 #products {
@@ -499,6 +499,7 @@ export default {
   box-sizing: border-box;
   padding: 30px 30px;
   width: 100%;
+  height: auto;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -565,7 +566,6 @@ export default {
 }
 
 #no_products{
-  position: absolute;
   padding: 80px;
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 export const state = () => ({
-    shop_name: null,
+    shop_name: [],
 })
 
 export const getters = {

@@ -57,3 +57,21 @@ router.get('/get_details', function (req, res) {
   })
   connection.end();
 })
+
+router.get('/get_newdata', function (req, res) {
+  console.log('登録されたてホヤホヤの商品情報API届いたよ')
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  var connection = mysql.createConnection(mysql_setting);
+  connection.connect();
+  const sql = 'SELECT * FROM product_lists ORDER BY record_date DESC';
+  console.log(sql)
+  connection.query(sql, function (error,results) {
+    console.log(results)
+    if (error) return res.json(error);
+    if(results.length > 0) return res.json(results);
+    return res.json(results);
+  })
+  connection.end();
+})

@@ -140,7 +140,7 @@
               <v-flex md10 xs8>
                 <v-subheader>日本伝統工芸品関係者（伝統工芸職人）の方は下のボックスにチェックを入れてください</v-subheader>
                 <v-layout row wrap align-center>
-                  <v-checkbox label="日本伝統工芸品関係者です" value=1  v-model="craft"></v-checkbox>
+                  <v-checkbox label="日本伝統工芸品関係者です" true-value="1" false-value="0"  v-model="craft"></v-checkbox>
                   <v-layout row wrap justify-end>
                     <v-btn color="primary" @click="e1check2">確認</v-btn>
                   </v-layout>
@@ -222,7 +222,8 @@
     <v-app-bar :clipped-left="clipped" flat class="no-print">
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
       <!-- <v-btn outlined>ここにlogo</v-btn> -->
-      <img src="../static/tenshokuLogoH.png" alt="ロゴ" width="150px">
+      <img src="../static/hewlogo.png" alt="ロゴ" width="50px">
+      <div id="site_title"><span>天職</span>tenshoku</div>
       <v-tabs style="padding-left: 10px;">
         <v-tab @click="$router.push('/')">トップ</v-tab>
         <v-tab @click="$router.push('/shop')">ショップ</v-tab>
@@ -230,32 +231,26 @@
         <v-tab @click="$router.push('/contact')">コンタクト</v-tab>
       </v-tabs>
 
-      <v-btn outlined @click="loginDialog = true" v-if="loginuserdata == null ? true:false">
-        <v-icon color="success">mdi-check</v-icon>ログイン
+      <v-btn text @click="loginDialog = true" v-if="loginuserdata == null ? true:false">
+        <v-icon color="#DC3839">mdi-login</v-icon>ログイン
       </v-btn>
 
-      <v-btn outlined style="margin: ;" v-if="loginuserdata == null ? true:false" @click="createADialog = true">
-        <v-icon color="success">mdi-account</v-icon>新規登録
+      <v-btn text style="margin: ;" v-if="loginuserdata == null ? true:false" @click="createADialog = true">
+        <v-icon color="#DC3839">mdi-account-plus</v-icon>新規登録
       </v-btn>
 
-      <v-badge left color="primary" v-if="loginuserdata !== null ? true:false">
-        <span slot="badge">5</span>
-        <v-btn outlined @click="$router.push('/client/myshop/myshop')">
-          <v-icon color="primary">mdi-shop</v-icon>マイ工房管理
-        </v-btn>
-      </v-badge>
+      <v-btn text @click="$router.push('/client/myshop/myshop')" v-if="loginuserdata !== null ? true:false">
+        <v-icon color="primary">mdi-store</v-icon>マイ工房管理
+      </v-btn>
 
-      <v-badge left color="primary" v-if="loginuserdata !== null ? true:false">
-        <span slot="badge">0</span>
-        <v-btn outlined v-if="loginuserdata !== null ? true:false" @click="$router.push('/customer/cart/cart')">
+        <v-btn text v-if="loginuserdata !== null ? true:false" @click="$router.push('/customer/cart/cart')">
           <v-icon color="primary">mdi-cart</v-icon>カート
         </v-btn>
-      </v-badge>
 
       <div v-if="loginuserdata !== null ? true:false">
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" outlined>
+            <v-btn v-on="on" text>
               <v-icon color="primary">mdi-account</v-icon>アカウント
             </v-btn>
           </template>
@@ -270,10 +265,6 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </div>
-
-      <div>
-        <v-switch label="English" style="padding: 25px 0 0 5px;" color="success"></v-switch>
       </div>
     </v-app-bar>
 
@@ -370,6 +361,7 @@ export default {
       }else{
         console.log(this.countrys[this.country])
         this.e1 = 3
+        console.log(this.craft);
       }
     },
 
@@ -449,9 +441,23 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.v-btn{
+  color: #444;
+}
+
 *{
   font-family: "Hannari","Sawarabi Mincho";
+}
+
+#site_title{
+  width: 500px;
+  padding-top:15px;
+}
+
+#site_title span{
+  font-size: 25px
 }
 
 @media print {
