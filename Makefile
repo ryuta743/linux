@@ -48,6 +48,9 @@ cd:
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
 
+ww:
+	kubectl exec -it web-6b64674b66-cncjl --container web /bin/sh
+
 stat:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 	kubectl label namespace default istio-injection=enabled --overwrite

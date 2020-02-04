@@ -50,8 +50,8 @@ metadata:
     app: express
     service: express
 spec:
-  type: ClusterIP
-  clusterIP: 10.152.183.5
+  #type: ClusterIP
+  #clusterIP: 10.152.183.5
   selector:
     app: express
   ports:
