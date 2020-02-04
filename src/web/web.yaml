@@ -20,7 +20,7 @@ spec:
       serviceAccountName: tenshoku-web
       containers:
         - name: web
-          image: ryutaterada/k8s-nodejs
+          image: ryutaterada/k8s-nodejs:1.0.0
           imagePullPolicy: IfNotPresent
           resources:
             limits:
