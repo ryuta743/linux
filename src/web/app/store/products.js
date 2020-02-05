@@ -26,14 +26,14 @@ export const actions = {
     }) {
         console.log('お前は最強だ正都様');
         console.log(payload.product);
-        var productname = await this.$axios.$get(`http://express:5000/product/get_product?pro_data=${payload.product}`);
+        var productname = await this.$axios.$get(`http://express/product/get_product?pro_data=${payload.product}`);
         console.log('APIから戻ってきた');
 
         for (var i = 0; i < productname.length; i++) {
             productname[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${productname[i].shop_id}%2Fproducts%2F${productname[i].product_img}?alt=media`;
         }
         console.log(productname);
-        /* for(var i=0 ; i<productname.length ; i++ ){        
+        /* for(var i=0 ; i<productname.length ; i++ ){
             productname[i].tags = await this.$axios.$get(`http://133.18.194.128:5000/product/get_product?pro_data=${productname[i].product_id}`);//product_idでタグを持ってくるAPI
         } */
         commit("setData", productname)
