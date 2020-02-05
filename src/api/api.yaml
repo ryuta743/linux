@@ -56,9 +56,9 @@ spec:
   selector:
     app: express
   ports:
-    - port: 5000
+    - port: 9080
       targetPort: 5000
-      name: tcp-express
+      name: http
 ---
 apiVersion: v1
 kind: ServiceAccount

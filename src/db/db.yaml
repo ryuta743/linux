@@ -61,9 +61,9 @@ metadata:
     service: db
 spec:
   ports:
-    - port: 3306
+    - port: 9080
       targetPort: 3306
-      name: tcp-db
+      name: http
   #clusterIP: None
   selector:
     app: db
