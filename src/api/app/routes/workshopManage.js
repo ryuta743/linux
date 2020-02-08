@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 // MySQLの設定情報
 var mysql_setting = {
-    host: 'db',
+    host: 'db:9080',
     user: 'root',
     password: '',
     database: 'tenshoku',
@@ -66,7 +66,7 @@ router.get('/getOrderdetail', (req, res, next) => {
     const order_num = req.query.order_number
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('SELECT * from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id where order_details.shop_id=? && order_details.order_number=?', [shop_id,order_num],
+    connection.query('SELECT * from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id where order_details.shop_id=? && order_details.order_number=?', [shop_id, order_num],
         function (error, results, fields) {
             if (error == null) {
                 if (results.length > 0) {
@@ -166,7 +166,7 @@ router.get('/addSale', (req, res, next) => {
     const sale_name = req.query.sale_name;
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO discount VALUES(?,?,?,?,?)', [sale_id,product_id,shop_id,rate,sale_name],
+    connection.query('INSERT INTO discount VALUES(?,?,?,?,?)', [sale_id, product_id, shop_id, rate, sale_name],
         function (error) {
             if (error == null) {
                 return res.status(200);
@@ -197,7 +197,7 @@ router.get('/addProduct', (req, res, next) => {
     const weight = req.query.weight
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)', [shop_id,product_name,product_name_en,product_number,price,record_date,product_detail,product_img,stock,safety,size,mate,weight],
+    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)', [shop_id, product_name, product_name_en, product_number, price, record_date, product_detail, product_img, stock, safety, size, mate, weight],
         function (error) {
             if (error == null) {
                 return res.status(200);

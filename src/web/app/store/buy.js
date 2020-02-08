@@ -1,6 +1,6 @@
 import moment from '~/plugins/moment';
 
-export const state = () =>({
+export const state = () => ({
     checkdata: null,
     creditdata: null,
 })
@@ -11,25 +11,33 @@ export const getters = {
 }
 
 export const mutations = {
-    setCheckdata(state,checkdata){
+    setCheckdata(state, checkdata) {
         state.checkdata = checkdata;
         console.log(checkdata)
     },
-    setCreditdata(state,creditdata){
+    setCreditdata(state, creditdata) {
         state.creditdata = creditdata;
         console.log(creditdata)
     },
 }
 
 export const actions = {
-    buycheck({commit},{buy_userdata}){
+    buycheck({
+        commit
+    }, {
+        buy_userdata
+    }) {
         console.log('storeきたよ')
         commit("setCheckdata", buy_userdata);
-    }, 
-    buycheck2({commit},{credit_data}){
+    },
+    buycheck2({
+        commit
+    }, {
+        credit_data
+    }) {
         console.log('storeきたよ')
         commit("setCreditdata", credit_data);
-    }, 
+    },
 }
 
 

@@ -10,7 +10,7 @@ const bodyParser = require('body-parser')
 
 const router = express.Router();
 
-module.exports={
+module.exports = {
     path: '/api',
     handler: app
 }
@@ -32,19 +32,26 @@ app.post('/sessionin', function (req, res) {
     console.log('セッションスタート');
     const user_data = req.body.kekka;
     console.log(user_data)
-    if(user_data){
-      console.log('true')
-      req.session.loginuserdata = {user_data : user_data[0]}
-      console.log('true2')
-      console.log(req.session.loginuserdata)
-      return res.json({user_data : user_data[0]})
+    if (user_data) {
+        console.log('true')
+        req.session.loginuserdata = {
+            user_data: user_data[0]
+        }
+        console.log('true2')
+        console.log(req.session.loginuserdata)
+        return res.json({
+            user_data: user_data[0]
+        })
     }
-    return res.status(401).json({ message: 'Bad credentials' })
+    return res.status(401).json({
+        message: 'Bad credentials'
+    })
 })
 
 // ログアウト
 app.post('/logout', (req, res) => {
     delete req.session.loginuserdata
-    res.json({ ok: true })
-  })
-
+    res.json({
+        ok: true
+    })
+})

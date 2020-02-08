@@ -9,10 +9,10 @@ module.exports = router;
 
 // mysqlと接続する
 var mysql_setting = {
-    host: 'db',
-    user: 'root',
-    password: '',
-    database: 'tenshoku',
+  host: 'db:9080',
+  user: 'root',
+  password: '',
+  database: 'tenshoku',
 };
 
 // カート情報insert
@@ -50,9 +50,9 @@ router.get('/get_cart_data', function (req, res) {
   console.log(user_id);
   const sql = `SELECT * from cart_list INNER JOIN product_lists ON product_lists.product_id = cart_list.product_id WHERE cart_list.user_id=?;`;
   console.log(sql)
-  connection.query(sql,user_id, function (error,results) {
+  connection.query(sql, user_id, function (error, results) {
     if (error) return res.json(error);
-    if(results.length > 0) return res.json(results);
+    if (results.length > 0) return res.json(results);
     return res.json(results);
   })
   connection.end();
@@ -71,7 +71,7 @@ router.get('/cart_upd', function (req, res) {
   const new_count = req.query.new_count;
   const sql = `UPDATE cart_list SET count=? WHERE user_id=? AND product_id=?;;`;
   console.log(sql)
-  connection.query(sql, [new_count,user_data,product_data], function (error) {
+  connection.query(sql, [new_count, user_data, product_data], function (error) {
     if (error) return res.json(error);
     res.json(0721);
   })

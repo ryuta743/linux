@@ -9,7 +9,7 @@ module.exports = router;
 
 // mysqlと接続する
 var mysql_setting = {
-  host: 'db',
+  host: 'db:9080',
   user: 'root',
   password: '',
   database: 'tenshoku',
@@ -57,18 +57,18 @@ router.get('/loginuser', function (req, res) {
     if (error) return res.json(error);
     if (results.length > 0) {
       if (results[0].user_type == 1) {
-        haveWs(res,results)
+        haveWs(res, results)
       } else {
         return res.json(results);
       }
-    }else{
+    } else {
       return res.json(0);
     }
   })
   connection.end();
 })
 
-function haveWs(res,user_data) {
+function haveWs(res, user_data) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
