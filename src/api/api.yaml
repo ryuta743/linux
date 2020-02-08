@@ -25,7 +25,7 @@ spec:
       serviceAccountName: tenshoku-express
       containers:
         - name: express
-          image: ryutaterada/k8s-express:1.0.1
+          image: ryutaterada/k8s-express:1.0.2
           resources:
             limits:
               cpu: "1"
@@ -53,7 +53,7 @@ metadata:
 spec:
   selector:
     app: express
-  clusterIP: None
+  #clusterIP: None
   ports:
     - port: 9080
       targetPort: 5000

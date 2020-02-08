@@ -12,10 +12,10 @@ export default {
 
 // mysqlと接続する
 var db = mysql.createConnection({
-  host: 'db:9080', //後で変える
-  user: 'root:9080',
-  password: 'root',
-  database: 'tensyoku'
+  host: 'db', //後で変える
+  user: 'root',
+  password: '',
+  database: 'tenshoku'
 });
 
 router.get('/createuser', function (req, res) {

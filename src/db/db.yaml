@@ -61,7 +61,7 @@ metadata:
     service: db
 spec:
   ports:
-    - port: 9080
+    - port: 3306
       targetPort: 3306
       name: http
   clusterIP: None
