@@ -53,6 +53,7 @@ metadata:
 spec:
   selector:
     app: express
+  clusterIP: None
   ports:
     - port: 9080
       targetPort: 5000

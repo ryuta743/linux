@@ -64,7 +64,7 @@ spec:
     - port: 9080
       targetPort: 3306
       name: http
-  #clusterIP: None
+  clusterIP: None
   selector:
     app: db
 ---
