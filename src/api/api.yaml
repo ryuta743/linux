@@ -33,15 +33,15 @@ spec:
           ports:
             - containerPort: 5000
               name: express
-          env:
-            - name: DB_URL
-              value: mysql://mysql:3306/user?replicaSet=rs0
-            - name: WAIT_HOSTS
-              value: mysql:3306
-            - name: DB_HOST
-              value: mysql
-            - name: DB_PORT
-              value: "3306"
+          #env:
+          #  - name: DB_URL
+          #    value: mysql://mysql:3306/user?replicaSet=rs0
+          #  - name: WAIT_HOSTS
+          #    value: mysql:3306
+          #  - name: DB_HOST
+          #    value: mysql
+          #  - name: DB_PORT
+          #    value: "3306"
 ---
 apiVersion: v1
 kind: Service
