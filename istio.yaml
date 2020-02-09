@@ -28,8 +28,8 @@ spec:
             prefix: /
       route:
         - destination:
-            host: web
-            #host: express
+            #host: web
+            host: express
             port:
               number: 80
               #number: 5000

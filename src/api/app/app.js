@@ -40,15 +40,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(session_opt));
 
-app.use('/', indexRouter);
+app.use('/hello', indexRouter);
 app.use('/users', usersRouter);
-app.use('/hello', hello);
+app.use('/', hello);
 app.use('/linebot', linebot);
 app.use('/workshopManage', workshopManage);
-app.use('/account' , account);
-app.use('/product' , product);
-app.use('/workshop' , workshop);
-app.use('/cart' , cart);
+app.use('/account', account);
+app.use('/product', product);
+app.use('/workshop', workshop);
+app.use('/cart', cart);
 
 // Crossを有効
 app.use((req, res, next) => {
