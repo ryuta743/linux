@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    app: db
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: db
+      version: v1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+        version: v1
+    spec:
+      containers:
+        - name: db
+          image: ryutaterada/k8s-mysql:1.0.0
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2000Mi
+          env:
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+            - name: MYSQL_DATABASE
+              value: tenshoku
+          ports:
+            - containerPort: 3306
+              name: db
+          volumeMounts:
+            - name: db-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: db-config
+              mountPath: /etc/mysql/conf.d
+              readOnly: true
+      volumes:
+        - name: db-persistent-storage
+          persistentVolumeClaim:
+            claimName: db-pv-claim
+        - name: db-config
+          configMap:
+            name: db-config
+            items:
+              - key: charset.cnf
+                path: charset.cnf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: db
+    service: db
+spec:
+  ports:
+    - port: 80
+      targetPort: 3306
+      name: http
+  #clusterIP: None
+  selector:
+    app: db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pv-claim
+  namespace: default
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/mysql
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  charset.cnf: |-
+    [mysqld]
+    character-set-server=utf8mb4
+    collation-server=utf8mb4_general_ci
+    skip-character-set-client-handshake
+    skip-name-resolve
+    [client]
+    default-character-set=utf8mb4
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tenshoku-db
+  labels:
+    account: db

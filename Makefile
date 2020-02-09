@@ -22,28 +22,28 @@ bd:
 	docker push ryutaterada/k8s-mysql:1.0.1
 
 dg:
-	kubectl apply -f src/k8s/istio.yaml
+	kubectl apply -f istio.yaml
 
 da:
-	kubectl apply -f src/api/api.yaml
+	kubectl apply -f api.yaml
 
 dw:
-	kubectl apply -f src/web/web.yaml
+	kubectl apply -f web.yaml
 
 dd:
-	kubectl apply -f src/db/db.yaml
+	kubectl apply -f db.yaml
 
 cg:
-	kubectl delete -f src/k8s/istio.yaml
+	kubectl delete -f istio.yaml
 
 ca:
-	kubectl delete -f src/api/api.yaml
+	kubectl delete -f api.yaml
 
 cw:
-	kubectl delete -f src/web/web.yaml
+	kubectl delete -f web.yaml
 
 cd:
-	kubectl delete -f src/db/db.yaml
+	kubectl delete -f db.yaml
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
@@ -52,20 +52,19 @@ ww:
 	kubectl exec -it web-6b64674b66-cncjl --container web /bin/sh
 
 stat:
-	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-	kubectl label namespace default istio-injection=enabled --overwrite
+	echo = export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 all:
-	kubectl apply -f src/db/db.yaml
-	kubectl apply -f src/api/api.yaml
-	kubectl apply -f src/web/web.yaml
-	kubectl apply -f src/k8s/istio.yaml
+	kubectl apply -f db.yaml
+	kubectl apply -f api.yaml
+	kubectl apply -f web.yaml
+	kubectl apply -f istio.yaml
 
 call:
-	kubectl delete -f src/api/api.yaml
-	kubectl delete -f src/web/web.yaml
-	kubectl delete -f src/k8s/istio.yaml
-	kubectl delete -f src/db/db.yaml
+	kubectl delete -f api.yaml
+	kubectl delete -f web.yaml
+	kubectl delete -f istio.yaml
+	kubectl delete -f db.yaml
 
 test:
 	kubectl label namespace default isito-injection=enabled --overwrite
