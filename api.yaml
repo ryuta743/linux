@@ -25,7 +25,7 @@ spec:
       serviceAccountName: tenshoku-express
       containers:
         - name: express
-          image: ryutaterada/k8s-express:1.0.5
+          image: ryutaterada/k8s-express:1.0.6
           resources:
             limits:
               cpu: "1"
