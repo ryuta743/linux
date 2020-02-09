@@ -44,10 +44,10 @@ spec:
     - hosts:
         - "./*"
         - "istio-system/*"
-        - "web/*"
-        - "express/hello"
-        - "express/*"
-        - "db/*"
+        - "default/*"
+        - "kube-node-lease/*"
+        - "kube-public/*"
+        - "kube-system/*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
