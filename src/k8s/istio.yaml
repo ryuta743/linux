@@ -35,6 +35,17 @@ spec:
               #number: 5000
 ---
 apiVersion: networking.istio.io/v1alpha3
+kind: Sidecar
+metadata:
+  name: default
+  namespace: default
+spec:
+  egress:
+    - hosts:
+        - "./*"
+        - "istio-system/*"
+---
+apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: grafana-gateway
@@ -79,6 +90,7 @@ spec:
   trafficPolicy:
     tls:
       mode: DISABLE
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
