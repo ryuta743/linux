@@ -6,7 +6,7 @@ metadata:
     app: web
     version: v1
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: web
@@ -17,6 +17,7 @@ spec:
         app: web
         version: v1
     spec:
+      type: LoadBalancer
       #serviceAccountName: tenshoku-web
       containers:
         - name: web
