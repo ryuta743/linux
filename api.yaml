@@ -22,7 +22,7 @@ spec:
         app: express
         version: v1
     spec:
-      serviceAccountName: tenshoku-express
+      #serviceAccountName: tenshoku-express
       containers:
         - name: express
           image: ryutaterada/k8s-express:1.0.7
@@ -59,9 +59,9 @@ spec:
       targetPort: 5000
       name: http
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: tenshoku-express
-  labels:
-    account: express
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: tenshoku-express
+#  labels:
+#    account: express

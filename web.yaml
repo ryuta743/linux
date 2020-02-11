@@ -17,7 +17,7 @@ spec:
         app: web
         version: v1
     spec:
-      serviceAccountName: tenshoku-web
+      #serviceAccountName: tenshoku-web
       containers:
         - name: web
           image: ryutaterada/k8s-nodejs:1.0.4
@@ -48,9 +48,9 @@ spec:
       name: http
   #clusterIP: None
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: tenshoku-web
-  labels:
-    account: web
+#apiVersion: v1
+#kind: ServiceAccount
+#metadata:
+#  name: tenshoku-web
+#  labels:
+#    account: web
