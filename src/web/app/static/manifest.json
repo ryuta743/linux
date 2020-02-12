@@ -1,0 +1,17 @@
+{
+  "name"              : "天職",
+  "short_name"        : "天職",
+  "description"       : "メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！",
+  "start_url"         : "/?ref=manifest.json",
+  "display"           : "standalone",
+  "orientation"       : "portrait",
+  "background_color"  : "#000000",
+  "theme_color"       : "#212121",
+  "icons": [
+    {
+      "src"           : "/img/hackmdbase2.png",
+      "sizes"         : "192x192",
+      "type"          : "image/png"
+    }
+  ]
+}

@@ -28,8 +28,8 @@ spec:
           env:
             - name: MYSQL_USER
               value: user
-            - name: MYSQL_ALLOW_EMPTY_PASSWORD
-              value: "true"
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
             - name: MYSQL_DATABASE
               value: tenshoku
           ports:

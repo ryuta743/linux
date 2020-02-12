@@ -7,7 +7,7 @@ var mysql = require('mysql');
 var mysql_setting = {
     host: 'db-service',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'tenshoku',
 };
 

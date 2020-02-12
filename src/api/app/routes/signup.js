@@ -14,7 +14,7 @@ export default {
 var db = mysql.createConnection({
     host: 'db-service', //後で変える
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'tenshoku'
 });
 
