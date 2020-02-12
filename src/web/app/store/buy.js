@@ -1,6 +1,6 @@
 import moment from '~/plugins/moment';
 
-export const state = () => ({
+export const state = () =>({
     checkdata: null,
     buy_data: null,
 })
@@ -11,11 +11,11 @@ export const getters = {
 }
 
 export const mutations = {
-    setCheckdata(state, checkdata) {
+    setCheckdata(state,checkdata){
         state.checkdata = checkdata;
         console.log(checkdata)
     },
-    setBuy_data(state, buy_data) {
+    setBuy_data(state,buy_data){
         state.buy_data = buy_data;
         console.log(buy_data)
     },
@@ -23,22 +23,14 @@ export const mutations = {
 
 export const actions = {
     // 商品購入確認
-    buycheck({
-        commit
-    }, {
-        buy_data
-    }) {
+    buycheck({commit},{buy_data}){
         console.log('storeきたよ')
         console.log(buy_data)
         commit("setCheckdata", buy_data);
     },
 
     // 商品購入処理
-    async insert_buy({
-        commit
-    }, {
-        buydata
-    }) {
+    async   insert_buy({commit},{buydata}){
         console.log('購入するためのstoreきたよ')
         console.log(buydata)
 
@@ -46,15 +38,15 @@ export const actions = {
 
         // 工房の種類を求めるfor文
         var kind = [];
-        for (var c = 0; c < buydata[1].cartdata.length; c++) {
-            if (kind.indexOf(buydata[1].cartdata[c].shop_id) === -1) {
+        for(var c=0; c<buydata[1].cartdata.length; c++){
+            if(kind.indexOf(buydata[1].cartdata[c].shop_id) === -1){
                 kind.indexOf(buydata[1].cartdata[c].shop_id)
                 kind.push(buydata[1].cartdata[c].shop_id)
             }
         }
 
         // 注文一覧テーブルinsert
-        for (var a = 0; a < kind.length; a++) {
+        for(var a=0; a<kind.length; a++){
             var shop_id = buydata[1].cartdata[a].shop_id
             var now = moment().format('YYYY-MM-DD')
             var user_id = buydata[2].user_data.user_data.user_id
@@ -71,7 +63,7 @@ export const actions = {
         }
 
         // 注文明細テーブルinsert
-        for (var i = 0; i < buydata[1].cartdata.length; i++) {
+        for(var i = 0; i<buydata[1].cartdata.length ; i++){
             var shop_id = buydata[1].cartdata[i].shop_id
             var now = moment().format('YYYY-MM-DD')
             var country = buydata[0].country
@@ -88,11 +80,11 @@ export const actions = {
             var price = buydata[1].cartdata[i].price
             var count = buydata[1].cartdata[i].count
             var buy_detail = await this.$axios.$get(`http://express-service/buy/buy_details?order_id=${saleid}&shop_id=${shop_id}&user_id=${user_id}&user_name=${user_name}&product_id=${product_id}&product_name=${product_name}&price=${price}&count=${count}`);
-            console.log('buy_detai:' + buy_detail)
+            console.log('buy_detai:'+buy_detail)
         }
 
         // 購入処理完了後の商品個数を減らすやつ
-        for (var z = 0; z < buydata[1].cartdata.length; z++) {
+        for(var z=0; z<buydata[1].cartdata.length; z++){
             var p_id = buydata[1].cartdata[z].product_id
             var now_count = await this.$axios.$get(`http://express-service/product/now_count?p_id=${p_id}`);
             console.log(now_count)
@@ -106,6 +98,6 @@ export const actions = {
         const del_cart = await this.$axios.$get(`http://express-service/cart/delete_cart?user_id=${buydata[2].user_data.user_data.user_id}`);
         console.log(del_cart)
 
-        commit("setBuy_data", del_cart);
-    },
+        commit("setBuy_data",del_cart);
+    }, 
 }

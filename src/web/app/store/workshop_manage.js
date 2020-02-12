@@ -61,7 +61,7 @@ export const mutations = {
 export const actions = {
     async getShopdata({ commit }, { wsid }) {
         try {
-            const ws_inf = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getShopdata?shop_id=${wsid}`);
+            const ws_inf = await this.$axios.$get(`http://express-service/workshopManage/getShopdata?shop_id=${wsid}`);
             console.log(ws_inf)
             commit('setWorkshop', ws_inf[0])
         } catch (error) {
@@ -74,7 +74,7 @@ export const actions = {
         try {
             console.log(wsid)
             var ws_inf = [];
-            ws_inf = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getOrderlist?shop_id=${wsid}`);
+            ws_inf = await this.$axios.$get(`http://express-service/workshopManage/getOrderlist?shop_id=${wsid}`);
             console.log(ws_inf)
             if(ws_inf.length > 0){
                 for(var i = 0; i<ws_inf.length ; i++){
@@ -92,7 +92,7 @@ export const actions = {
         console.log('受け取ったデータ:' + wsid)
         try {
             console.log('aa')
-            const ws_inf = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getOrderdetail?shop_id=${wsid}&order_number=${order_number}`);
+            const ws_inf = await this.$axios.$get(`http://express-service/workshopManage/getOrderdetail?shop_id=${wsid}&order_number=${order_number}`);
             if (ws_inf.length > 0) {
                 for (var i = 0; ws_inf.length > i; i++) {
                     if (ws_inf[i].proccess == 1) ws_inf[i].proccess = true;
@@ -112,7 +112,7 @@ export const actions = {
     async getProduct({ commit }, { wsid }) {
         console.log('受け取ったデータ:' + wsid)
         try {
-            var products = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getProducts?shop_id=${wsid}`);
+            var products = await this.$axios.$get(`http://express-service/workshopManage/getProducts?shop_id=${wsid}`);
             for(var i = 0; i < products.length; i++){
                 products[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${products[i].shop_id}%2Fproducts%2F${products[i].product_img}?alt=media`;
             }
@@ -127,7 +127,7 @@ export const actions = {
     async getSale({ commit }, { wsid }) {
         console.log('受け取ったデータ:' + wsid)
         try {
-            const sales = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getSale?shop_id=${wsid}`);
+            const sales = await this.$axios.$get(`http://express-service/workshopManage/getSale?shop_id=${wsid}`);
             commit('setSales', sales)
             console.log(sales)
         } catch (error) {
@@ -139,7 +139,7 @@ export const actions = {
     async getOrderSales({ commit }, { wsid }){
         console.log('受け取ったデータ:' + wsid)
         try {
-            const sales = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getOrderSales?shop_id=${wsid}`);
+            const sales = await this.$axios.$get(`http://express-service/workshopManage/getOrderSales?shop_id=${wsid}`);
             for(var i = 0; i<sales.length ; i++){
                 sales[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${sales[i].shop_id}%2Fproducts%2F${sales[i].product_img}?alt=media`;
             }
@@ -157,7 +157,7 @@ export const actions = {
     async getSaleitem({commit},{saleid}){
         try{
             console.log(saleid)
-            var saleitem = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getSaleitem?sale_id=${saleid}`)
+            var saleitem = await this.$axios.$get(`http://express-service/workshopManage/getSaleitem?sale_id=${saleid}`)
             for(var i = 0; i<saleitem.length ; i++){
                 saleitem[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${saleitem[i].shop_id}%2Fproducts%2F${saleitem[i].product_img}?alt=media`;
             }
@@ -169,7 +169,7 @@ export const actions = {
     },
     async getTrend({commit},{wsid}){
         try{
-            var trends = await this.$axios.$get(`http://133.18.194.128:5000/workshopManage/getTrend?shop_id=${wsid}`)
+            var trends = await this.$axios.$get(`http://express-service/workshopManage/getTrend?shop_id=${wsid}`)
             var trends_item = [];
             var total = 0;
             for(var i=3;i<trends.length;i++){

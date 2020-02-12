@@ -54,7 +54,7 @@ export const actions = {
     },
     async get_newproduct({commit}){
         console.log('正都は優しさが溢れてすごい人！！');
-        const new_productdata = await this.$axios.$get(`http://express-service/product/get_newdata`);
+        const new_productdata = await this.$axios.$get(`/api2/product/get_newdata`);
         for(var i = 0; i<new_productdata.length ; i++){
             new_productdata[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${new_productdata[i].shop_id}%2Fproducts%2F${new_productdata[i].product_img}?alt=media`;
         }
