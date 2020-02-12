@@ -40,7 +40,7 @@ export const actions = {
         const count = data.count
         const new_count = count + old_count
         console.log('変更する個数' + new_count)
-        const upd_cartdata = await this.$axios.$get(`http://express/cart/cart_upd?product_id=${product_id}&user_id=${user_id}&new_count=${new_count}`);
+        const upd_cartdata = await this.$axios.$get(`http://express-service.default.svc.cluster.local/cart/cart_upd?product_id=${product_id}&user_id=${user_id}&new_count=${new_count}`);
         console.log('あと少し!!');
         console.log(upd_cartdata);
         commit("setUpdata_data", upd_cartdata);

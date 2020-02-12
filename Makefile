@@ -14,12 +14,15 @@ ba:
 	docker push ryutaterada/k8s-express:1.0.8
 
 bw:
-	docker build -t ryutaterada/k8s-nodejs:1.0.5 ./src/web
-	docker push ryutaterada/k8s-nodejs:1.0.5
+	docker build -t ryutaterada/k8s-nodejs:1.0.6 ./src/web
+	docker push ryutaterada/k8s-nodejs:1.0.6
 
 bd:
 	docker build -t ryutaterada/k8s-mysql:1.0.1 ./src/db
 	docker push ryutaterada/k8s-mysql:1.0.1
+
+a:
+	kubectl get po,svc,pv,pvc,ingress
 
 dg:
 	kubectl apply -f istio.yaml

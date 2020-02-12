@@ -1,10 +1,9 @@
 cp:
 	rm -rf linux
 	git clone https://github.com/RyutaTerada/linux
-	cd linux
 
 path:
-	export PATH=$PATH:/snap/bin
+	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 reset:
 	microk8s.reset

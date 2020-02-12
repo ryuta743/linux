@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: web-container
-          image: ryutaterada/k8s-nodejs:1.0.4
+          image: ryutaterada/k8s-nodejs:1.0.5
           resources:
             limits:
               cpu: "1"
