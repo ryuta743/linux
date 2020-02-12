@@ -2,29 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: express
-  labels:
-    app: express
-    version: v1
+  #labels:
+  ###app: express
+  ###version: v1
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: express
       version: v1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
   template:
     metadata:
       labels:
         app: express
         version: v1
     spec:
-      #serviceAccountName: tenshoku-express
       containers:
-        - name: express
+        - name: express-container
           image: ryutaterada/k8s-express:1.0.7
           resources:
             limits:
@@ -46,11 +40,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: express
-  labels:
-    app: express
-    service: express
+  name: express-service
+  #labels:
+  ###app: express
+  ###service: express
 spec:
+  type: ClusterIP
   selector:
     app: express
   #clusterIP: None
@@ -58,10 +53,3 @@ spec:
     - port: 80
       targetPort: 5000
       name: http
----
-#apiVersion: v1
-#kind: ServiceAccount
-#metadata:
-#  name: tenshoku-express
-#  labels:
-#    account: express

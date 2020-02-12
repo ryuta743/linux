@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db
-  labels:
-    app: db
-    version: v1
+  #labels:
+  ##app: db
+  ##version: v1
 spec:
   selector:
     matchLabels:
@@ -19,7 +19,7 @@ spec:
         version: v1
     spec:
       containers:
-        - name: db
+        - name: db-container
           image: ryutaterada/k8s-mysql:1.0.0
           resources:
             limits:
@@ -56,17 +56,17 @@ apiVersion: v1
 kind: Service
 metadata:
   name: db
-  labels:
-    app: db
-    service: db
+  #labels:
+  ##app: db
+  ##service: db
 spec:
-  ports:
-    - port: 3306
-      targetPort: 3306
-      name: http
   clusterIP: None
   selector:
     app: db
+  ports:
+    - port: 80
+      targetPort: 3306
+      name: http
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -109,10 +109,3 @@ data:
     skip-name-resolve
     [client]
     default-character-set=utf8mb4
----
-#apiVersion: v1
-#kind: ServiceAccount
-#metadata:
-#  name: tenshoku-db
-#  labels:
-#    account: db

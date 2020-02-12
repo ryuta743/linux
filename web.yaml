@@ -20,18 +20,16 @@ spec:
       containers:
         - name: web-container
           image: ryutaterada/k8s-nodejs:1.0.4
-          imagePullPolicy: IfNotPresent
           resources:
             limits:
               cpu: "1"
               memory: 1000Mi
-            requests:
-              cpu: 50m
           ports:
             - containerPort: 3000
+              name: web
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: web-service
   #labels:
@@ -44,7 +42,7 @@ spec:
   ports:
     - port: 80
       targetPort: 3000
-      name: TCP
+      name: http
   #clusterIP: None
 ---
 apiVersion: extensions/v1beta1
