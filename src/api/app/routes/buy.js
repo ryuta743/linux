@@ -14,7 +14,7 @@ var mysql_setting = {
   user: 'root',
   password: 'root',
   database: 'tenshoku',
-  port: 80
+  port: 3306
 };
 
 // 購入（注文一覧/order_lists）

@@ -64,6 +64,6 @@ spec:
   selector:
     app: db
   ports:
-    - port: 80
+    - port: 3306
       targetPort: 3306
       name: http
