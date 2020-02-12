@@ -30,8 +30,11 @@ da:
 dw:
 	kubectl apply -f web.yaml
 
-dd:
-	kubectl apply -f db.yaml
+dd1:
+	kubectl apply -f db1.yaml
+
+dd2:
+	kubectl apply -f db2.yaml
 
 cg:
 	kubectl delete -f istio.yaml
@@ -43,7 +46,14 @@ cw:
 	kubectl delete -f web.yaml
 
 cd:
-	kubectl delete -f db.yaml
+	kubectl delete -f db1.yaml
+	kubectl delete -f db2.yaml
+
+cd1:
+	kubectl delete -f db1.yaml
+
+cd2:
+	kubectl delete -f db2.yaml
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p

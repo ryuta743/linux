@@ -55,7 +55,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db
+  name: db-service
   #labels:
   ##app: db
   ##service: db
@@ -67,45 +67,3 @@ spec:
     - port: 80
       targetPort: 3306
       name: http
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: db-pv-claim
-  namespace: default
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 500Mi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: db-pv-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 500Mi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: /data/mysql
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: db-config
-data:
-  charset.cnf: |-
-    [mysqld]
-    character-set-server=utf8mb4
-    collation-server=utf8mb4_general_ci
-    skip-character-set-client-handshake
-    skip-name-resolve
-    [client]
-    default-character-set=utf8mb4
