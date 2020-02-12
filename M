@@ -1,0 +1,13 @@
+cp:
+	rm -rf linux
+  git clone https://github.com/RyutaTerada/linux
+  cd linux
+
+path:
+	export PATH=$PATH:/snap/bin
+
+reset:
+	microk8s.reset
+
+reset:
+	microk8s.enable dns ingress metallb

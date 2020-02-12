@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web
-  labels:
-    app: web
-    version: v1
+  #labels:
+  ###app: web
+  ###version: v1
 spec:
   replicas: 2
   selector:
@@ -20,7 +20,7 @@ spec:
       type: LoadBalancer
       #serviceAccountName: tenshoku-web
       containers:
-        - name: web
+        - name: web-container
           image: ryutaterada/k8s-nodejs:1.0.4
           imagePullPolicy: IfNotPresent
           resources:
@@ -37,9 +37,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: web
-  labels:
-    app: web
-    service: web
+  #labels:
+  ###app: web
+  ###service: web
 spec:
   selector:
     app: web

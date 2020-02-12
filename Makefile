@@ -51,12 +51,11 @@ mm:
 ww:
 	kubectl exec -it web-6b64674b66-cncjl --container web /bin/sh
 
-stat:
-	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+path:
+	export PATH=$PATH:/snap/bin
 
 istio:
 	kubectl apply -f D:work/git/istio/install/kubernetes/istio-demo.yaml
-
 
 all:
 	kubectl apply -f db.yaml
@@ -69,28 +68,3 @@ call:
 	kubectl delete -f web.yaml
 	kubectl delete -f istio.yaml
 	kubectl delete -f db.yaml
-
-test:
-	kubectl label namespace default isito-injection=enabled --overwrite
-	kubectl apply -f src/api/api-deployment.yaml
-	kubectl apply -f src/api/api-service.yaml
-	kubectl apply -f src/k8s/gateway.yaml
-	kubectl apply -f src/k8s/vservice.yaml
-	kubectl apply -f src/db/db-deployment.yaml
-	kubectl apply -f src/db/db-service.yaml
-	kubectl apply -f src/db/db-claim.yaml
-	kubectl apply -f src/db/db-volume.yaml
-	kubectl apply -f src/db/db-config.yaml
-	kubectl apply -f src/db/db-storage.yaml
-
-ctest:
-	kubectl delete -f src/api/api-deployment.yaml
-	kubectl delete -f src/api/api-service.yaml
-	kubectl delete -f src/k8s/gateway.yaml
-	kubectl delete -f src/k8s/vservice.yaml
-	kubectl delete -f src/db/db-deployment.yaml
-	kubectl delete -f src/db/db-service.yaml
-	kubectl delete -f src/db/db-claim.yaml
-	kubectl delete -f src/db/db-volume.yaml
-	kubectl delete -f src/db/db-config.yaml
-	kubectl delete -f src/db/db-storage.yaml
