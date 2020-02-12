@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 // MySQLの設定情報
 var mysql_setting = {
-    host: '133.18.194.128:3306',
+    host: 'db-service.default.svc.cluster.local',
     user: 'root',
     password: '',
     database: 'tenshoku',
