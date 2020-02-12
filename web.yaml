@@ -17,8 +17,6 @@ spec:
         app: web
         version: v1
     spec:
-      type: LoadBalancer
-      #serviceAccountName: tenshoku-web
       containers:
         - name: web-container
           image: ryutaterada/k8s-nodejs:1.0.4
@@ -31,27 +29,29 @@ spec:
               cpu: 50m
           ports:
             - containerPort: 3000
-            #- containerPort: 9080
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: web
+  name: web-service
   #labels:
   ###app: web
   ###service: web
 spec:
+  type: LoadBalancer
   selector:
     app: web
   ports:
     - port: 80
       targetPort: 3000
-      name: http
+      name: TCP
   #clusterIP: None
 ---
-#apiVersion: v1
-#kind: ServiceAccount
-#metadata:
-#  name: tenshoku-web
-#  labels:
-#    account: web
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-ingress
+spec:
+  backend:
+    serviceName: web-service
+    servicePort: 80
