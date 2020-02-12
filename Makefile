@@ -22,7 +22,7 @@ bd:
 	docker push ryutaterada/k8s-mysql:1.0.1
 
 a:
-	kubectl get po,svc,pv,pvc,ingress
+	kubectl get all,pv,pvc,ingress
 
 dg:
 	kubectl apply -f istio.yaml
