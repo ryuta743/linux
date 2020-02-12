@@ -15,7 +15,8 @@ var db = mysql.createConnection({
     host: 'db-service', //後で変える
     user: 'root',
     password: 'root',
-    database: 'tenshoku'
+    database: 'tenshoku',
+    port: 80
 });
 
 router.get('/createuser', function (req, res) {

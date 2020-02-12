@@ -13,6 +13,7 @@ var mysql_setting = {
   user: 'root',
   password: 'root',
   database: 'tenshoku',
+  port: 80
 };
 
 

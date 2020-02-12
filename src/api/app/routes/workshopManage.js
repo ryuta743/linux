@@ -9,6 +9,7 @@ var mysql_setting = {
     user: 'root',
     password: 'root',
     database: 'tenshoku',
+    port: 80
 };
 
 //ショップ情報をショップidから引き出す
