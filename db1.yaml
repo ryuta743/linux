@@ -23,8 +23,8 @@ spec:
           image: ryutaterada/k8s-mysql:1.0.2
           resources:
             limits:
-              cpu: "2"
-              memory: 2000Mi
+              cpu: "1"
+              memory: 1000Mi
           env:
             - name: MYSQL_USER
               value: user

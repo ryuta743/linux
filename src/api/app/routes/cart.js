@@ -1,5 +1,6 @@
 var express = require('express');
-
+const cors = require('cors')
+app.use(cors())
 const router = express.Router();
 
 // sqlを読み込む

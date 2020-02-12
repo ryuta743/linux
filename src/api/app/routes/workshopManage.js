@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+const cors = require('cors')
 var mysql = require('mysql');
-
+app.use(cors())
 // MySQLの設定情報
 var mysql_setting = {
     host: 'db-service',
