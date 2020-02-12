@@ -6,9 +6,11 @@ COPY ./app .
 
 RUN apk update && \
   apk upgrade && \
+  npm cache clean --force && \
   npm install -g npm && \
   npm update -g && \
   npm cache clean --force && \
+  yarn cache clean && \
   yarn install && \
   yarn cache clean && \
   yarn build

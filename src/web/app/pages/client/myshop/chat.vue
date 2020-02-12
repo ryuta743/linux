@@ -1,6 +1,6 @@
 <template>
   <div id="workshop_body">
-    <v-container grid-list-xs style="min-height: 100vh;width: 15%;" id="workshop_nav">
+    <div style="min-height: 100vh;width: 15%;" id="workshop_nav">
       <ul>
         <li @click="$router.push('/client/myshop/myshop')">
           <v-icon>mdi-home</v-icon> 管理ツールトップ
@@ -26,7 +26,7 @@
           <v-icon>mdi-chat</v-icon> チャットメッセージ
         </li>
       </ul>
-    </v-container>
+    </div>
     <v-container grid-list-xs style="min-height: 85vh;width: 85%;overflow-y: scroll;">
       <v-content>
         <div id="sub_title">
@@ -179,7 +179,10 @@ export default {
 }
 
 #workshop_nav {
-  border: 1.2px solid #dee5ec;
+  padding-top: 40px;
+  padding-left: 10px;
+  border: 1.2px solid #DEE5EC;
+  border-width: 1.2px 1.2px 1.2px 0;
   background-color: #ffffff;
 }
 

@@ -19,11 +19,7 @@ export const mutations = {
 }
 
 export const actions = {
-    async openChat({
-        commit
-    }, {
-        payload
-    }) {
+    async openChat({ commit }, { payload }) {
         const wsid = payload.wsid;
         const fb = await database.ref('chatroom/' + wsid);
         await fb.on('value', (snapshot) => {
@@ -31,11 +27,7 @@ export const actions = {
         });
         return true;
     },
-    async sendChat({
-        commit
-    }, {
-        payload
-    }) {
+    async sendChat({ commit }, { payload }) {
         const wsid = payload.wsid;
         const userid = payload.userid;
         const username = payload.username;

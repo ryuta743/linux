@@ -1,6 +1,6 @@
 <template>
   <div id="workshop_body">
-    <v-container grid-list-xs style="min-height: 100vh;width: 15%;" id="workshop_nav">
+    <div style="min-height: 100vh;width: 15%;" id="workshop_nav">
       <ul>
         <li @click="$router.push('/client/myshop/myshop')">
           <v-icon>mdi-home</v-icon> 管理ツールトップ
@@ -26,7 +26,7 @@
           <v-icon>mdi-chat</v-icon> チャットメッセージ
         </li>
       </ul>
-    </v-container>
+    </div>
     <v-container grid-list-xs style="min-height: 85vh;width: 85%;overflow-y: scroll;">
       <v-btn color="info" icon :loading="loading" v-if="loading" large></v-btn>
       <v-content v-if="!loading">
@@ -53,11 +53,11 @@
                       <v-chip color="red" v-if="item.stock < item.safety" dark>安全在庫{{item.safety - item.stock}}個不足</v-chip>
                   </v-card-text>
                   <v-flex xs12 md12>
-                    <v-lazy-image style="width: 100%;object-fit: scale-down;min-height: 350px;" :src="item.product_img" @click="$router.push(`/customer/product/${item.product_name}`)"></v-lazy-image>
+                    <v-lazy-image style="width: 100%;object-fit: scale-down;min-height: 350px;" :src="item.product_img" @click="$router.push(`/customer/product/${item.product_id}`)"></v-lazy-image>
                   </v-flex>
-                  <v-card-text style="font-weight: bold;height: 10px;" @click="$router.push(`/customer/product/${item.product_name}`)">{{item.product_name}}</v-card-text>
-                  <v-card-text style="height : 10px;" @click="$router.push(`/customer/product/${item.product_name}`)">
-                    <v-layout row wrap align-center @click="$router.push(`/customer/product/${item.product_name}`)">
+                  <v-card-text style="font-weight: bold;height: 10px;" @click="$router.push(`/customer/product/${item.product_id}`)">{{item.product_name}}</v-card-text>
+                  <v-card-text style="height : 10px;" @click="$router.push(`/customer/product/${item.product_id}`)">
+                    <v-layout row wrap align-center @click="$router.push(`/customer/product/${item.product_id}`)">
                       <v-rating
                         color="yellow darken-3"
                         background-color="grey darken-1"
@@ -99,19 +99,20 @@ export default {
   data() {
     return {
       loading: true,
-      shop_id: 1
     };
   },
   async mounted() {
-    await this.getProduct({ wsid: this.shop_id });
-    this.loading = false
+    if(!this.loginuserdata.user_data.shop_id) return;
+    await this.getProduct({ wsid: this.loginuserdata.user_data.shop_id });
+    this.loading = false;
   },
   methods:{
     ...mapActions('workshop_manage',['getProduct']),
     ...mapMutations('workshop_manage',['setStock'])
   },
   computed:{
-    ...mapGetters('workshop_manage',['products'])
+    ...mapGetters('workshop_manage',['products']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>
@@ -123,7 +124,10 @@ export default {
 }
 
 #workshop_nav {
-  border: 1.2px solid #dee5ec;
+  padding-top: 40px;
+  padding-left: 10px;
+  border: 1.2px solid #DEE5EC;
+  border-width: 1.2px 1.2px 1.2px 0;
   background-color: #ffffff;
 }
 

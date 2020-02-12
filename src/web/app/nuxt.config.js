@@ -9,89 +9,86 @@ module.exports = {
 
 
   /*
-   ** Headers of the page
-   */
+  ** Headers of the page
+  */
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
-    meta: [{
-        charset: 'utf-8'
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+    htmlAttrs: {
+      prefix: 'og: http://ogp.me/ns#'
+    },
+    titleTemplate: '%s - HackmdBase',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'theme-color', content: '#212121' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      /* { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }, */
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！' },
+      { hid: 'og:site_name', property: 'og:site_name', content: '天職' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://hackmdbase-fire.herokuapp.com' },
+      { hid: 'og:title', property: 'og:title', content: '天職' },
+      { hid: 'og:description', property: 'og:description', content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！' },
+      { hid: 'og:image', property: 'og:image', content: 'https://hackmdbase-fire.herokuapp.com/img/hackmdbase2.png' },
+      { property: 'fb:app_id', content: '373239600269292' },
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:site', content: '@aspirational_ta' },
+      { name: 'twitter:title', content: '天職' },
+      { name: 'twitter:description', content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！' },
+      { name: 'twitter:image', content: 'https://hackmdbase-fire.herokuapp.com/img/hackmdbase2.png' },
     ],
-    link: [{
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/earlyaccess/hannari.css'
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Sawarabi+Mincho'
-      }
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet' , href:'https://fonts.googleapis.com/earlyaccess/hannari.css'},
+      { rel: 'stylesheet' , href:'https://fonts.googleapis.com/css?family=Sawarabi+Mincho'},
+      { rel: 'apple-touch-icon', href: 'https://hackmdbase-fire.herokuapp.com/img/hackmdbase-app.png' },
+      { rel: 'manifest', href: 'manifest.json' },
       //https://fonts.googleapis.com/css?family=Sawarabi+Mincho
       //<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet">
       //<link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
     ]
   },
   /*
-   ** Customize the progress-bar color
-   */
-  loading: {
-    color: '#fff'
-  },
+  ** Customize the progress-bar color
+  */
+  loading: { color: '#fff' },
   /*
-   ** Global CSS
-   */
-  css: [],
+  ** Global CSS
+  */
+  css: [
+  ],
   /*
-   ** Plugins to load before mounting the App
-   */
+  ** Plugins to load before mounting the App
+  */
   plugins: [
     '~/plugins/chart.js',
     '~/plugins/bar_chart.js',
-    '~/plugins/v-lazy-image.js',
-    '~/plugins/axios'
+    '~/plugins/v-lazy-image.js'
   ],
   /*
-   ** Nuxt.js dev-modules
-   */
+  ** Nuxt.js dev-modules
+  */
   buildModules: [
     '@nuxtjs/vuetify',
   ],
   /*
-   ** Nuxt.js modules
-   */
+  ** Nuxt.js modules
+  */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
   ],
   /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
+  ** Axios module configuration
+  ** See https://axios.nuxtjs.org/options
+  */
   axios: {
-    proxy: true,
-  },
-
-  proxy: {
-    '/api': 'https://express-server.~',
   },
   /*
-   ** vuetify module configuration
-   ** https://github.com/nuxt-community/vuetify-module
-   */
+  ** vuetify module configuration
+  ** https://github.com/nuxt-community/vuetify-module
+  */
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -110,12 +107,13 @@ module.exports = {
     }
   },
   /*
-   ** Build configuration
-   */
+  ** Build configuration
+  */
   build: {
     /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {}
+    ** You can extend webpack config here
+    */
+    extend (config, ctx) {
+    }
   }
 }

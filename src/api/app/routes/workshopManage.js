@@ -5,7 +5,7 @@ var mysql = require('mysql');
 
 // MySQLの設定情報
 var mysql_setting = {
-    host: 'db-service.default.svc.cluster.local',
+    host: 'db-service',
     user: 'root',
     password: '',
     database: 'tenshoku',
@@ -48,7 +48,7 @@ router.get('/getOrderlist', (req, res, next) => {
                 if (results.length > 0) {
                     return res.json(results);
                 } else {
-                    return res.status(403)
+                    return res.json(results);
                 }
             } else {
                 console.log('エラーはいてるよ' + error)
@@ -153,6 +153,56 @@ router.get('/getSaleitem', (req, res, next) => {
     connection.end();
 });
 
+router.get('/getOrderSales', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    const shop_id = req.query.shop_id;
+    console.log('渡されたショップid:' + shop_id)
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    connection.query('SELECT * from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id WHERE order_details.shop_id=?', shop_id,
+        function (error, results, fields) {
+            console.log(results)
+            if (error == null) {
+                if (results.length > 0) {
+                    return res.json(results);
+                } else {
+                    return res.status(403)
+                }
+            } else {
+                console.log('エラーはいてるよ' + error)
+                return res.status(504)
+            }
+        })
+    connection.end();
+});
+
+router.get('/getTrend', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    const shop_id = req.query.shop_id;
+    console.log('渡されたショップid:' + shop_id)
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    connection.query('SELECT *,sum(order_details.count) AS datacount from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id WHERE order_details.shop_id=? GROUP BY order_details.product_id ORDER BY datacount DESC', shop_id,
+        function (error, results, fields) {
+            console.log(results)
+            if (error == null) {
+                if (results.length > 0) {
+                    return res.json(results);
+                } else {
+                    return res.json(results);
+                }
+            } else {
+                console.log('エラーはいてるよ' + error)
+                return res.status(504)
+            }
+        })
+    connection.end();
+});
+
 
 /* インサート */
 router.get('/addSale', (req, res, next) => {
@@ -209,5 +259,69 @@ router.get('/addProduct', (req, res, next) => {
     connection.end();
 });
 
+/*  アップデート処理 */
+
+router.get('/proccessUp', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    const order_number = req.query.order_number;
+    const product_id = req.query.product_id;
+    const which = req.query.which;
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    connection.query('UPDATE order_details SET proccess=? WHERE order_number=? AND product_id=?', [which, order_number, product_id],
+        function (error) {
+            if (error == null) {
+                return res.status(200);
+            } else {
+                console.log('エラーはいてるよ' + error)
+                return res.status(504)
+            }
+        })
+    connection.end();
+});
+
+
+
+router.get('/newest_product', function (req, res) {
+    console.log('最新の商品IDセレクトのAPI届いたよ')
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    const sql = 'SELECT product_id FROM product_lists ORDER BY record_date DESC LIMIT 1';
+    console.log(sql)
+    connection.query(sql, function (error, results) {
+        console.log(results)
+        if (error) return res.json(error);
+        if (results.length > 0) return res.json(results);
+        return res.json(results);
+    })
+    connection.end();
+});
+
+router.get('/tag_add', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    const product_id = req.query.product_id;
+    const tag_jp = req.query.tag_jp;
+    const tag_en = req.query.tag_en
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    connection.query('INSERT INTO product_tags VALUES(?,?,?)', [product_id, tag_jp, tag_en],
+        function (error) {
+            if (error == null) {
+                return res.status(200);
+            } else {
+                console.log('エラーはいてるよ' + error)
+                return res.status(504)
+            }
+        })
+    console.log('完了')
+    connection.end();
+});
 
 module.exports = router;

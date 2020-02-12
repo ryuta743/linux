@@ -20,15 +20,22 @@
               <div id="sender">
                   <h5 class="gosi">ご依頼主<small class="gosi">(Sender):</small></h5>
                   <div class="gosi" style="font-size: 12px;padding-top: 10px;padding-left: 5px;">
-                      Takashi Kuwahata<br>
-                      13-2,Gohonmatsu 1-chome<br>
-                      Mimatachou,MIYAZAKI<br>
-                      889-1902,JAPAN<br>
+                      <!-- Takashi Kuwahata -->{{ loginuserdata.user_data.user_name }}<br>
+                      <!-- 13-2,Gohonmatsu 1-chome -->{{ workshop_data.address }}<br>
+                      <!-- Mimatachou,MIYAZAKI --><br>
+                      {{ workshop_data.postal_code }},JAPAN<br>
                       TEL:0986-27-7307
                   </div>
               </div>
               <div id="addressee">
                   <h5 class="gosi">お届け先<small class="gosi">(Addressee):</small></h5>
+                  <div class="gosi" style="font-size: 12px;padding-top: 10px;padding-left: 5px;">
+                      <!-- Takashi Kuwahata -->{{ loginuserdata.user_data.user_name }}<br>
+                      <!-- 13-2,Gohonmatsu 1-chome -->{{ workshop_data.address }}<br>
+                      <!-- Mimatachou,MIYAZAKI --><br>
+                      {{ workshop_data.postal_code }},JAPAN<br>
+                      TEL:0986-27-7307
+                  </div>
               </div>
           </div>
           <div id="rightbox">
@@ -63,74 +70,74 @@
                 <th class="gosi" style="width: 190px;font-size: 11px;">金額<br>(TotalAmount)</th>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[0] ? details[0].product_name:'' }}</td>
                 <td class="gosi" style="width: 75px;text-align: end;"></td>
-                <td class="gosi" style="width: 50px;text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="width: 50px;text-align: end;">{{ details[0] ? details[0].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[0] ? exprice(details[0].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[0] ? exprice(details[0].price * details[0].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[1] ? details[1].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[1] ? details[1].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[1] ? exprice(details[1].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[1] ? exprice(details[1].price * details[1].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[2] ? details[2].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[2] ? details[2].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[2] ? exprice(details[2].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[2] ? exprice(details[2].price * details[2].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[3] ? details[3].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[3] ? details[3].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[3] ? exprice(details[3].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[3] ? exprice(details[3].price * details[3].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[4] ? details[4].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[4] ? details[4].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[4] ? exprice(details[4].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[4] ? exprice(details[4].price * details[4].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[5] ? details[5].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[5] ? details[5].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[5] ? exprice(details[5].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[5] ? exprice(details[5].price * details[5].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[6] ? details[6].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[6] ? details[6].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[6] ? exprice(details[6].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[6] ? exprice(details[6].price * details[6].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[7] ? details[7].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[7] ? details[7].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[7] ? exprice(details[7].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[7] ? exprice(details[7].price * details[7].count):'' }}円</td>
             </tr>
             <tr>
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[8] ? details[8].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[8] ? details[8].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[8] ? exprice(details[8].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[8] ? exprice(details[8].price * details[8].count):'' }}円</td>
             </tr>
             <tr>    
-                <td class="gosi" style="width: 250px;"></td>
+                <td class="gosi" style="width: 250px;">{{ details[9] ? details[9].product_name:'' }}</td>
                 <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="text-align: end;"></td>
-                <td class="gosi" style="width: 75px;text-align: end;">円</td>
-                <td class="gosi" style="width: 190px;text-align: end;">円</td>
+                <td class="gosi" style="text-align: end;">{{ details[9] ? details[9].count:'' }}</td>
+                <td class="gosi" style="width: 75px;text-align: end;">{{ details[9] ? exprice(details[9].price):'' }}円</td>
+                <td class="gosi" style="width: 190px;text-align: end;">{{ details[9] ? exprice(details[9].price * details[9].count):'' }}円</td>
             </tr>
             <tr>    
                 <td class="gosi" style="width: 250px;text-align: center;">総合計(Total)</td>
@@ -171,58 +178,35 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
+
 export default {
   data() {
     return {
-        items:[
-            {
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:1
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:2
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:3
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:4
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:5
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:6
-            }
-        ]
+        year: null,
+        month: null,
+        day: null,
+        address: {},
+        items:[]
     };
   },
-  mounted() {
+  async mounted() {
+    if(!this.loginuserdata.user_data) return
+    await this.getShopdata({wsid:this.loginuserdata.user_data.shop_id})
+    await this.getOrderdetail({wsid:this.loginuserdata.user_data.shop_id,order_number:this.$route.params.invoice})
+    await this.getOrderlist({wsid:this.loginuserdata.user_data.shop_id})
+    var today = new Date();
+    this.year = today.getFullYear();
+    this.month = today.getMonth() + 1;
+    this.day = today.getDate();
+    this.items = this.details;
   },
   methods: {
     sumAll(){
         var sum = 0;
-        this.items.forEach(element => {
-            sum += element.price * element.count;
-        })
+        for(var i=0;i<this.details.length;i++){
+          sum += this.details[i].price * this.details[i].count
+        }
         return sum;
     },
     print() {
@@ -231,6 +215,11 @@ export default {
     exprice(val){
       return val.toLocaleString();
     },
+    ...mapActions('workshop_manage',['getShopdata','getOrderdetail','getOrderlist'])
+  },
+  computed:{
+    ...mapGetters('workshop_manage',['workshop_data','details','orderlist']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>

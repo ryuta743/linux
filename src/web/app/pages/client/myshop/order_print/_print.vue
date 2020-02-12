@@ -7,24 +7,24 @@
       </div>
       <div id="date" class="mincho"></div>
       <div id="send">
-        <div id="customer_name" class="mincho">加藤正都</div>
+        <div id="customer_name" class="mincho">{{ details[0].user_name }}</div>
         <div style="width: 100px;font-weight: bold;" class="mincho">様</div>
       </div>
       <div id="paybox">
-        <div class="mincho" style="width: 100px;text-align: center;font-weight: bold;">金額</div>
-        <div id="money" class="mincho">¥ {{exprice(200000)}}-</div>
+        <div class="mincho" style="width: 100px;text-align: center;font-weight: bold;">税込金額</div>
+        <div id="money" class="mincho">¥ {{exprice(details[0].price)}}-</div>
       </div>
       <div id="description">
         <div style="margin-bottom: 20px;width: 100%;" class="mincho">但</div>
         <div class="mincho" style="margin-bottom: 40px;">上記金額を正に領収しました</div>
-        <div class="mincho" style="width: 100%;">2019年   12月   31日</div>
+        <div class="mincho" style="width: 100%;">{{ year }}年   {{ month }}月   {{ day }}日</div>
       </div>
       <div id="my_shop">
         <div style="width: 100px;height: 100px;border: 1px solid #222222;"></div>
         <div id="info">
-          <div class="mincho">〒8891902</div>
-          <div class="mincho">宮崎県北諸県三股町五本松13-2</div>
-          <div class="mincho">天職工房</div>
+          <div class="mincho">〒{{ workshop_data.postal_code }}</div>
+          <div class="mincho">{{ workshop_data.address }}</div>
+          <div class="mincho">{{ workshop_data.shop_name }}</div>
         </div>
         <div style="display: flex;justify-content: center;align-items: center;width: 50px;height: 50px;border: 1px solid #222222;" class="mincho">領</div>
       </div>
@@ -32,20 +32,32 @@
     <form style="width: 100%;">
       <div style="width: 100%;margin: 20px 0 20px 0;text-align: center;" class="no-print">
         <v-btn color="info" width="200px" @click="print">印刷</v-btn>
-        <v-btn color="grey" width="200px" @click="$router.push('/client/myshop/orderlist')">キャンセル</v-btn>
+        <v-btn color="grey" width="200px" @click="$router.push(`/client/myshop/order/${$route.params.print}`)">キャンセル</v-btn>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
+
 export default {
   data() {
     return {
       ordernumber: this.$route.params.print,
+      year: null,
+      month: null,
+      day: null
     };
   },
-  mounted() {
+  async mounted() {
+    if(!this.loginuserdata.user_data) return
+    await this.getShopdata({wsid:this.loginuserdata.user_data.shop_id})
+    await this.getOrderdetail({wsid:this.loginuserdata.user_data.shop_id,order_number:this.$route.params.print})
+    var today = new Date();
+    this.year = today.getFullYear();
+    this.month = today.getMonth() + 1;
+    this.day = today.getDate();
   },
   methods: {
     print() {
@@ -54,6 +66,11 @@ export default {
     exprice(val){
       return val.toLocaleString();
     },
+    ...mapActions('workshop_manage',['getShopdata','getOrderdetail'])
+  },
+  computed:{
+    ...mapGetters('workshop_manage',['workshop_data','details']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>

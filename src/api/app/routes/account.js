@@ -9,7 +9,7 @@ module.exports = router;
 
 // mysqlと接続する
 var mysql_setting = {
-  host: 'db-service.default.svc.cluster.local',
+  host: 'db-service',
   user: 'root',
   password: '',
   database: 'tenshoku',

@@ -206,7 +206,7 @@ export default {
     for(var i = 0; i<this.productdetails.stock ; i++){
       this.stock.push(i+1);
     }
-    await this.get_cartdata({userid:this.loginuserdata.user_data.user_id});
+    await this.getcartdataReq();
   },
 
   data() {
@@ -237,6 +237,10 @@ export default {
     };
   },
   methods:{
+    async getcartdataReq(){
+      await this.get_cartdata({userid:this.loginuserdata.user_data.user_id});
+    },
+
     async getproductdetailreq(){
       var p_data = {
         product_id : this.$route.params.product
@@ -271,7 +275,7 @@ export default {
         console.log(payload);
         try{
           await this.cart_upload({payload})
-          location.reload();
+          await this.getcartdataReq()
           alert('カート追加完了です');
         }catch(e){
           console.log('エラー発生')
@@ -285,7 +289,7 @@ export default {
         console.log(data.upd_obj)
         try{
           await this.upd_cart({data})
-          location.reload();
+          await this.getcartdataReq()
           alert('カート追加完了しました')
         }catch(e){
           console.log('エラー発生')

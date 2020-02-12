@@ -1,14 +1,19 @@
 <template>
   <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+    <div id="container">
+      <h1 v-if="error.statusCode === 403">
+        ログインをしてください。
+      </h1>
+      <h1 v-if="error.statusCode === 404">
+        {{ pageNotFound }}
+      </h1>
+      <h1 v-else>
+        {{ otherError }}
+      </h1>
+      <NuxtLink to="/">
+        <v-btn color="grey" depressed>ホームに戻る</v-btn>
+      </NuxtLink>
+    </div>
   </v-app>
 </template>
 
@@ -38,7 +43,22 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
+
+#container{
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
 h1 {
+  width: 100%;
+  text-align: center;
   font-size: 20px;
 }
 </style>

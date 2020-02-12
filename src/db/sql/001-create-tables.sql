@@ -13,7 +13,7 @@ create table IF not exists `mydata`
  `created_at`       Datetime DEFAULT NULL,
  `updated_at`       Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
- ) DEFAULT CHARSET=utf8mb4;
+) DEFAULT CHARSET=utf8mb4;
 
 create table `user_lists`
 (
@@ -64,23 +64,25 @@ create table `product_lists`
 
 create table `order_lists`
 (
-  `order_number` INT(8) NOT NULL,
+  `order_number` VARCHAR(50) NOT NULL,
   `user_id` INT(8) NOT NULL,
   `user_name` VARCHAR(16) NOT NULL,
   `shop_id` INT(8) NOT NULL,
-  `shop_name` VARCHAR(30) NOT NULL,
   `buy_date`	DATE NOT NULL,
   `countory` VARCHAR(30) NOT NULL,
   `post_address` VARCHAR(50) NOT NULL,
   `address` VARCHAR(100) NOT NULL,
-  `price_all` INT(12),
+  `price_all` INT(20),
   `status` INT(1) NOT NULL,
+  `buy_type` INT(1) NOT NULL,
+  `mail` VARCHAR(60) NOT NULL,
+  `tel` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`order_number`,`shop_id`)
 ) DEFAULT CHARSET=utf8mb4;
 
 create table `order_details`
 (
-  `order_number` INT(8) NOT NULL,
+  `order_number` VARCHAR(50) NOT NULL,
   `shop_id` INT(8) NOT NULL,
   `user_id` INT(8) NOT NULL,
   `user_name` VARCHAR(16) NOT NULL,
@@ -115,4 +117,12 @@ create table `cart_list`
   `count` INT(3) NOT NULL,
   `add_date` DATE NOT NULL,
   PRIMARY KEY (`user_id`,`product_id`)
+) DEFAULT CHARSET=utf8mb4;
+
+create table `product_tags`
+(
+  `product_id` INT(8) NOT NULL,
+  `tag` VARCHAR(40) NOT NULL,
+  `tag_en` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`product_id`,`tag`)
 ) DEFAULT CHARSET=utf8mb4;

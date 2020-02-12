@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: db-container
-          image: ryutaterada/k8s-mysql:1.0.0
+          image: ryutaterada/k8s-mysql:1.0.1
           resources:
             limits:
               cpu: "2"

@@ -2,13 +2,13 @@
   <div class="container">
     <div id="receipt">
       <div id="send" style="margin-bottom:10px;">
-        <div id="customer_name" class="mincho">加藤正都</div>
+        <div id="customer_name" class="mincho">{{ details[0] ? details[0].user_name:'' }}</div>
         <div style="width: 100px;font-weight: bold;" class="mincho">様</div>
       </div>
       <div style="width: 650px;">
-        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">日付　2019年12月27日</div>
-        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">天職工房</div>
-        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">TEL:0000-00-0000</div>
+        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">日付　{{ year }}年{{ month }}月{{ day }}日</div>
+        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">{{ workshop_data.shop_name }}</div>
+        <div id="hiduke" class="mincho" style="margin:  0 0 0 auto;">TEL:0986-27-7307</div>
       </div>
       <div style="display: flex;">
         <h2 id="graphtitle" class="mincho">納品書</h2>
@@ -138,51 +138,25 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
 export default {
   data() {
     return {
-        items:[
-            {
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:1
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:2
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:3
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:4
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:5
-            },{
-                user_name: '桒畑 天',
-                count: 4,
-                price: 1200,
-                product_name: '砂岩模様のこだわりプレート',
-                product_number:6
-            }
-        ]
+        year: null,
+        month: null,
+        day: null,
+        items:[]
     };
   },
-  mounted() {
+  async mounted() {
+    if(!this.loginuserdata.user_data) return
+    await this.getShopdata({wsid:this.loginuserdata.user_data.shop_id})
+    await this.getOrderdetail({wsid:this.loginuserdata.user_data.shop_id,order_number:this.$route.params.delivery})
+    var today = new Date();
+    this.year = today.getFullYear();
+    this.month = today.getMonth() + 1;
+    this.day = today.getDate();
+    this.items = this.details
   },
   methods: {
     sumAll(){
@@ -198,6 +172,11 @@ export default {
     exprice(val){
       return val.toLocaleString();
     },
+    ...mapActions('workshop_manage',['getShopdata','getOrderdetail'])
+  },
+  computed:{
+    ...mapGetters('workshop_manage',['workshop_data','details']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>

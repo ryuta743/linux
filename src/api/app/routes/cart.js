@@ -9,7 +9,7 @@ module.exports = router;
 
 // mysqlと接続する
 var mysql_setting = {
-  host: 'db-service.default.svc.cluster.local',
+  host: 'db-service',
   user: 'root',
   password: '',
   database: 'tenshoku',
@@ -74,6 +74,43 @@ router.get('/cart_upd', function (req, res) {
   connection.query(sql, [new_count, user_data, product_data], function (error) {
     if (error) return res.json(error);
     res.json(0721);
+  })
+  connection.end();
+})
+
+// 購入処理終わった後のカート内データを消すAPI
+router.get('/delete_cart', function (req, res) {
+  console.log('カートデリート追加のAPI届いたよ')
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  var connection = mysql.createConnection(mysql_setting);
+  connection.connect();
+  const user_id = req.query.user_id;
+  const sql = `DELETE FROM cart_list WHERE user_id = ?;`;
+  console.log(sql)
+  connection.query(sql, user_id, function (error) {
+    if (error) return res.json(error);
+    res.json(7);
+  })
+  connection.end();
+})
+
+// カートリストデリート
+router.get('/del_cartdata', function (req, res) {
+  console.log('カートデリートのAPI届いたよ')
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  var connection = mysql.createConnection(mysql_setting);
+  connection.connect();
+  const user_id = req.query.user_id;
+  const product_id = req.query.product_id;
+  const sql = `DELETE FROM cart_list WHERE user_id=? AND product_id=?;`;
+  console.log(sql)
+  connection.query(sql, [user_id, product_id], function (error) {
+    if (error) return res.json(error);
+    res.json(1);
   })
   connection.end();
 })

@@ -188,7 +188,7 @@
           <v-stepper-content step="4">
             <v-layout row wrap justify-center>
               <v-flex md10>
-                <v-card>
+                <v-card flat>
                   <v-card-text style="text-align:center;">
                     <v-icon size="50px" color="success">mdi-check</v-icon>
                   </v-card-text>
@@ -267,6 +267,14 @@
         </v-menu>
       </div>
     </v-app-bar>
+    <div id="record_btn">
+      <v-btn color="error" icon @click="record_req"><v-icon x-large>mdi-microphone</v-icon></v-btn>
+    </div>
+    <div id="order_box" v-if="order != ''">
+      {{ order }}
+    </div>
+
+    {{ monitor() }}
 
     <nuxt />
 
@@ -420,8 +428,24 @@ export default {
         this.successDialog = true;
         this.logoutDialog = false;
         console.log('ログアウト完了')
+        this.$router.push('/')
       } catch (e) {
         this.formError = e.message
+      }
+    },
+
+    async record_req(){
+      await this.record();
+    },
+
+    monitor(){
+      if(this.order_result == 'ログイン'){
+        this.loginDialog = true;
+        this.order_reset()
+      }
+      if(this.order_result == 'ログアウト'){
+        this.logoutDialog = true;
+        this.order_reset()
       }
     },
 
@@ -431,17 +455,62 @@ export default {
     //   this.logoutDialog = false;
     //   this.$router.push("/");
     // },
-    ...mapActions(['login','logout']),
+    ...mapActions(['login','logout','record','order_reset']),
     ...mapActions('userdata',['inuserdata'])
   },
   computed: {
-    ...mapGetters(['loginuserdata']),
+    ...mapGetters(['loginuserdata','order','order_result']),
     ...mapGetters('userdata',['userdata'])
   }
 };
 </script>
 
 <style scoped>
+
+#record_btn{
+  position: fixed;
+  top: 150px;
+  right: 50px;
+  z-index: 200;
+}
+
+#order_box{
+  position: fixed;
+  top: 140px;
+  right: 100px;
+  z-index: 200;
+  width: auto;
+  height: auto;
+  background-color: white;
+  border-radius: 5px;
+  z-index: 200;
+  padding: 10px;
+  border: 1.2px solid #e1e1e1;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#order_box:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -26px;
+  margin-top: -12px;
+  border: 12px solid transparent;
+  border-left: 13.5px solid #FFF;
+  z-index: 2;
+}
+
+#order_box:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  margin-top: -14px;
+  border: 14px solid transparent;
+  border-left: 15px solid #e1e1e1;
+  z-index: 1;
+}
 
 .v-btn{
   color: #444;

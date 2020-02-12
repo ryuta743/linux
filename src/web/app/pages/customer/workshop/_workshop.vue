@@ -24,12 +24,12 @@
           <div id="workshop_icon">
             <v-lazy-image
               style="width: 110px;object-fit: cover;height: 110px;border-radius: 100px;"
-              :src="item.icon"
+              :src="workshop_data.shop_img"
             />
           </div>
           <div id="workshop_detail">
-            <div id="workshop_title">{{item.title}}</div>
-            <div id="workshop_description">{{item.description}}</div>
+            <div id="workshop_title">{{ workshop_data.shop_name }}</div>
+            <div id="workshop_description">{{ workshop_data.shop_description }}</div>
             <div id="workshop_rate">
               <v-rating
                 color="yellow darken-3"
@@ -75,7 +75,7 @@
       <div id="products_content" v-if="now_page==0">
         <div id="product_header">
           <div class="content_title"><v-icon>mdi-gift-outline</v-icon>  全ての商品</div>
-          <div id="result_count">-全{{products.length}}件</div>
+          <div id="result_count">-全{{ products[0] ? products.length:''}}件</div>
           <div id="search_icon">
             <v-btn color="#444444" large icon>
               <v-icon>mdi-magnify</v-icon>
@@ -90,7 +90,7 @@
           </div>
         </div>
         <div id="products">
-          <div id="no_products" v-if="products.length == 0">
+          <div id="no_products" v-if="products[0] ? products.length == 0:''">
             <div id="no_product">
               <img src="../../../static/grey_logo.png" width="100px" alt="no-product">
               <p>検索結果が見つかりませんでした</p>
@@ -104,13 +104,13 @@
               />
             </div>
             <div class="product_detail">
-              <div class="product_title">{{item.title}}</div>
+              <div class="product_title">{{item.product_name}}</div>
               <div class="product_price">¥ {{exprice(item.price)}}（税抜）</div>
               <div class="product_rate">
                 <v-rating
                   color="yellow darken-3"
                   background-color="grey darken-1"
-                  v-model="item.rating"
+                  v-model="rating"
                   readonly
                   size="15px"
                   half-increments
@@ -176,7 +176,7 @@
         <div style="margin-bottom:7px;color: #444;" class="sawarabi">お仕事連絡用メールアドレス</div>
         <div id="contact_mail">
           <div id="mail_icon"><v-icon x-large color="white">mdi-email</v-icon></div>
-          <div id="mailaddress">tenshoku20@hal.co.jp</div>
+          <div id="mailaddress">{{ workshop_data.work_mail }}</div>
         </div>
         <div style="margin-bottom:7px;color: #444;" class="sawarabi">お仕事連絡用電話番号</div>
         <div id="contact_mail">
@@ -225,7 +225,13 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
+
 export default {
+  async mounted() {
+    await this.get_workshopReq();
+    await this.getProduct({wsid:this.workshop_data.shop_id})
+  },
   data() {
     return {
       now_page: 0,
@@ -242,62 +248,30 @@ export default {
         description:
           "便利だけど人為的なものが身の回りに増える現代生活。自然素材なら安心して使うことができます。陶芸は地球の一部を拝借しての楽しい手作り生活です。「ゆう工房」は人為を感じない土味ある焼きものを提案しています。"
       },
-      products: [
-        /* {
-          product_id: 1,
-          title: "スマイル鉢植え",
-          product_img: 'https://image1.shopserve.jp/taikeian.net/pic-labo/llimg/310a.jpg?t=20190824100607',
-          rating: 4.5,
-          price: 980,
-          tags: ["陶器", "食卓"]
-        },
-        {
-          product_id: 2,
-          title: "天職茶碗",
-          product_img: 'https://image1.shopserve.jp/taikeian.net/pic-labo/llimg/310a.jpg?t=20190824100607',
-          rating: 5,
-          price: 3000,
-          tags: ["陶器", "食卓"]
-        },
-        {
-          product_id: 3,
-          title: "味噌茶碗",
-          product_img: 'https://base-ec2if.akamaized.net/w=1024,a=1,q=90,u=0/images/user/blog/79663/blog/e5ae64b3059a46195f0afded25141798.jpg',
-          rating: 3.5,
-          price: 3000,
-          tags: ["陶器", "食卓"]
-        },
-        {
-          product_id: 4,
-          title: "小鳥のおもちゃ",
-          product_img: 'https://shop6-makeshop.akamaized.net/shopimages/hinohara/0000000001922.jpg',
-          rating: 1.5,
-          price: 2500,
-          tags: ["陶器", "食卓"]
-        },
-        {
-          product_id: 5,
-          title: "小鳥のおもちゃ",
-          product_img: 'https://shop6-makeshop.akamaized.net/shopimages/hinohara/0000000001922.jpg',
-          rating: 1.5,
-          price: 2500,
-          tags: ["陶器", "食卓"]
-        },
-        {
-          product_id: 6,
-          title: "小鳥のおもちゃ",
-          product_img: 'https://shop6-makeshop.akamaized.net/shopimages/hinohara/0000000001922.jpg',
-          rating: 1.5,
-          price: 2500,
-          tags: ["陶器", "食卓"]
-        } */
-      ]
+      rating: 4
     };
   },
   methods:{
     exprice(val){
       return val.toLocaleString();
     },
+    async get_workshopReq(){
+      const shop_data = {
+        shop_id : this.$route.params.workshop
+      }
+      try{
+        await this.get_workshop({shop_data})
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+    },
+    ...mapActions('work_shop',['get_workshop']),
+    ...mapActions('workshop_manage',['getProduct'])
+  },
+  computed:{
+    ...mapGetters('work_shop',['workshop_data']),
+    ...mapGetters('workshop_manage',['products'])
   }
 };
 </script>
@@ -538,7 +512,8 @@ export default {
   width: 100%;
   height: 35px;
   letter-spacing: 2px;
-  font-size: 18px;
+  color: #444;
+  font-size: 15px;
   font-family: "Sawarabi Mincho";
 }
 

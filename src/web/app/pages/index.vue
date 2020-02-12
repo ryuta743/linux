@@ -37,7 +37,7 @@
         <div id="new_pro">
           <div class="contents_title">新着商品</div>
           <div id="new_products">
-            <v-card id="product" @click="$router.push(`/customer/product/${item.product_id}`)" flat v-for="(item, index) in newproducts" :key="index">
+            <v-card  id="product" @click="$router.push(`/customer/product/${item.product_id}`)" flat v-for="(item, index) in data" :key="index" v-if="index < 5">
               <div id="product_img">
                 <v-lazy-image :src="item.product_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
               </div>
@@ -114,11 +114,15 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import VuetifyLogo from "~/components/VuetifyLogo.vue";
+import {mapActions,mapGetters} from 'vuex';
 
 export default {
   components: {
     Logo,
     VuetifyLogo
+  },
+  async mounted() {
+    await  this.get_newproductReq()
   },
   data() {
     return {
@@ -238,9 +242,16 @@ export default {
     };
   },
   methods:{
+    async get_newproductReq(){
+      await this.get_newproduct();
+    },
     exprice(val){
       return val.toLocaleString();
     },
+    ...mapActions('products',['get_newproduct']),
+  },
+  computed:{
+    ...mapGetters('products',['data'])
   }
 };
 </script>

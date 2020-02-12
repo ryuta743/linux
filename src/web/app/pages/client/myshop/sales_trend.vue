@@ -1,6 +1,6 @@
 <template>
   <div id="workshop_body">
-    <v-container grid-list-xs style="min-height: 100vh;width: 15%;" id="workshop_nav">
+    <div style="min-height: 100vh;width: 15%;" id="workshop_nav">
       <ul>
         <li @click="$router.push('/client/myshop/myshop')">
           <v-icon>mdi-home</v-icon> 管理ツールトップ
@@ -26,13 +26,13 @@
           <v-icon>mdi-chat</v-icon> チャットメッセージ
         </li>
       </ul>
-    </v-container>
+    </div>
     <v-container grid-list-xs style="min-height: 85vh;width: 85%;overflow-y: scroll;">
       <v-content>
         <div id="sub_title">
           <h3><v-icon>mdi-chart-arc</v-icon>売上傾向表</h3>
           <div class="flex-grow-1"></div>
-          <v-btn color="info" @click="$router.push(`/client/myshop/trend_print/${year}`)"><v-icon>mdi-file</v-icon>売上傾向表を印刷する</v-btn>
+          <v-btn color="info" depressed @click="$router.push(`/client/myshop/trend_print/${year}`)"><v-icon>mdi-file</v-icon>売上傾向表を印刷する</v-btn>
         </div>
         
         <div id="trend_body">
@@ -58,13 +58,13 @@
             <div id="trend_chart">
                 <doughnut :chart-data="datacollection" :options="options" style="position: relative; width:650px;"></doughnut>
                 <div id="table">
-                    <h4 style="text-align: center;padding-bottom: 10px;">2019年12月の売上傾向</h4>
+                    <h4 style="text-align: center;padding-bottom: 10px;">{{ year }}年{{ month }}月の売上傾向</h4>
                     <v-simple-table>
                         <tbody>
-                            <tr v-for="(item, index) in items" :key="index">
+                            <tr v-for="(item, index) in trends" :key="index">
                                 <td>{{index!=3 ? index + 1 + '位':''}}</td>
-                                <td>{{item.name}}</td>
-                                <td>{{item.count}}個</td>
+                                <td style="font-size: 11px;width: 128px;">{{ trends[index] != undefind ? item.product_name:''}}</td>
+                                <td>{{ trends[index] != undefind ? item.datacount:'' }}個</td>
                             </tr>
                         </tbody>
                     </v-simple-table>
@@ -78,12 +78,14 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex'
+
 export default {
   data() {
     return {
-      year: '',
-      month: '',
-      years:['2019','2020','2021'],
+      year: null,
+      month: null,
+      years:[2019,2020,2021],
       months:[1,2,3,4,5,6,7,8,9,10,11,12],
       datacollection: null,
       options:{
@@ -92,43 +94,39 @@ export default {
               position: 'bottom'
           }
       },
-      items:[
-          {
-              name: '商品名1',
-              count: 42
-          },
-          {
-              name: '商品名2',
-              count: 33
-          },
-          {
-              name: '商品名3',
-              count: 15
-          },
-          {
-              name: 'その他',
-              count: 20
-          }
-      ]
+      
     };
   },
-  mounted() {
+  async mounted() {
+      if(!this.loginuserdata.user_data) return
+      await this.getTrend({wsid:this.loginuserdata.user_data.shop_id})
+      var today = new Date();
+      this.year = today.getFullYear();
+      this.month = today.getMonth() + 1;
       if (process.client) {
-        this.fillData();
+        if(this.trends[2] != undefined){
+          this.fillData();
+        }
       }
+      
   },
   methods:{
       fillData() {
       this.datacollection = {
-        labels: ['商品名1', '商品名2', '商品名3', 'その他'],
+        labels: [this.trends[0].product_name, this.trends[1].product_name, this.trends[2].product_name, 'その他'],
         datasets: [
           {
-            data: [42,33,15,20],
+            data: [this.trends[0].datacount,this.trends[1].datacount,this.trends[2].datacount,this.trends[3].datacount],
             backgroundColor: ['#f87979', '#aa4c8f', '#38b48b', '#c1e4e9']
           }
         ]
       };
     },
+    ...mapActions('workshop_manage',['getTrend'])
+  },
+  computed:{
+    ...mapGetters('workshop_manage',['trends']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>
@@ -168,7 +166,10 @@ export default {
 }
 
 #workshop_nav {
-  border: 1.2px solid #dee5ec;
+  padding-top: 40px;
+  padding-left: 10px;
+  border: 1.2px solid #DEE5EC;
+  border-width: 1.2px 1.2px 1.2px 0;
   background-color: #ffffff;
 }
 

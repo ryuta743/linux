@@ -10,16 +10,16 @@ down:
 	docker-compose down
 
 ba:
-	docker build -t ryutaterada/k8s-express:1.0.9 ./src/api
-	docker push ryutaterada/k8s-express:1.0.9
+	docker build -t ryutaterada/k8s-express:1.1.0 ./src/api
+	docker push ryutaterada/k8s-express:1.1.0
 
 bw:
-	docker build -t ryutaterada/k8s-nodejs:1.0.7 ./src/web
-	docker push ryutaterada/k8s-nodejs:1.0.7
+	docker build -t ryutaterada/k8s-nodejs:1.0.8 ./src/web
+	docker push ryutaterada/k8s-nodejs:1.0.8
 
 bd:
-	docker build -t ryutaterada/k8s-mysql:1.0.1 ./src/db
-	docker push ryutaterada/k8s-mysql:1.0.1
+	docker build -t ryutaterada/k8s-mysql:1.0.2 ./src/db
+	docker push ryutaterada/k8s-mysql:1.0.2
 
 a:
 	kubectl get all,pv,pvc,ingress

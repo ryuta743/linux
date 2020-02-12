@@ -5,11 +5,11 @@
         <v-card-title primary-title>購入必要情報入力</v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-          <h3>名前</h3><br>
+          <!-- <h3>名前</h3><br>
           <v-layout row wrap>
             <v-text-field label="姓" outlined v-model="sei"></v-text-field>
             <v-text-field label="名" outlined v-model="mei"></v-text-field>
-          </v-layout>
+          </v-layout> -->
           <v-divider style="padding-bottom: 10px;"></v-divider>
           <h3>連絡先</h3><br>
           <v-layout row wrap>
@@ -71,8 +71,8 @@ import {mapActions,mapGetters} from 'vuex';
 export default {
   data(){
     return{
-      sei: '',
-      mei: '',
+      // sei: '',
+      // mei: '',
       tel: '',
       mail: '',
       country: '',
@@ -118,13 +118,13 @@ export default {
         {label: "12月" , value:11},
       ],
       month: null,
-      card_sec: 0,
+      card_sec: null,
     };
   },
   methods: {
     buycheckreq(){
-      const buy_data = {
-          buy_userdata : {
+      const buy_data = [
+        {
           sei : this.sei,
           mei : this.mei,
           tel : this.tel,
@@ -137,20 +137,20 @@ export default {
           address_05 : this.address_05,
           buy_type : this.buy_type,
         },
-        credit_data : {
+        {
           card_num : this.card_num,
           year : this.year,
           month : this.month,
           card_sec : this.card_sec
         }
-      }
+      ]
       try{
         this.buycheck({buy_data});
       }catch(e){
         console.log('エラー発生'),
         console.log(e)
       }
-      this.$router.push(`/customer/cart/cartBuycheck`)
+      this.$router.push(`/customer/cart/cartBuycheck_02`)
     },
     ...mapActions('buy',['buycheck'])
   },

@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <h2 id="graphtitle" class="mincho">{{ $route.params.trend_print }}年度12月・売上傾向表</h2>
-    <div id="date" class="mincho">天職工房 2020年12月27日</div>
+    <h2 id="graphtitle" class="mincho">{{ $route.params.trend_print }}年度{{ month }}月・売上傾向表</h2>
+    <div id="date" class="mincho">天職工房 {{ year }}年{{ month }}月{{ day }}日</div>
     <div id="trend_chart">
                 <doughnut :chart-data="datacollection" :options="options" style="position: relative; width:650px;"></doughnut>
                 <div id="table">
-                    <h4 style="text-align: center;padding-bottom: 10px;" class="mincho">2019年12月の売上傾向</h4>
+                    <h4 style="text-align: center;padding-bottom: 10px;" class="mincho">{{ year }}年{{ month }}月の売上傾向</h4>
                     <v-simple-table>
                         <tbody>
-                            <tr v-for="(item, index) in items" :key="index">
-                                <td class="mincho">{{index!=3 ? index + 1 + '位':''}}</td>
-                                <td class="mincho">{{item.name}}</td>
-                                <td class="mincho">{{item.count}}個</td>
+                            <tr v-for="(item, index) in trends" :key="index">
+                                <td>{{index!=3 ? index + 1 + '位':''}}</td>
+                                <td style="font-size: 11px;width: 128px;">{{item.product_name}}</td>
+                                <td>{{item.datacount}}個</td>
                             </tr>
                         </tbody>
                     </v-simple-table>
@@ -27,48 +27,41 @@
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex'
+
 export default {
   data() {
     return {
+      year:null,
+      month:null,
+      day:null,
       datacollection: null,
       options:{
           responsive: true,
           legend:{
               position: 'bottom'
           }
-      },
-      items:[
-          {
-              name: '商品名1',
-              count: 42
-          },
-          {
-              name: '商品名2',
-              count: 33
-          },
-          {
-              name: '商品名3',
-              count: 15
-          },
-          {
-              name: 'その他',
-              count: 20
-          }
-      ]
+      }
     };
   },
-  mounted() {
-    if (process.client) {
-      this.fillData();
-    }
+  async mounted() {
+      if(!this.loginuserdata.user_data) return
+      await this.getTrend({wsid:this.loginuserdata.user_data.shop_id})
+      if (process.client) {
+        this.fillData();
+      }
+      var today = new Date();
+      this.year = today.getFullYear();
+      this.month = today.getMonth() + 1;
+      this.day = today.getDate();
   },
   methods: {
     fillData() {
       this.datacollection = {
-        labels: ['商品名1', '商品名2', '商品名3', 'その他'],
+        labels: [this.trends[0].product_name, this.trends[1].product_name, this.trends[2].product_name, 'その他'],
         datasets: [
           {
-            data: [42,33,15,20],
+            data: [this.trends[0].datacount,this.trends[1].datacount,this.trends[2].datacount,this.trends[3].datacount],
             backgroundColor: ['#f87979', '#aa4c8f', '#38b48b', '#c1e4e9']
           }
         ]
@@ -76,7 +69,12 @@ export default {
     },
     print() {
       window.print();
-    }
+    },
+    ...mapActions('workshop_manage',['getTrend'])
+  },
+  computed:{
+    ...mapGetters('workshop_manage',['trends']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>
@@ -127,6 +125,7 @@ a{
 @page {
   size: A4 landscape;
   margin: 0mm;
+  background-color: #ffffff;
 }
 
 #trend_body{
