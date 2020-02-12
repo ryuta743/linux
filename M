@@ -1,7 +1,7 @@
 cp:
 	rm -rf linux
-  git clone https://github.com/RyutaTerada/linux
-  cd linux
+	git clone https://github.com/RyutaTerada/linux
+	cd linux
 
 path:
 	export PATH=$PATH:/snap/bin
