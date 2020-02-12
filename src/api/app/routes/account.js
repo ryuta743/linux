@@ -1,7 +1,7 @@
 var express = require('express');
 const cors = require('cors')
-app.use(cors())
 const router = express.Router();
+router.use(cors())
 
 // sqlを読み込む
 var mysql = require('mysql');
