@@ -65,7 +65,7 @@ ww:
 	kubectl exec -it web-6b64674b66-cncjl --container web /bin/sh
 
 path:
-	export PATH=$PATH:/snap/bin
+	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 istio:
 	kubectl apply -f D:work/git/istio/install/kubernetes/istio-demo.yaml

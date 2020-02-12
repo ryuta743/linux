@@ -10,3 +10,7 @@ reset:
 
 reset:
 	microk8s.enable dns ingress metallb
+
+update:
+	rm -rf Makefile
+	cp linux/M Makefile
