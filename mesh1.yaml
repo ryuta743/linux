@@ -1,0 +1,17 @@
+apiVersion: authentication.istio.io/v1alpha1
+kind: Policy
+metadata:
+  name: db-fix
+spec:
+  targets:
+  - name: db
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: db-fix
+spec:
+  host: db-service
+  trafficPolicy:
+    tls:
+      mode: DISABLE

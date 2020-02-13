@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: db-fix
+spec:
+  hosts:
+  - mydb.domain.com
+  ports:
+  - number: 3306
+    name: db-service
+    protocol: TCP
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+ name: db-fix
+spec:
+ host: db-service
+ trafficPolicy:
+   tls:
+     mode: DISABLE
