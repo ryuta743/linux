@@ -39,3 +39,10 @@ data:
     skip-name-resolve
     [client]
     default-character-set=utf8mb4
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: database
+  labels:
+    name: database
