@@ -1,8 +1,15 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: database
+  labels:
+    name: database
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: db-pv-claim
-  namespace: default
+  namespace: database
 spec:
   storageClassName: manual
   accessModes:
@@ -15,6 +22,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: db-pv-volume
+  namespace: database
   labels:
     type: local
 spec:
@@ -30,6 +38,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: db-config
+  namespace: database
 data:
   charset.cnf: |-
     [mysqld]
@@ -39,10 +48,3 @@ data:
     skip-name-resolve
     [client]
     default-character-set=utf8mb4
----
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: database
-  labels:
-    name: database
