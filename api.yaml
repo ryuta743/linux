@@ -2,9 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: express
-  #labels:
-  ###app: express
-  ###version: v1
 spec:
   replicas: 1
   selector:
@@ -27,28 +24,15 @@ spec:
           ports:
             - containerPort: 5000
               name: express
-          #env:
-          #  - name: DB_URL
-          #    value: mysql://mysql:3306/user?replicaSet=rs0
-          #  - name: WAIT_HOSTS
-          #    value: mysql:3306
-          #  - name: DB_HOST
-          #    value: mysql
-          #  - name: DB_PORT
-          #    value: "3306"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: express-service
-  #labels:
-  ###app: express
-  ###service: express
 spec:
   type: ClusterIP
   selector:
     app: express
-  #clusterIP: None
   ports:
     - port: 80
       targetPort: 5000
