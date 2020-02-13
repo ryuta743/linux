@@ -24,6 +24,9 @@ bd:
 a:
 	kubectl get all,pv,pvc,ingress
 
+i:
+	kubectl get all -n istio-system
+
 dg:
 	kubectl apply -f istio.yaml
 
@@ -65,25 +68,26 @@ ce:
 	kubectl delete -f eco.yaml
 
 mm:
-	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db -p
+	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db-service -proot
 
 ww:
-	kubectl exec -it web-6b64674b66-cncjl --container web /bin/sh
+	kubectl exec -it web-6b64674b66-cncjl --container web-container /bin/sh
 
 path:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 istio:
-	kubectl apply -f D:work/git/istio/install/kubernetes/istio-demo.yaml
+	kubectl label namespace default istio-injection=enabled
 
 all:
-	kubectl apply -f db.yaml
+	kubectl apply -f db2.yaml
 	kubectl apply -f api.yaml
 	kubectl apply -f web.yaml
-	kubectl apply -f istio.yaml
+	kubectl apply -f eco.yaml
 
 call:
 	kubectl delete -f api.yaml
 	kubectl delete -f web.yaml
-	kubectl delete -f istio.yaml
-	kubectl delete -f db.yaml
+	kubectl delete -f eco.yaml
+	kubectl delete -f db1.yaml
+	kubectl delete -f db2.yaml

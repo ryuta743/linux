@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express
+  labels:
+    app: express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: express
+    spec:
+      containers:
+        - name: express
+          image: ryutaterada/k8s-express
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1000Mi
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_URL
+              value: mysql://mysql:3306/user?replicaSet=rs0
+            - name: WAIT_HOSTS
+              value: mysql:3306
+            - name: DB_HOST
+              value: mysql
+            - name: DB_PORT
+              value: "3306"
