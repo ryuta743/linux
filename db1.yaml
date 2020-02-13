@@ -20,14 +20,12 @@ spec:
     spec:
       containers:
         - name: db-container
-          image: ryutaterada/k8s-mysql:1.0.2
+          image: ryutaterada/k8s-mysql:1.0.3
           resources:
             limits:
               cpu: "1"
               memory: 1000Mi
           env:
-            - name: MYSQL_USER
-              value: user
             - name: MYSQL_ROOT_PASSWORD
               value: root
             - name: MYSQL_DATABASE

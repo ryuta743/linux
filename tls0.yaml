@@ -4,4 +4,4 @@ metadata:
   name: mysql-nomtls-authn
 spec:
   targets:
-    - name: db-service
+  - name: db-service    # The name of *your* K8s Service

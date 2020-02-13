@@ -1,22 +1,20 @@
-apiVersion: networking.istio.io/v1alpha3
-kind: ServiceEntry
+apiVersion: "authentication.istio.io/v1alpha1"
+kind: "Policy"
 metadata:
-  name: db-fix
+  name: mysql-mtls-authn
 spec:
-  hosts:
-  - mydb.domain.com
-  ports:
-  - number: 3306
-    name: db-service
-    protocol: TCP
-  resolution: DNS
+  targets:
+    - name: db-service # The name of *your* K8s Service
+  peers:
+    - mtls:
+        mode: STRICT
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
- name: db-fix
+  name: mysql-mtls-dr
 spec:
- host: db-service
- trafficPolicy:
-   tls:
-     mode: DISABLE
+  host: db-service # The name of *your* K8s Service
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL

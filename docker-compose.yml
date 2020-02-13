@@ -1,11 +1,11 @@
 version: "3"
 services:
-  web-service:
-    container_name: web-service
-    build: src/web
-    #image: ryutaterada/k8s-nodejs
-    ports:
-      - "3000:3000"
+  #web-service:
+  #container_name: web-service
+  #build: src/web
+  #image: ryutaterada/k8s-nodejs
+  #ports:
+  #- "3000:3000"
   express-service:
     build: src/api
     container_name: express-service
