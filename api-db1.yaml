@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+      version: v1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+        version: v1
+    spec:
+      containers:
+        - name: db-container
+          image: ryutaterada/k8s-mysql:1.0.3
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1000Mi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: tenshoku
+          ports:
+            - containerPort: 3306
+              name: db
+          volumeMounts:
+            - name: db-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: db-config
+              mountPath: /etc/mysql/conf.d
+              readOnly: true
+      volumes:
+        - name: db-persistent-storage
+          persistentVolumeClaim:
+            claimName: db-pv-claim
+        - name: db-config
+          configMap:
+            name: db-config
+            items:
+              - key: charset.cnf
+                path: charset.cnf

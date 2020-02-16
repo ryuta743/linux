@@ -10,8 +10,8 @@ down:
 	docker-compose down
 
 ba:
-	docker build -t ryutaterada/k8s-express:1.1.8 ./src/api
-	docker push ryutaterada/k8s-express:1.1.8
+	docker build -t ryutaterada/k8s-express:1.1.9 ./src/api
+	docker push ryutaterada/k8s-express:1.1.9
 
 bw:
 	docker build -t ryutaterada/k8s-nodejs:1.0.9 ./src/web

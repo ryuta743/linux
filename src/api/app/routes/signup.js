@@ -12,7 +12,7 @@ export default {
 
 // mysqlと接続する
 var db = mysql.createConnection({
-    host: '127.0.0.1', //後で変える
+    host: 'db-service', //後で変える
     user: 'root',
     password: 'root',
     database: 'tenshoku',

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: express
+        version: v1
+    spec:
+      containers:
+        - name: express-container
+          image: ryutaterada/k8s-express:1.1.7
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1000Mi
+          ports:
+            - containerPort: 5000
+              name: express
+        - name: db-container
+          image: ryutaterada/k8s-mysql:1.0.3
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1000Mi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: tenshoku
+          ports:
+            - containerPort: 3306
+              name: db
+          volumeMounts:
+            - name: db-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: db-config
+              mountPath: /etc/mysql/conf.d
+              readOnly: true
+      volumes:
+        - name: db-persistent-storage
+          persistentVolumeClaim:
+            claimName: db-pv-claim
+        - name: db-config
+          configMap:
+            name: db-config
+            items:
+              - key: charset.cnf
+                path: charset.cnf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-service
+spec:
+  type: ClusterIP
+  selector:
+    app: express
+  ports:
+    - port: 80
+      targetPort: 5000
+      name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  #clusterIP: None
+  selector:
+    app: express
+  ports:
+    - port: 3306
+      targetPort: 3306
+      name: tcp

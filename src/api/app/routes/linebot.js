@@ -6,7 +6,7 @@ var mysql = require('mysql');
 
 // MySQLの設定情報
 var mysql_setting = {
-    host: 'localhost',
+    host: 'db-service',
     user: 'root',
     password: 'root',
     database: 'tenshoku',
