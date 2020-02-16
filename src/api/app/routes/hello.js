@@ -8,7 +8,7 @@ var mysql = require('mysql'); //★追加
 
 // MySQLの設定情報
 var mysql_setting = {
-    host: 'db-service.database.svc.cluster.local',
+    host: 'localhost',
     user: 'root',
     password: 'root',
     database: 'tenshoku',

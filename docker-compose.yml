@@ -6,11 +6,11 @@ services:
   #image: ryutaterada/k8s-nodejs
   #ports:
   #- "3000:3000"
-  express-service:
-    build: src/api
-    container_name: express-service
-    ports:
-      - "80:5000"
+  #express-service:
+  #build: src/api
+  #container_name: express-service
+  #ports:
+  #- "80:5000"
   db-service:
     build: src/db
     container_name: db-service
