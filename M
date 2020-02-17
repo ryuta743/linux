@@ -8,7 +8,7 @@ path:
 reset:
 	microk8s.reset
 
-reset:
+enable:
 	microk8s.enable dns ingress metallb
 
 update:
