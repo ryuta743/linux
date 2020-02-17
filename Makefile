@@ -14,8 +14,8 @@ ba:
 	docker push ryutaterada/k8s-express:1.1.9
 
 bw:
-	docker build -t ryutaterada/k8s-nodejs:1.1.2 ./src/web
-	docker push ryutaterada/k8s-nodejs:1.1.2
+	docker build -t ryutaterada/k8s-nodejs:1.1.3 ./src/web
+	docker push ryutaterada/k8s-nodejs:1.1.3
 
 bd:
 	docker build -t ryutaterada/k8s-mysql:1.0.4 ./src/db

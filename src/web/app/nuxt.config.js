@@ -162,7 +162,7 @@ module.exports = {
 
   proxy: {
     '/api2': {
-      target: 'http://express-service.database.svc.cluster.local',
+      target: 'http://express-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api2': '/'
       }
