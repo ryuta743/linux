@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: web-container
-          image: ryutaterada/k8s-nodejs:1.1.0
+          image: ryutaterada/k8s-nodejs:1.1.1
           resources:
             limits:
               cpu: "1"
@@ -32,9 +32,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: web-service
-  #labels:
-  ###app: web
-  ###service: web
 spec:
   type: LoadBalancer
   selector:
@@ -43,7 +40,6 @@ spec:
     - port: 80
       targetPort: 3000
       name: http
-  #clusterIP: None
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
