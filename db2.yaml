@@ -9,6 +9,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: db-pv-claim
+  namespace: database
 spec:
   storageClassName: manual
   accessModes:
@@ -21,6 +22,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: db-pv-volume
+  namespace: database
   labels:
     type: local
 spec:
@@ -36,6 +38,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: db-config
+  namespace: database
 data:
   charset.cnf: |-
     [mysqld]
