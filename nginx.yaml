@@ -26,13 +26,14 @@ data:
 
       access_log    /var/log/nginx/access.log main;
 
+      charset UTF-8;
+
       server {
           listen       80;
           server_name  _;
 
           location / {
-              root   html;
-              index  index.html index.htm;
+              rewrite http://express-server/.*$ http://express-core/.* redirect; # redirect or permanent
           }
       }
       include /etc/nginx/virtualhost/virtualhost.conf;
@@ -52,8 +53,7 @@ data:
       error_log /var/log/nginx/app.error_log;
 
       location / {
-        proxy_pass http://app/;
-        proxy_http_version 1.1;
+        rewrite ^(.*)$ http://express-server/$request_uri redirect;
       }
     }
 ---
@@ -71,9 +71,10 @@ spec:
     metadata:
       labels:
         app: nginx
+        version: v1
     spec:
       containers:
-        - name: nginx
+        - name: nginx-container
           image: nginx
           ports:
             - containerPort: 80
@@ -99,7 +100,7 @@ spec:
 apiVersion: v1
 kind: Service # nginxにアクセスする用のservice
 metadata:
-  name: nginx
+  name: nginx-server
 spec:
   type: ClusterIP
   ports:
