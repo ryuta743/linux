@@ -24,8 +24,14 @@ bd:
 a:
 	kubectl get all,pv,pvc,ingress
 
+d:
+	kubectl get all,pv,pvc,ingress -n database
+
 i:
-	kubectl get all -n istio-system
+	kubectl get all,pv,pvc,ingress -n istio-system
+
+s:
+	kubectl get all,pv,pvc,ingress -A
 
 dg:
 	kubectl apply -f istio.yaml

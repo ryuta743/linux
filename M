@@ -9,7 +9,7 @@ reset:
 	microk8s.reset
 
 enable:
-	microk8s.enable dns ingress metallb
+	microk8s.enable dns ingress metallb istio
 
 update:
 	rm -rf Makefile
