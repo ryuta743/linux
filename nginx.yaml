@@ -30,10 +30,10 @@ data:
 
       server {
           listen       80;
-          server_name  _;
+          server_name  express-server;
 
           location / {
-              rewrite http://express-server/.*$ http://express-core/.* redirect; # redirect or permanent
+              rewrite ^(.*)$ http://express-core$1 redirect; # redirect or permanent
           }
       }
       include /etc/nginx/virtualhost/virtualhost.conf;

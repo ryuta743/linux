@@ -1,3 +1,10 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: database
+  labels:
+    name: database
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

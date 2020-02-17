@@ -2,9 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db
-  #labels:
-  ##app: db
-  ##version: v1
+  namespace: database
 spec:
   selector:
     matchLabels:
