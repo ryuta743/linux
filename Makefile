@@ -86,7 +86,7 @@ path:
 	export PATH="/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 
 istio:
-	kubectl label namespace database istio-injection=enabled
+	kubectl label namespace web istio-injection=enabled
 
 all:
 	kubectl apply -f db2.yaml
