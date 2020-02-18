@@ -51,6 +51,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: web-ingress
+  namespace: web
 spec:
   backend:
     serviceName: web-service
