@@ -39,6 +39,9 @@ dg:
 da:
 	kubectl apply -f api.yaml
 
+dapi:
+	kubectl apply -f ./k8s
+
 dw:
 	kubectl apply -f web.yaml
 

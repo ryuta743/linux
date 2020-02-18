@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: express
+  name: express-users
   namespace: database
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: express
+      app: express-users
       version: v1
   template:
     metadata:
       labels:
-        app: express
+        app: express-users
         version: v1
     spec:
       containers:
-        - name: express-container
+        - name: express-users-container
           image: ryutaterada/k8s-express:1.1.8
           resources:
             limits:
@@ -24,17 +24,17 @@ spec:
               memory: 1000Mi
           ports:
             - containerPort: 5000
-              name: express
+              name: express-users
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: express-service
+  name: express-users-service
   namespace: database
 spec:
   type: ClusterIP
   selector:
-    app: express
+    app: express-users
   ports:
     - port: 80
       targetPort: 5000
