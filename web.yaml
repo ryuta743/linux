@@ -4,6 +4,7 @@ metadata:
   name: web
   labels:
     name: web
+    istio-injection: enabled
 ---
 apiVersion: apps/v1
 kind: Deployment
