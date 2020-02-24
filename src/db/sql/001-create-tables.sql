@@ -126,3 +126,38 @@ create table `product_tags`
   `tag_en` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`product_id`,`tag`)
 ) DEFAULT CHARSET=utf8mb4;
+
+create table `product_favo`
+(
+  `user_id` INT(8) NOT NULL,
+  `product_id` INT(8) NOT NULL,
+  PRIMARY KEY (`user_id`,`product_id`)
+) DEFAULT CHARSET=utf8mb4;
+
+create table `shop_favo`
+(
+  `user_id` INT(8) NOT NULL,
+  `shop_id` INT(8) NOT NULL,
+  PRIMARY KEY (`user_id`,`shop_id`)
+) DEFAULT CHARSET=utf8mb4;
+
+create table `reviews`
+(
+  `review_id` INT(10) AUTO_INCREMENT NOT NULL,
+  `product_id` INT(8) NOT NULL,
+  `user_id` INT(8) NOT NULL,
+  `evaluation` INT(1) NOT NULL,
+  `comment` VARCHAR(120),
+  `post_time` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`review_id`)
+) DEFAULT CHARSET=utf8mb4;
+
+create table `contacts`
+(
+  `contact_id` INT(10) AUTO_INCREMENT NOT NULL,
+  `user_id` INT(8) NOT NULL,
+  `contact_date` TIMESTAMP NOT NULL,
+  `contact_detail` VARCHAR(500),
+  `helper_id` INT(8),
+  PRIMARY KEY (`contact_id`)
+) DEFAULT CHARSET=utf8mb4;
