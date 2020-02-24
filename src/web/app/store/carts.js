@@ -46,7 +46,7 @@ export const actions = {
         const count = data.count
         const new_count = count + old_count
         console.log('変更する個数' + new_count)
-        const upd_cartdata = await this.$axios.$get(`/api2/cart/cart_upd?product_id=${product_id}&user_id=${user_id}&new_count=${new_count}`);
+        const upd_cartdata = await this.$axios.$get(`http://api-cart/cart/cart_upd?product_id=${product_id}&user_id=${user_id}&new_count=${new_count}`);
         console.log('あと少し!!');
         console.log(upd_cartdata);
         commit("setUpdata_data", upd_cartdata);
@@ -62,7 +62,7 @@ export const actions = {
         const product_id = payload.product_id;
         const count = payload.count;
         const now = moment().format('YYYY-MM-DD')
-        const cartdata = await this.$axios.$get(`/api2/cart/cart_up?cart_data=${product_id}&user_data=${user_id}&count=${count}&date=${now}`);
+        const cartdata = await this.$axios.$get(`http://api-cart/cart/cart_up?cart_data=${product_id}&user_data=${user_id}&count=${count}&date=${now}`);
         console.log('APIから戻ってきた!!');
         console.log(cartdata);
         commit("setCart_data", cartdata);
@@ -76,8 +76,9 @@ export const actions = {
         console.log('カート情報引き出し')
         const u_id = userid;
         console.log(u_id)
-        var get_cart = await this.$axios.$get(`/api2/cart/get_cart_data?user_id=${u_id}`);
+        var get_cart = await this.$axios.$get(`http://api-cart/cart/get_cart_data?user_id=${u_id}`);
         for (var i = 0; i < get_cart.length; i++) {
+            get_cart[i].product_img_origin = get_cart[i].product_img;
             get_cart[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${get_cart[i].shop_id}%2Fproducts%2F${get_cart[i].product_img}?alt=media`;
         }
         console.log(get_cart)
@@ -94,6 +95,6 @@ export const actions = {
         console.log(user_id);
         const product_id = del_data.product_id;
         console.log(product_id);
-        var delete_cart = await this.$axios.$get(`/api2/cart/del_cartdata?user_id=${user_id}&product_id=${product_id}`);
+        var delete_cart = await this.$axios.$get(`http://api-cart/cart/del_cartdata?user_id=${user_id}&product_id=${product_id}`);
     },
 }

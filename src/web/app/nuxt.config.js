@@ -4,7 +4,7 @@ module.exports = {
   mode: 'universal',
 
   serverMiddleware: [
-    '~/api/index.js'
+    '~/api/index.js',
   ],
 
 
@@ -134,6 +134,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    '@/plugins/mixin-common-methods',
     '~/plugins/chart.js',
     '~/plugins/bar_chart.js',
     '~/plugins/v-lazy-image.js'
@@ -150,7 +151,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
   ],
   /*
    ** Axios module configuration
@@ -161,12 +162,66 @@ module.exports = {
   },
 
   proxy: {
-    '/api2': {
-      target: 'http://express-service.default.svc.cluster.local',
+    '/api-account': {
+      target: 'http://express-account-service.default.svc.cluster.local',
       pathRewrite: {
-        '^/api2': '/'
+        '^/api-account': '/'
       }
-    }
+    },
+    '/api-buy': {
+      target: 'http://express-buy-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-buy': '/'
+      }
+    },
+    '/api-cart': {
+      target: 'http://express-cart-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-cart': '/'
+      }
+    },
+    '/api-buy': {
+      target: 'http://express-contact-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-contact': '/'
+      }
+    },
+    '/api-linebot': {
+      target: 'http://express-linebot-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-linebot': '/'
+      }
+    },
+    '/api-product': {
+      target: 'http://express-product-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-product': '/'
+      }
+    },
+    '/api-review': {
+      target: 'http://express-review-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-review': '/'
+      }
+    },
+    '/api-users': {
+      target: 'http://express-users-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-users': '/'
+      }
+    },
+    '/api-workshop': {
+      target: 'http://express-workshop-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-workshop': '/'
+      }
+    },
+    '/api-workshopManage': {
+      target: 'http://express-workshopManage-service.default.svc.cluster.local',
+      pathRewrite: {
+        '^/api-workshopManage': '/'
+      }
+    },
   },
   /*
    ** vuetify module configuration

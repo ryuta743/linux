@@ -43,8 +43,14 @@
             </div>
           </div>
           <div id="workshop_ui">
-            <v-hover v-slot:default="{ hover }">
-              <v-btn :color="hover ? 'red':'grey'" icon>
+            <v-hover v-slot:default="{ hover }" v-if="favo_shops.indexOf(workshop_data.shop_id) == -1 ? true:false"> 
+              <v-btn :color="hover ? 'red':'grey'" icon @click="add_favoshop_req(0)">
+                <!-- <v-btn color="red" icon> -->
+                <v-icon x-large>mdi-shield-star</v-icon>
+              </v-btn>
+            </v-hover>
+            <v-hover v-slot:default="{ hover }" v-if="favo_shops.indexOf(workshop_data.shop_id) != -1 ? true:false"> 
+              <v-btn :color="hover ? 'grey':'red'" icon @click="add_favoshop_req(1)">
                 <!-- <v-btn color="red" icon> -->
                 <v-icon x-large>mdi-shield-star</v-icon>
               </v-btn>
@@ -185,36 +191,36 @@
         </div>
         <div id="contact_form">
           <div class="sawarabi" style="font-size: 19px;">お問い合わせフォーム</div>
-          <div style="margin: 10px 0;font-size: 14px;color: #444444;">お問い合わせ内容をご入力の上、「確認画面へ」ボタンをクリックしてください。</div>
+          <div style="margin: 10px 0;font-size: 14px;color: #444444;">お問い合わせ内容をご入力の上、「送信」ボタンをクリックしてください。</div>
           <form @submit.prevent>
             <table>
               <tr>
                 <td class="th"><label>お名前<span>必須</span></label></td>
                 <td class="input">
-                  <input type="text" name="name" placeholder="例）山田太郎">
+                  <input type="text" name="name" placeholder="例）山田太郎" v-model="your_name">
                 </td>
               </tr>
               <tr>
                 <td class="th"><label>あなたのメールアドレス<span>必須</span></label></td>
                 <td class="input">
-                  <input type="text" name="name" placeholder="例）tenshoku20@hal.co.jp">
+                  <input type="text" name="name" placeholder="例）tenshoku20@hal.co.jp" v-model="your_mail">
                 </td>
               </tr>
               <tr>
                 <td class="th"><label>あなたの電話番号<span style="background-color: #999999;">任意</span></label></td>
                 <td class="input">
-                  <input type="text" name="name" placeholder="例）tenshoku20@hal.co.jp">
+                  <input type="text" name="name" placeholder="例）00011112222" v-model="your_tel">
                 </td>
               </tr>
               <tr>
                 <td class="th"><label>お問い合わせ内容<span>必須</span></label></td>
                 <td class="input">
-                  <textarea name="content" rows="5" cols="76" placeholder="お問合せ内容を入力" style="border: 1px solid #cccccc;background: #fff;padding-left: 10px;border-radius: 4px;"></textarea>
+                  <textarea name="content" rows="5" cols="76" placeholder="お問合せ内容を入力" style="border: 1px solid #cccccc;background: #fff;padding-left: 10px;border-radius: 4px;" v-model="mail_text"></textarea>
                 </td>
               </tr>
             </table>
           </form>
-          <div id="form_btn"><v-btn depressed　color="success" style="width: 150px;">送信</v-btn></div>
+          <div id="form_btn"><v-btn depressed　color="success" style="width: 150px;" @click="request_mailReq">送信</v-btn></div>
         </div>
       </div>
       </transition>
@@ -228,13 +234,25 @@
 import {mapGetters,mapActions} from 'vuex';
 
 export default {
+middleware: 'auth',
+
   async mounted() {
     await this.get_workshopReq();
     await this.getProduct({wsid:this.workshop_data.shop_id})
+    if(this.loginuserdata){
+      var result = await this.get_favoshop({user_id:this.loginuserdata.user_data.user_id});
+      this.favo_shops = result;
+    }
+    console.log('tag', this.favo_shop)
   },
   data() {
     return {
+      your_name:'',
+      your_mail:'',
+      your_tel:'',
+      mail_text:'',
       now_page: 0,
+      favo_shops: [],
       nav_item: ["商品", "工房スキル", "コンタクト"],
       item: {
         title: "天職工房",
@@ -266,12 +284,42 @@ export default {
         console.log(e)
       }
     },
-    ...mapActions('work_shop',['get_workshop']),
-    ...mapActions('workshop_manage',['getProduct'])
+    async add_favoshop_req(i){
+      const payload = {
+        user_id: this.loginuserdata.user_data.user_id,
+        shop_id: this.workshop_data.shop_id
+      }
+      console.log(payload)
+      if(i == 0) await this.add_favoshop({payload});
+      if(i == 1) await this.del_favoshop({payload});
+      var result = await this.get_favoshop({user_id:this.loginuserdata.user_data.user_id});
+      this.favo_shops = result;
+    },
+    async request_mailReq(){
+      console.log(this.workshop_data.work_mail)
+      const mail_data = {
+        work_mail: this.workshop_data.work_mail,
+        name: this.your_name,
+        your_mail: this.your_mail,
+        tel: this.your_tel,
+        mail_text: this.mail_text
+      }
+      console.log(mail_data)
+      try{
+        await this.request_mail({mail_data})
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+    },
+    ...mapActions('work_shop',['get_workshop','add_favoshop','get_favoshop','del_favoshop']),
+    ...mapActions('workshop_manage',['getProduct']),
+    ...mapActions('mail',['request_mail'])
   },
   computed:{
-    ...mapGetters('work_shop',['workshop_data']),
-    ...mapGetters('workshop_manage',['products'])
+    ...mapGetters('work_shop',['workshop_data','favo_shop']),
+    ...mapGetters('workshop_manage',['products']),
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>

@@ -14,6 +14,8 @@
 
 <script>
 export default {
+middleware: 'auth',
+
   data() {
     return {
       datacollection: null,

@@ -50,7 +50,7 @@
                   </div>
                   <div id="access_graph">
                     <div id="graph">
-                      <h4>累計アクセス数</h4>
+                      <h4>累計アクセス数<small style="color: #999;">(2019)</small></h4>
                       <access :chart-data="datacollection" :options="options" width="80%" ></access>
                     </div>
                   </div>
@@ -143,7 +143,7 @@ export default {
         datasets: [
           {
             label: "アクセス数",
-            data: [10, 20, 30, 40, 50, 55, 58, 70, 98, 120, 143, 155],
+            data: [0, 0, 0, 10, 14, 25, 50, 65, 67, 90, 143, 190],
             backgroundColor: "rgba(255, 206, 86, 0.2)",
             borderColor: "rgba(255, 159, 64, 1)",
             borderWidth: 1

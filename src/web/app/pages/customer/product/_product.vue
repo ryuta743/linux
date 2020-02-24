@@ -7,7 +7,19 @@
       <div class="bread">></div>
       <div class="bread">工房名</div>
     </div>
-    
+    <div id="fullimage">
+      <div
+        class="cloudimage-360"
+        data-folder="https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/demo/chair-360-72/"
+        data-filename="chair_{index}.jpg?v1"
+        data-amount="72"
+        data-magnifier="2"
+        data-full-screen="true"
+        data-autoplay="true"
+        data-speed="100"
+        id="sasa"
+      ></div>
+    </div>
     <div id="product_infos">
       <div id="product_img">
         <v-lazy-image style="width: 100%;object-fit: cover;height: 500px;vertical-align:bottom" :src="productdetails.product_img" />
@@ -24,25 +36,31 @@
             <v-rating
                 color="yellow darken-3"
                 background-color="grey darken-1"
-                v-model="item.rating"
+                v-model="avg"
                 readonly
                 half-increments
             ></v-rating>
-            <p>(12)</p>
+            <p>({{avg}})</p>
           </div>
         </div>
         <div id="product_description">
           {{ productdetails ? productdetails.product_detail:'' }}
         </div>
         <div id="product_tags">
-          <div class="product_tag">甲冑</div>
-          <div class="product_tag">重い</div>
+          <div class="product_tag" v-for="(item, index) in tag_data" :key="index">{{item.tag}}</div>
+          <!-- <div class="product_tag">重い</div> -->
         </div>
         <div id="product_price">
           {{ productdetails.price ? exprice(productdetails.price):'' }} 円 <span>(税抜)</span>
           <div id="product_favo">
-            <v-hover v-slot:default="{ hover }">
-              <v-btn :color="hover ? '#F8CE38':'grey'" icon>
+            <v-hover v-slot:default="{ hover }" v-if="product_favos.indexOf(productdetails.product_id) == -1 ? true:false">
+              <v-btn :color="hover ? '#F8CE38':'grey'" icon @click="product_favo_Req">
+                <!-- <v-btn color="red" icon> -->
+                <v-icon x-large>mdi-star-circle-outline</v-icon>
+              </v-btn>
+            </v-hover>
+            <v-hover v-slot:default="{ hover }" v-if="product_favos.indexOf(productdetails.product_id) != -1 ? true:false">
+              <v-btn :color="hover ? 'grey':'#F8CE38'" icon @click="del_favo_dataReq">
                 <!-- <v-btn color="red" icon> -->
                 <v-icon x-large>mdi-star-circle-outline</v-icon>
               </v-btn>
@@ -73,8 +91,14 @@
             <div id="workshop_description">{{ workshop_data.shop_description }}</div>
           </div>
           <div id="workshop_favo">
-            <v-hover v-slot:default="{ hover }">
-              <v-btn :color="hover ? 'red':'grey'" icon>
+            <v-hover v-slot:default="{ hover }" v-if="favo_shops.indexOf(workshop_data.shop_id) == -1 ? true:false"> 
+              <v-btn :color="hover ? 'red':'grey'" icon @click="add_favoshop_req(0)">
+                <!-- <v-btn color="red" icon> -->
+                <v-icon x-large>mdi-shield-star</v-icon>
+              </v-btn>
+            </v-hover>
+            <v-hover v-slot:default="{ hover }" v-if="favo_shops.indexOf(workshop_data.shop_id) != -1 ? true:false"> 
+              <v-btn :color="hover ? 'grey':'red'" icon @click="add_favoshop_req(1)">
                 <!-- <v-btn color="red" icon> -->
                 <v-icon x-large>mdi-shield-star</v-icon>
               </v-btn>
@@ -102,15 +126,19 @@
           </tr>
           <tr>
             <td class="th">評価</td>
-            <td>
+            <td v-if="reviews_data.length>0">
+              <p style="padding-left: 8px;">{{avg}}点</p>
               <v-rating
                 color="yellow darken-3"
                 background-color="grey darken-1"
-                v-model="item.rating"
+                v-model="avg"
                 readonly
                 half-increments
                 size="14px"
               ></v-rating>
+            </td>
+            <td v-else>
+              <p style="padding-top: 15px;">評価がされていません</p>
             </td>
           </tr>
         </table>
@@ -122,8 +150,7 @@
         </div>
         <div id="tag_search_title" class="sawarabi">タグで探す</div>
         <div id="search_tags">
-          <div class="search_tag">甲冑</div>
-          <div class="search_tag">重い</div>
+          <div class="search_tag" v-for="(item, index) in tag_data" :key="index">{{item.tag}}</div>
         </div>
       </div>
     </div>
@@ -133,30 +160,30 @@
         <v-divider></v-divider>
         <v-card-text>
           <v-subheader>この商品を評価する</v-subheader>
-          <v-rating></v-rating>
+          <v-rating v-model="review_point"></v-rating>
           <v-layout row wrap justify-center>
             <v-flex xs9 md11>
-              <v-text-field label placeholder="商品レビュー" outlined></v-text-field>
+              <v-text-field label placeholder="商品レビュー" outlined v-model="review_text"></v-text-field>
             </v-flex>
             <v-flex xs2 md1>
-              <v-btn color="success" style="height: 55px;width: 100%;">送信</v-btn>
+              <v-btn color="success" style="height: 55px;width: 100%;" @click="in_review">送信</v-btn>
             </v-flex>
           </v-layout>
           <v-divider />
         </v-card-text>
-        <v-card-text v-for="(item, index) in reviews" :key="index">
-          {{item.name}}
+        <v-card-text v-for="(item, index) in reviews_data" :key="index">
+          {{item.user_name}}
           <v-layout row wrap align-center>
             <v-rating
-              v-model="item.rating"
+              v-model="item.evaluation"
               color="yellow darken-3"
               background-color="grey darken-1"
               readonly
               size="19px"
             />
-            ({{item.rating}})
+            ({{item.evaluation}})
           </v-layout>
-          {{item.review}}
+          {{item.comment}}
           <v-divider style="margin-top: 5px;"></v-divider>
         </v-card-text>
       </v-card>
@@ -184,6 +211,48 @@
           </v-layout>
         </v-card>
       </v-dialog>
+      <v-dialog
+        v-model="dialog_02"
+        persistent
+        :overlay="false"
+        max-width="500px"
+        transition="dialog-transition"
+      >
+        <v-card>
+          <v-card-text style="padding: 10px;">
+            <v-layout row wrap justify-center align-center>
+              <h3>
+                <v-icon style="margin-bottom: 10px;">mdi-check</v-icon>
+              </h3>
+              <h3 style="margin-bottom: 10px;">投稿しました</h3>
+            </v-layout>
+            <v-layout row wrap justify-center>
+              <v-btn color="success" @click="load">OK</v-btn>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-dialog
+        v-model="dialog"
+        persistent
+        :overlay="false"
+        max-width="500px"
+        transition="dialog-transition"
+      >
+        <v-card>
+          <v-card-text style="padding: 10px;">
+            <v-layout row wrap justify-center align-center>
+              <h3>
+                <v-icon style="margin-bottom: 10px;">mdi-check</v-icon>
+              </h3>
+              <h3 style="margin-bottom: 10px;">カートに追加しました</h3>
+            </v-layout>
+            <v-layout row wrap justify-center>
+              <v-btn color="success" @click="dialog=false">OK</v-btn>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </div>
   </v-layout>
 </template>
@@ -192,14 +261,19 @@
 import {mapActions,mapGetters} from 'vuex';
 
 export default {
+middleware: 'auth',
   head() {
     return {
-      script: [{ src: "https://fyu.se/embed?v=2.0" }]
+      script: [
+        { src: "https://fyu.se/embed?v=2.0" },
+        { src: "https://cdn.scaleflex.it/plugins/js-cloudimage-360-view/2/js-cloudimage-360-view.min.js" }
+      ]
     };
   },
 
   async mounted() {
     await this.getproductdetailreq();
+    await this.get_reviewsReq()
     console.log(this.productdetails.shop_id)
     this.getShopdata({wsid:this.productdetails.shop_id})
     console.log(this.workshop_data)
@@ -207,10 +281,25 @@ export default {
       this.stock.push(i+1);
     }
     await this.getcartdataReq();
+    this.product_favos = await this.get_favo_data({user_data: this.loginuserdata.user_data});
+    var result = await this.get_favoshop({user_id:this.loginuserdata.user_data.user_id});
+    this.favo_shops = result;
+    console.log('商品ID達',this.product_favos)
+    await this.get_avg()
+    await window.CI360.init();
   },
 
   data() {
     return {
+      dialog: false,
+      dialog_02: false,
+      all_review_point: 0,
+      avg: 0,
+      dialog:false,
+      review_text: '',
+      review_point: 0,
+      favo_shops: [],
+      product_favos: [],
       selectItem: 0,
       circle: false,
       stock: [],
@@ -237,8 +326,62 @@ export default {
     };
   },
   methods:{
+    async in_review(){
+      console.log(this.review_text)
+      console.log(this.review_point)
+      const review_data = {
+        product_id: this.$route.params.product,
+        user_id: this.loginuserdata.user_data.user_id,
+        review_point: this.review_point,
+        review_text: this.review_text
+      }
+      await this.product_review({review_data})
+      this.review_point=0;
+      this.review_text='';
+      await this.get_reviewsReq()
+      this.dialog_02=true;
+    },
+
+    async load(){
+      await this.getproductdetailreq();
+      await this.get_reviewsReq()
+      await this.get_avg()
+      this.dialog_02=false;
+    },
+
+    async get_reviewsReq(){
+      const get_review_data = {
+        product_id: this.$route.params.product
+      }
+      await this.get_reviews({get_review_data})
+    },
+
     async getcartdataReq(){
       await this.get_cartdata({userid:this.loginuserdata.user_data.user_id});
+    },
+    async add_favoshop_req(i){
+      const payload = {
+        user_id: this.loginuserdata.user_data.user_id,
+        shop_id: this.workshop_data.shop_id
+      }
+      console.log(payload)
+      if(i == 0) await this.add_favoshop({payload});
+      if(i == 1) await this.del_favoshop({payload});
+      var result = await this.get_favoshop({user_id:this.loginuserdata.user_data.user_id});
+      this.favo_shops = result;
+    },
+
+    async get_avg(){
+      this.all_review_point = 0;
+      for(var c=0; c<this.reviews_data.length; c++){
+        this.all_review_point += this.reviews_data[c].evaluation 
+      }
+      console.log(this.avg)
+      if(this.all_review_point !== 0){
+        this.avg = Math.round(this.all_review_point / this.reviews_data.length * 10)
+        this.avg = this.avg / 10
+      }
+      console.log(this.avg)
     },
 
     async getproductdetailreq(){
@@ -248,6 +391,7 @@ export default {
       console.log(p_data);
       try{
         await this.getproductdetails({p_data})
+        await this.get_tagdata({p_data})
       }catch(e){
         console.log('エラー発生')
         console.log(e)
@@ -276,7 +420,7 @@ export default {
         try{
           await this.cart_upload({payload})
           await this.getcartdataReq()
-          alert('カート追加完了です');
+          this.dialog = true
         }catch(e){
           console.log('エラー発生')
           console.log(e)
@@ -290,14 +434,40 @@ export default {
         try{
           await this.upd_cart({data})
           await this.getcartdataReq()
-          alert('カート追加完了しました')
+          this.dialog = true
         }catch(e){
           console.log('エラー発生')
           console.log(e)
         }
       }
     },
-
+    async product_favo_Req(){
+      var favo_data = {
+        user_id : this.loginuserdata.user_data.user_id,
+        product_id : this.$route.params.product,
+      }
+      console.log(favo_data)
+      try{
+        await this.product_favo({favo_data})
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+      this.product_favos = await this.get_favo_data({user_data: this.loginuserdata.user_data})
+    },
+    async del_favo_dataReq(){
+      const del_data = {
+        user_id: this.loginuserdata.user_data.user_id,
+        product_id: this.$route.params.product,
+      }
+      try{
+        await this.del_product_favo({del_data})
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+      this.product_favos = await this.get_favo_data({user_data: this.loginuserdata.user_data})
+    },
 
     circleOpen(){
       this.circle = true
@@ -309,20 +479,37 @@ export default {
     exprice(val){
       return val.toLocaleString();
     },
-    ...mapActions('products',['getproductdetails']),
+    ...mapActions('reviews',['product_review','get_reviews']),
+    ...mapActions('products',['getproductdetails','product_favo','del_product_favo']),
+    ...mapActions('products',['getproductdetails','product_favo','del_product_favo','get_favo_data','get_tagdata']),
     ...mapActions('workshop_manage',['getShopdata']),
+    ...mapActions('work_shop',['get_workshop','add_favoshop','get_favoshop','del_favoshop']),
     ...mapActions('carts',['cart_upload','get_cartdata','upd_cart'])
   },
   computed: {
-    ...mapGetters('products',['productdetails']),
+    ...mapGetters('reviews',['reviews_data']),
+    ...mapGetters('products',['productdetails','favo_flg','tag_data']),
     ...mapGetters('carts',['cart_data','getcartdata','updata_data']),
     ...mapGetters('workshop_manage',['workshop_data']),
+    ...mapGetters('work_shop',['favo_shop']),
     ...mapGetters(['loginuserdata'])
   }
 };
 </script>
 
 <style scoped>
+
+#fullimage{
+  border: 2px solid #DEE5ED;
+  border-radius: 3px;
+  width: 160px;
+  height: 160px;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  background-color: #fff;
+  z-index: 100;
+}
 
 .sawarabi{
   font-family: "Sawarabi Mincho";
@@ -388,28 +575,30 @@ a {
 }
 
 #product_titles{
-  display: flex;
+  overflow: hidden;
   width: 100%;
   height: 110px;
 }
 
 #product_title{
   display: flex;
+  align-items: center;
+  float: left;
+  height: 110px;
+  word-break: break-all;
   box-sizing: border-box;
   padding-left: 30px;
   font-size: 30px;
-  align-items: center;
-  width: 50%;
-  height: 110px;
-  white-space: nowrap
+  width: 60%;
 }
 
 #product_rate{
+  float: left;
   display: flex;
   justify-content: flex-end;
   font-size: 30px;
   align-items: center;
-  width: 50%;
+  width: 40%;
   height: 110px;
   font-size: 11px;
 }
@@ -422,6 +611,7 @@ a {
   width: 100%;
   height: 150px;
   color: #444444;
+  line-height: 30px;
 }
 
 #product_tags{

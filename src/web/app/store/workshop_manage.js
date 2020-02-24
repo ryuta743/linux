@@ -65,7 +65,7 @@ export const actions = {
         wsid
     }) {
         try {
-            const ws_inf = await this.$axios.$get(`/api2/workshopManage/getShopdata?shop_id=${wsid}`);
+            const ws_inf = await this.$axios.$get(`http://api-workshopManage/workshopManage/getShopdata?shop_id=${wsid}`);
             console.log(ws_inf)
             commit('setWorkshop', ws_inf[0])
         } catch (error) {
@@ -82,7 +82,7 @@ export const actions = {
         try {
             console.log(wsid)
             var ws_inf = [];
-            ws_inf = await this.$axios.$get(`/api2/workshopManage/getOrderlist?shop_id=${wsid}`);
+            ws_inf = await this.$axios.$get(`http://api-workshopManage/workshopManage/getOrderlist?shop_id=${wsid}`);
             console.log(ws_inf)
             if (ws_inf.length > 0) {
                 for (var i = 0; i < ws_inf.length; i++) {
@@ -105,7 +105,7 @@ export const actions = {
         console.log('受け取ったデータ:' + wsid)
         try {
             console.log('aa')
-            const ws_inf = await this.$axios.$get(`/api2/workshopManage/getOrderdetail?shop_id=${wsid}&order_number=${order_number}`);
+            const ws_inf = await this.$axios.$get(`http://api-workshopManage/workshopManage/getOrderdetail?shop_id=${wsid}&order_number=${order_number}`);
             if (ws_inf.length > 0) {
                 for (var i = 0; ws_inf.length > i; i++) {
                     if (ws_inf[i].proccess == 1) ws_inf[i].proccess = true;
@@ -129,7 +129,7 @@ export const actions = {
     }) {
         console.log('受け取ったデータ:' + wsid)
         try {
-            var products = await this.$axios.$get(`/api2/workshopManage/getProducts?shop_id=${wsid}`);
+            var products = await this.$axios.$get(`http://api-workshopManage/workshopManage/getProducts?shop_id=${wsid}`);
             for (var i = 0; i < products.length; i++) {
                 products[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${products[i].shop_id}%2Fproducts%2F${products[i].product_img}?alt=media`;
             }
@@ -148,7 +148,7 @@ export const actions = {
     }) {
         console.log('受け取ったデータ:' + wsid)
         try {
-            const sales = await this.$axios.$get(`/api2/workshopManage/getSale?shop_id=${wsid}`);
+            const sales = await this.$axios.$get(`http://api-workshopManage/workshopManage/getSale?shop_id=${wsid}`);
             commit('setSales', sales)
             console.log(sales)
         } catch (error) {
@@ -164,7 +164,7 @@ export const actions = {
     }) {
         console.log('受け取ったデータ:' + wsid)
         try {
-            const sales = await this.$axios.$get(`/api2/workshopManage/getOrderSales?shop_id=${wsid}`);
+            const sales = await this.$axios.$get(`http://api-workshopManage/workshopManage/getOrderSales?shop_id=${wsid}`);
             for (var i = 0; i < sales.length; i++) {
                 sales[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${sales[i].shop_id}%2Fproducts%2F${sales[i].product_img}?alt=media`;
             }
@@ -186,7 +186,7 @@ export const actions = {
     }) {
         try {
             console.log(saleid)
-            var saleitem = await this.$axios.$get(`/api2/workshopManage/getSaleitem?sale_id=${saleid}`)
+            var saleitem = await this.$axios.$get(`http://api-workshopManage/workshopManage/getSaleitem?sale_id=${saleid}`)
             for (var i = 0; i < saleitem.length; i++) {
                 saleitem[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${saleitem[i].shop_id}%2Fproducts%2F${saleitem[i].product_img}?alt=media`;
             }
@@ -202,7 +202,7 @@ export const actions = {
         wsid
     }) {
         try {
-            var trends = await this.$axios.$get(`/api2/workshopManage/getTrend?shop_id=${wsid}`)
+            var trends = await this.$axios.$get(`http://api-workshopManage/workshopManage/getTrend?shop_id=${wsid}`)
             var trends_item = [];
             var total = 0;
             for (var i = 3; i < trends.length; i++) {
@@ -235,7 +235,7 @@ export const actions = {
         const products = payload.products;
         try {
             for (var i = 0; i < items.length; i++) {
-                this.$axios.$get(`/api2/workshopManage/addSale?sale_id=${saleid}&product_id=${products[items[i]].product_id}&shop_id=${wsid}&sale_name=${salename}&rate=${rate}`);
+                this.$axios.$get(`http://api-workshopManage/workshopManage/addSale?sale_id=${saleid}&product_id=${products[items[i]].product_id}&shop_id=${wsid}&sale_name=${salename}&rate=${rate}`);
             }
             return 'success'
         } catch (error) {
@@ -249,7 +249,7 @@ export const actions = {
     }) {
         try {
             const now = moment().format('YYYY-MM-DD');
-            this.$axios.$get(`/api2/workshopManage/addProduct?shop_id=${payload.wsid}&product_name=${payload.product_name}&product_name_en=${payload.product_name_en}&product_number=${payload.product_number}&price=${payload.price}&record_date=${now}&product_detail=${payload.description}&product_img=${payload.img}&stock=${payload.stock}&safety=${payload.safety}&size=${payload.size}&mate=${payload.mate}&weight=${payload.weight}`)
+            this.$axios.$get(`http://api-workshopManage/workshopManage/addProduct?shop_id=${payload.wsid}&product_name=${payload.product_name}&product_name_en=${payload.product_name_en}&product_number=${payload.product_number}&price=${payload.price}&record_date=${now}&product_detail=${payload.description}&product_img=${payload.img}&stock=${payload.stock}&safety=${payload.safety}&size=${payload.size}&mate=${payload.mate}&weight=${payload.weight}`)
         } catch (error) {
             throw new Error("Error")
         }
@@ -262,14 +262,14 @@ export const actions = {
         try {
             if (payload.which === 1) {
                 //削除
-                this.$axios.$get(`/api2/workshopManage/proccessUp?product_id=${payload.product_id}&which=0&order_number=${payload.order}`);
+                this.$axios.$get(`http://api-workshopManage/workshopManage/proccessUp?product_id=${payload.product_id}&which=0&order_number=${payload.order}`);
                 commit('setProccess', {
                     target: payload.target,
                     flg: 0
                 })
                 return
             } else {
-                this.$axios.$get(`/api2/workshopManage/proccessUp?product_id=${payload.product_id}&which=1&order_number=${payload.order}`);
+                this.$axios.$get(`http://api-workshopManage/workshopManage/proccessUp?product_id=${payload.product_id}&which=1&order_number=${payload.order}`);
                 commit('setProccess', {
                     target: payload.target,
                     flg: 1
@@ -278,6 +278,24 @@ export const actions = {
             }
         } catch (error) {
             throw new Error("Error")
+        }
+    },
+    async tag_add({
+        commit
+    }, {
+        tag_datas
+    }) {
+        const product_id = await this.$axios.$get(`http://api-workshopManage/workshopManage/newest_product?shop_id=${tag_datas.shop_id}`);
+        console.log(product_id)
+        for (var i = 0; i < tag_datas.tag_data.length; i++) {
+            const tag_jp = tag_datas.tag_data[i].japan
+            const tag_en = tag_datas.tag_data[i].english
+            console.log(tag_jp)
+            console.log(tag_en)
+            const productid = product_id[0].product_id
+            console.log(productid)
+            let product_data = await this.$axios.$get(`http://api-workshopManage/workshopManage/tag_add?product_id=${productid}&tag_jp=${tag_jp}&tag_en=${tag_en}`);
+            console.log(product_data)
         }
     }
 }

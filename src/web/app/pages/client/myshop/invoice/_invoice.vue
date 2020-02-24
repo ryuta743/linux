@@ -170,8 +170,8 @@
     </div>
     <form style="width: 100%;">
       <div style="width: 100%;margin: 20px 0 20px 0;text-align: center;" class="no-print">
-        <v-btn color="info" width="200px" @click="print">印刷</v-btn>
-        <v-btn color="grey" width="200px" @click="$router.push(`/client/myshop/order/${$route.params.invoice}`)">キャンセル</v-btn>
+        <v-btn color="info" width="200px" @click="print" depressed>印刷</v-btn>
+        <v-btn color="grey" width="200px" @click="$router.push(`/client/myshop/order/${$route.params.invoice}`)" depressed>キャンセル</v-btn>
       </div>
     </form>
   </div>
@@ -181,6 +181,8 @@
 import {mapGetters,mapActions} from 'vuex';
 
 export default {
+middleware: 'auth',
+
   data() {
     return {
         year: null,
@@ -233,7 +235,9 @@ table td{
 
 #receipt {
   box-sizing: border-box;
-  padding: 50px 100px;
+  padding: 40px 100px;
+  box-shadow: 0 0 4px gray;
+  background-color: #fff;
 }
 
 #number {
@@ -360,6 +364,9 @@ table td{
 @media print {
   .no-print {
     display: none;
+  }
+  #receipt{
+    box-shadow: 0 0 0px gray;
   }
 }
 

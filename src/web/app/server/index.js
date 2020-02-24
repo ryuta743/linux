@@ -6,6 +6,32 @@ const { createTerminus } = require('@godaddy/terminus')
 const app = express()
 const session = require('express-session')
 var MemoryStore = require('memorystore')(session)
+// メール   
+var nodemailer = require('nodemailer')
+
+// メッセージ
+var message = {
+  from    : 'tenshokuproject2020@gmail.com',
+  to      : 'hankun0127taktak@gmail.com',
+  subject : 'テスト',
+  text    : 'テストです'
+};
+
+var smtpConfig = {
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // SSL
+  auth: {
+    user : 'tenshokuproject2020@gmail.com',
+    pass : 'tenshoku'
+  }
+};
+
+var transporter = nodemailer.createTransport(smtpConfig);
+
+transporter.sendMail(message, function(err, response) {
+  console.log(err || response);
+});
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')

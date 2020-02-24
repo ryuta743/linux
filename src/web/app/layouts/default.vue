@@ -1,22 +1,28 @@
 <template>
-  <v-app>
+  <v-app style="background-color: #fff;background-image: url(/wasi.png);">
     <!-- ログインダイアログ -->
     <v-dialog
       v-model="loginDialog"
       scrollable
       :overlay="false"
-      max-width="700px"
+      max-width="400px"
       transition="dialog-transition"
     >
-      <v-card style="padding: 15px 15px 60px 15px;">
+      <v-card style="padding: 20px 25px 30px 25px;">
         <v-card-text style="text-align: center;padding: 20px;">
+          <img src="../static/hewlogo.png" alt="ロゴ" width="50px">
           <h2>ログイン</h2>
         </v-card-text>
         <form @submit.prevent>
-          <v-text-field name="name" outlined label="メールアドレス" v-model="login_mail"></v-text-field>
-          <v-text-field name="password" outlined label="パスワード" type="password" v-model="login_password"></v-text-field>
-          <v-btn color="success" type="submit" @click="logindataReq">ログイン</v-btn>
-          <v-btn color="grey" dark @click="loginDialog = false">キャンセル</v-btn>
+          <v-text-field name="name" outlined label="メールアドレス" v-model="login_mail" id="text_field" style="padding: 0;"></v-text-field>
+          <v-text-field name="password" outlined label="パスワード" type="password" v-model="login_password" id="text_field"></v-text-field>
+          <div id="login_button">
+            <v-btn color="success" type="submit" @click="logindataReq" depressed id="suc_btn">ログイン</v-btn>
+            <v-btn color="grey" dark @click="loginDialog = false" depressed id="can_btn">キャンセル</v-btn>
+          </div>
+          <div id="chan_pass">
+            <nuxt-link to="/change_pass" id="change_pass">パスワードを忘れた方はこちらから</nuxt-link>
+          </div>
         </form>
       </v-card>
     </v-dialog>
@@ -85,7 +91,6 @@
           <v-stepper-content step="1">
             <v-layout row wrap justify-center>
               <v-flex md10>
-
                 <v-subheader>メールアドレス</v-subheader>
                 <v-text-field label id="id" outlined v-model="user_mail"></v-text-field>
               </v-flex>
@@ -93,7 +98,6 @@
                 <v-subheader>パスワード</v-subheader>
                 <v-text-field label type="password" id="id" outlined v-model="user_pass"></v-text-field>
               </v-flex>
-              <h1 v-if="e1errorflg == 1" style="color: red;">未入力の場所あるよ</h1>
             </v-layout>
 
             <v-layout row wrap justify-end>
@@ -193,8 +197,9 @@
                     <v-icon size="50px" color="success">mdi-check</v-icon>
                   </v-card-text>
                   <v-card-text style="text-align: center;font-size: 20px;">
-                    登録が完了いたしました！
-                    <br />お疲れ様でした！
+                    天職にご登録いただき誠にありがとうございます。
+                    <br />先ほど登録完了メールを送りました。お手数ですがご確認ください。
+                    <br />お疲れ様でした。
                   </v-card-text>
                   <v-card-text style="text-align: center;">
                     <v-btn color="primary" @click="createADialog = false; e1 = 1">OK</v-btn>
@@ -219,36 +224,34 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>-->
-    <v-app-bar :clipped-left="clipped" flat class="no-print">
+    <v-app-bar :clipped-left="clipped" flat class="no-print" style="height: 65px;">
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
       <!-- <v-btn outlined>ここにlogo</v-btn> -->
-      <img src="../static/hewlogo.png" alt="ロゴ" width="50px">
-      <div id="site_title"><span>天職</span>tenshoku</div>
-      <v-tabs style="padding-left: 10px;">
-        <v-tab @click="$router.push('/')">トップ</v-tab>
-        <v-tab @click="$router.push('/shop')">ショップ</v-tab>
-        <v-tab @click="$router.push('/mall')">モール</v-tab>
-        <v-tab @click="$router.push('/contact')">コンタクト</v-tab>
-      </v-tabs>
+      <img src="../static/hewlogo.png" alt="ロゴ" width="50px" class="no-print">
+      <div id="site_title" class="no-print"><span class="no-print">天職</span>tenshoku</div>
 
-      <v-btn text @click="loginDialog = true" v-if="loginuserdata == null ? true:false">
-        <v-icon color="#DC3839">mdi-login</v-icon>ログイン
+      <div id="search_box" class="no-print">
+        <input type="text" id="search_input" placeholder="キーワード" class="no-print">
+      </div>
+
+      <v-btn text @click="loginDialog = true" v-if="loginuserdata == null ? true:false" class="no-print">
+        <v-icon color="#DC3839" class="no-print">mdi-login</v-icon>ログイン
       </v-btn>
 
-      <v-btn text style="margin: ;" v-if="loginuserdata == null ? true:false" @click="createADialog = true">
-        <v-icon color="#DC3839">mdi-account-plus</v-icon>新規登録
+      <v-btn text style="margin: ;" v-if="loginuserdata == null ? true:false" @click="createADialog = true" class="no-print">
+        <v-icon color="#DC3839" class="no-print">mdi-account-plus</v-icon>新規登録
       </v-btn>
 
-      <v-btn text @click="$router.push('/client/myshop/myshop')" v-if="loginuserdata !== null ? true:false">
-        <v-icon color="primary">mdi-store</v-icon>マイ工房管理
+      <v-btn text @click="$router.push('/client/myshop/myshop')" v-if="loginuserdata !== null ? true:false" class="no-print">
+        <v-icon color="primary" class="no-print">mdi-store</v-icon>マイ工房管理
       </v-btn>
 
-        <v-btn text v-if="loginuserdata !== null ? true:false" @click="$router.push('/customer/cart/cart')">
-          <v-icon color="primary">mdi-cart</v-icon>カート
+        <v-btn text v-if="loginuserdata !== null ? true:false" @click="$router.push('/customer/cart/cart')" class="no-print">
+          <v-icon color="primary" class="no-print">mdi-cart</v-icon>カート
         </v-btn>
 
-      <div v-if="loginuserdata !== null ? true:false">
-        <v-menu offset-y>
+      <div v-if="loginuserdata !== null ? true:false" class="no-print">
+        <v-menu offset-y class="no-print">
           <template v-slot:activator="{ on }">
             <v-btn v-on="on" text>
               <v-icon color="primary">mdi-account</v-icon>アカウント
@@ -267,8 +270,14 @@
         </v-menu>
       </div>
     </v-app-bar>
-    <div id="record_btn">
-      <v-btn color="error" icon @click="record_req"><v-icon x-large>mdi-microphone</v-icon></v-btn>
+    <div id="subnav" class="no-print">
+      <div class="sub_item no-print" @click="$router.push('/')"><v-icon color="green darken-2">mdi-home</v-icon>トップ</div>
+      <div class="sub_item no-print" @click="$router.push('/shop')"><v-icon color="orange darken-2">mdi-gift</v-icon>ショップ</div>
+      <div class="sub_item no-print" @click="$router.push('/mall')"><v-icon color="purple darken-2">mdi-shopping-search</v-icon>ランダムモール</div>
+      <div class="sub_item no-print" @click="$router.push('/contact')"><v-icon color="teal darken-2">mdi-email</v-icon>お問い合わせ</div>
+    </div>
+    <div id="record_btn" class="no-print">
+      <v-btn color="error" class="no-print" icon @click="record_req"><v-icon x-large>mdi-microphone</v-icon></v-btn>
     </div>
     <div id="order_box" v-if="order != ''">
       {{ order }}
@@ -278,8 +287,30 @@
 
     <nuxt />
 
-    <v-footer style="height: 400px;" dark class="no-print">
-      <span>&copy; ここはフッター</span>
+    <div id="foo" class="no-print">
+      <p class="no-print">PAGE</p>
+      <p class="no-print"></p>
+      <p class="no-print">TOP</p>
+    </div>
+    <v-footer style="height: 300px;" dark class="no-print">
+      <div id="ter">
+        <div id="foo_logo">
+          <img src="/grey_logo.png" alt="天職くん" style="width: 150px;">
+          <div id="footer_title"><span>天職</span>tenshoku</div>
+        </div>
+        <div id="footer_nav">
+          <h2>天職</h2>
+          <div id="navi">
+            <p>利用規約</p>
+            <p>プライバシー</p>
+            <p>ヘルプ</p>
+            <nuxt-link to="/contact" id="footer_link">お問い合わせ</nuxt-link>
+          </div>
+        </div>
+      </div>
+      <div id="copy">
+        <p>Copyright　2020　Tenshoku　ALL　RIGHTS　RESERVED.</p>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -362,7 +393,6 @@ export default {
         this.e1 = 2
       }
     },
-
     e1check2() {
       if(this.user_name == '' || this.countrys == '' || this.gender == ''){
         this.e1errorflg = 1
@@ -384,11 +414,13 @@ export default {
       }
       try{
         this.inuserdata({payload});
+        this.new_user_mail({payload});
         this.e1 = 4
       }catch(e){
         console.log('エラー発生'),
         console.log(e)
       }
+
       this.e1 = 4
     },
     
@@ -456,7 +488,8 @@ export default {
     //   this.$router.push("/");
     // },
     ...mapActions(['login','logout','record','order_reset']),
-    ...mapActions('userdata',['inuserdata'])
+    ...mapActions('userdata',['inuserdata']),
+    ...mapActions('mail',['new_user_mail'])
   },
   computed: {
     ...mapGetters(['loginuserdata','order','order_result']),
@@ -466,6 +499,141 @@ export default {
 </script>
 
 <style scoped>
+#subnav{
+  border-top: 1.2px solid #dddddd;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 45px;
+  font-size: 14px;
+  background-color: #fefefe;
+}
+
+.sub_item:hover{
+  background-color: #ddd;
+}
+
+.sub_item{
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: 0.5s;
+  width: 450px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub_item .v-icon{
+  margin-right: 5px;
+}
+
+#foo{
+  display: flex;
+  background-color: #989898;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+#foo p{
+  margin: 0;
+  padding: 0;
+  font-size: 25px;
+}
+
+#copy{
+  width: 100%;
+  display: flex;
+  font-size: 0.8em;
+}
+
+#copy p{
+  margin: 0 auto;
+}
+
+.triangle{
+  border-right: 23px solid transparent;
+  border-bottom: 24px solid #b2ce54;
+  border-left: 23px solid transparent; 
+}
+
+#ter{
+  padding-left: 70px;
+  display: flex;
+}
+
+#ter img{
+  padding-left: 20px;
+}
+
+#foo_logo{
+  width: 270px;
+}
+
+#footer_title{
+  width: 500px;
+  font-size: 23px;
+  padding-bottom: 5px;
+}
+
+#footer_title span{
+  font-size: 35px;
+  padding-right: 10px;
+  padding-bottom: 0; 
+}
+
+#footer_nav h2{
+  font-size: 15px;
+  margin-bottom: 17px;
+}
+
+#navi{
+  margin-left: 15px;
+  border-left: 1px solid #ffffff;
+  padding-left: 15px;
+  font-size: 14.5px;
+  
+}
+
+#navi p{
+  padding-bottom: 0px;
+  margin-bottom: 10px; 
+}
+
+#footer_link{
+  text-decoration: none;
+  color: #fff;
+}
+
+#login_button{
+  text-align: center;
+}
+
+#chan_pass{
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+}
+
+#change_pass{
+  font-size: 0.8em;
+  text-decoration: none;
+}
+
+#suc_btn{
+  width: 350px;
+  margin-bottom: 10px; 
+}
+
+#can_btn{
+  width: 350px;
+}
+
+#text_field{
+  width: 100px;
+}
 
 #record_btn{
   position: fixed;
@@ -521,12 +689,27 @@ export default {
 }
 
 #site_title{
-  width: 500px;
+  width: 530px;
   padding-top:15px;
+}
+
+#search_box{
+  width: 600px;
+}
+
+#search_input{
+  width: 400px;
+  padding: 5px 5px 5px 15px;
+  border: 1.2px solid #ddd;
+  border-radius: 3px
 }
 
 #site_title span{
   font-size: 25px
+}
+
+.v-input__slot{
+  margin-bottom: 0px;
 }
 
 @media print {

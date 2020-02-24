@@ -31,8 +31,8 @@
     </div>
     <form style="width: 100%;">
       <div style="width: 100%;margin: 20px 0 20px 0;text-align: center;" class="no-print">
-        <v-btn color="info" width="200px" @click="print">印刷</v-btn>
-        <v-btn color="grey" width="200px" @click="$router.push(`/client/myshop/order/${$route.params.print}`)">キャンセル</v-btn>
+        <v-btn color="info" width="200px" @click="print" depressed>印刷</v-btn>
+        <v-btn color="grey" width="200px" @click="$router.push(`/client/myshop/order/${$route.params.print}`)" depressed>キャンセル</v-btn>
       </div>
     </form>
   </div>
@@ -42,6 +42,8 @@
 import {mapGetters,mapActions} from 'vuex';
 
 export default {
+middleware: 'auth',
+
   data() {
     return {
       ordernumber: this.$route.params.print,
@@ -76,9 +78,12 @@ export default {
 </script>
 
 <style scoped>
+
 #receipt {
   box-sizing: border-box;
-  padding: 50px 100px;
+  background-color: #fff;
+  box-shadow: 0 0 4px gray;
+  padding: 20px 70px 20px 70px;
 }
 
 #number {
@@ -185,6 +190,9 @@ export default {
 }
 
 @media print {
+  #receipt{
+    box-shadow: 0 0 0px gray;
+  }
   .no-print {
     display: none;
   }

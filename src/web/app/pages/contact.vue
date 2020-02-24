@@ -11,11 +11,12 @@
               outlined
               label
               auto-grow
+              v-model="contact_text"
             ></v-textarea>
           </v-card-text>
           <v-card-actions>
             <v-layout row wrap justify-end>
-              <v-btn color="info" @click="dialog = true">送信</v-btn>
+              <v-btn color="info" @click="post_contactReq">送信</v-btn>
             </v-layout>
           </v-card-actions>
         </v-card>
@@ -46,11 +47,37 @@
 </template>
 
 <script>
+import {mapActions,mapGetters} from 'vuex';
+
 export default {
+middleware: 'auth',
   data() {
     return {
+      contact_text: '',
       dialog: false
     };
+  },
+  methods:{
+    async post_contactReq(){
+      console.log(this.contact_text)
+      const contact_data = {
+        user_id: this.loginuserdata.user_data.user_id,
+        text: this.contact_text,
+      }
+      console.log(contact_data)
+      try{
+        await this.post_contact({contact_data})
+        this.dialog = true
+      }catch(e){
+        console.log('エラー発生')
+        console.log(e)
+      }
+    },
+    
+    ...mapActions('contact',['post_contact'])
+  },
+  computed:{
+    ...mapGetters(['loginuserdata'])
   }
 };
 </script>

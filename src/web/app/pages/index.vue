@@ -2,12 +2,21 @@
   <v-layout>
     <v-flex xs12 sm12 md12>
       <div id="top">
-            <img src="../static/topimg.png" alt="メインビジュアル" style="width: 100%;height: 600px;object-fit: cover;opacity: 1;">
-            <div id="madejp">
-              <img src="../static/madejp.png" alt="madeinjapan">
-              <div class="madechar">受け継がれる意志</div>
-              <div class="madechar">受け継がれる技術</div>
-            </div>
+            <img src="../static/topimg.png" alt="メインビジュアル" style="width: 100%;height: 600px;object-fit: cover;opacity: 0.6;">
+            <input type="text" id="keyword_input" placeholder="キーワード">
+            <img src="../static/madejp.png" alt="madeinjapan" id="madejp">
+            <div id="loop_body">
+              <div id="loopslider">
+                <ul>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2018/08/IM_KG02001-01.jpg" width="200" height="200" alt="" /></li>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2017/05/HR71009-2-600x600.jpg" width="200" height="200" alt="" /></li>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2018/07/BS99004_img.jpg" width="200" height="200" alt="" /></li>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2018/09/KG92006_11.jpg" width="200" height="200" alt="" /></li>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2017/05/HR71009-2-600x600.jpg" width="200" height="200" alt="" /></li>
+                  <li><img src="https://ichi-point.jp/wp-content/uploads/2018/11/HR91003.jpg" width="200" height="200" alt="" /></li>
+                </ul>
+              </div>
+            </div>    
       </div>
       
       <div id="top_body">
@@ -42,13 +51,13 @@
                 <v-lazy-image :src="item.product_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
               </div>
               <v-card-text style="heigh: 150px;">
-                <div id="product_name">{{item.product_name}}</div>
+                <div id="product_name">{{truncate(item.product_name,14)}}</div>
                 <div id="product_price">¥{{exprice(item.price)}}</div>
                 <div id="product_rate">
                   <v-rating
                       color="yellow darken-3"
                       background-color="grey darken-1"
-                      v-model="ws_rate"
+                      v-model="item.rate"
                       size="14px"
                       readonly
                       half-increments
@@ -67,7 +76,7 @@
                 <v-lazy-image :src="item.product_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
               </div>
               <v-card-text style="heigh: 150px;">
-                <div id="product_name">{{item.product_name}}</div>
+                <div id="product_name">{{truncate(item.product_name,14)}}</div>
                 <div id="product_price">¥{{exprice(item.price)}}</div>
                 <div id="product_rate">
                   <v-rating
@@ -117,12 +126,53 @@ import VuetifyLogo from "~/components/VuetifyLogo.vue";
 import {mapActions,mapGetters} from 'vuex';
 
 export default {
+  head:{
+    script:[
+      {src:"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"}
+    ]
+  },
   components: {
     Logo,
     VuetifyLogo
   },
   async mounted() {
-    await  this.get_newproductReq()
+    await  this.get_newproductReq();
+    if (process.client) {
+      $('#loopslider').each(function(){
+        var loopsliderWidth = $(this).width();
+        var loopsliderHeight = $(this).height();
+        $(this).children('ul').wrapAll('<div id="loopslider_wrap"></div>');
+ 
+        var listWidth = $('#loopslider_wrap').children('ul').children('li').width();
+        var listCount = $('#loopslider_wrap').children('ul').children('li').length;
+ 
+        var loopWidth = (listWidth)*(listCount);
+ 
+        $('#loopslider_wrap').css({
+            top: '0',
+            left: '0',
+            width: ((loopWidth) * 2),
+            height: (loopsliderHeight),
+            overflow: 'hidden',
+            position: 'absolute'
+        });
+ 
+        $('#loopslider_wrap ul').css({
+            width: (loopWidth)
+        });
+        loopsliderPosition();
+ 
+        function loopsliderPosition(){
+            $('#loopslider_wrap').css({left:'0'});
+            $('#loopslider_wrap').stop().animate({left:'-' + (loopWidth) + 'px'},25000,'linear');
+            setTimeout(function(){
+                loopsliderPosition();
+            },25000);
+        };
+ 
+        $('#loopslider_wrap ul').clone().appendTo('#loopslider_wrap');
+    });
+    }
   },
   data() {
     return {
@@ -266,9 +316,10 @@ export default {
 
 #top #madejp{
   position: absolute;
-  margin: auto 0;
-  top: 200px;
-  left: 30px
+  left: 0;
+  right: 0;
+  top: 90px;
+  margin: auto;
 }
 
 .madechar{
@@ -379,5 +430,76 @@ export default {
   font-size: 18px;
   background-color: #DEE5ED;
   color: #666;
+}
+
+#keyword_input{
+  position: absolute;
+  top: 200px;
+  outline: 0;
+  margin: auto;
+  left: 0;
+  right: 0;
+  width: 600px;
+  padding: 20px 0px 20px 15px;
+  border-radius: 100px;
+  background-color: #fff;
+}
+
+#loop_body{
+  position: absolute;
+  top: 320px;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+#loopslider {
+    margin: 0 auto;
+    width: 1200px;
+    height: 200px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+#loopslider * {
+  margin: 0;
+  padding: 0;
+}
+ 
+#loopslider ul {
+    height: 200px;
+    float: left;
+    display: inline;
+    overflow: hidden;
+}
+ 
+#loopslider ul li {
+    width: 200px;
+    height: 200px;
+    float: left;
+    display: inline;
+    overflow: hidden;
+}
+
+#loopslider ul li img{
+  padding-right: 15px; 
+  object-fit: cover;
+}
+ 
+/* =======================================
+    ClearFixElements
+======================================= */
+#loopslider ul:after {
+    content: ".";
+    height: 0;
+    clear: both;
+    display: block;
+    visibility: hidden;
+}
+ 
+#loopslider ul {
+    display: inline-block;
+    overflow: hidden;
 }
 </style>

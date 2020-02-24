@@ -37,6 +37,7 @@
 import {mapActions,mapGetters} from 'vuex';
 
 export default {
+middleware: 'auth',
   data(){
     return{
       buytype :["銀行振り込み","クレジットカード","AmazonPay"],

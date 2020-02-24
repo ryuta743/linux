@@ -82,6 +82,8 @@
 
 <script>
 export default {
+middleware: 'auth',
+
   data() {
     return {
       userid: "01",

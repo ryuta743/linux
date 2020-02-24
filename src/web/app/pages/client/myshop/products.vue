@@ -69,7 +69,7 @@
                       ({{item.stock}})
                     </v-layout>
                   </v-card-text @click="$router.push(`/customer/product/${item.product_name}`)">
-                  <v-card-text style="height: 8px;">¥{{item.price}}</v-card-text>
+                  <v-card-text style="height: 8px;">¥{{exprice(item.price)}}</v-card-text>
                   <v-card-text @click="$router.push(`/customer/product/${item.product_name}`)">
                     <!-- <v-chip
                       class="ma-2"
@@ -96,6 +96,8 @@
 <script>
 import {mapActions,mapGetters,mapMutations} from 'vuex'
 export default {
+middleware: 'auth',
+
   data() {
     return {
       loading: true,
@@ -107,6 +109,9 @@ export default {
     this.loading = false;
   },
   methods:{
+    exprice(val){
+      return val.toLocaleString();
+    },
     ...mapActions('workshop_manage',['getProduct']),
     ...mapMutations('workshop_manage',['setStock'])
   },

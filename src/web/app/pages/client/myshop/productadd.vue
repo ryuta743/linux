@@ -123,9 +123,10 @@
               商品につけるタグ
               <span style="font-size: 15px;color: #999;">(3つまで)</span>
             </h3>
+            <!-- ここからタグ追加 -->
             <v-layout row wrap>
               <v-flex xs10 md10>
-                <v-text-field outlined label="追加タグ(全角カナ)" v-model="formData.tag"></v-text-field>
+                <v-text-field outlined label="追加タグ(全角カナ)" v-model="formData.tag.japan" clearable></v-text-field>
               </v-flex>
               <v-flex xs1 md1>
                 <v-btn color="info" style="width: 100%;height: 55px;" outlined @click="addTag">追加</v-btn>
@@ -144,18 +145,31 @@
                       :key="index"
                     >
                       <v-icon left>mdi-backspace</v-icon>
-                      {{item}}
+                      {{item.japan}}
                     </v-chip>
                   </v-flex>
                 </v-layout>
               </v-flex>
             </v-layout>
+            <!-- 　　　　ここからは英語だよーーーーーー　　　　 -->
+            <v-layout row wrap>
+              <v-flex xs10 md10>
+                <v-text-field outlined label="追加タグ(ローマ字)" v-model="formData.tag.english" clearable></v-text-field>
+                {{ formData.tag.japan }}
+                {{ formData.tag.english }}
+              </v-flex>
+              <v-flex xs1 md1>
+                <v-btn color="info" style="width: 100%;height: 55px;" outlined @click="addTag">追加</v-btn>
+              </v-flex>
+            </v-layout>
+            <!-- ここまで -->
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
             <v-layout row wrap justify-center>
               <v-flex xs12 md1>
                 <v-btn color="info" style="width: 100%;" @click="check = 1">確認</v-btn>
+                <!--  -->
               </v-flex>
               <v-flex xs12 md1>
                 <v-btn style="width: 100%;" @click="$router.push('/client/myshop/myshop')">キャンセル</v-btn>
@@ -196,7 +210,7 @@
                 </tr>
                 <tr>
                   <td>タグ</td>
-                  <td>トウキ・サラ・ショッキ</td>
+                  <td><span v-for="(item,index) in formData.tags" :key="index">{{item.japan}}　　　</span></td>
                 </tr>
               </tbody>
             </v-simple-table>
@@ -243,6 +257,8 @@ import {mapActions,mapGetters} from 'vuex'
 
 
 export default {
+middleware: 'auth',
+
   data() {
     return {
       myCroppa: null, //v-model croppa
@@ -259,8 +275,11 @@ export default {
         stock: 0,
         safety: 0,
         description: '',
-        tag: "",
-        tags: ["陶器"],
+        tag: {
+          japan:'',
+          english:'',
+        },
+        tags:[],
         img: "",
         size:"",
         mate:"",
@@ -269,14 +288,25 @@ export default {
     };
   },
   methods: {
-    addTag() {
-      if (this.formData.tag != "") {
-        if (this.formData.tags.length < 4) {
-          this.formData.tags.push(this.formData.tag);
-          this.formData.tag = "";
-        }
+    async addTag() {
+      if (this.formData.tag.japan != "" && this.formData.tag.english != "") {
+        const result =  await this.checkTags();
+        this.formData.tag.japan = "";
+        this.formData.tag.english = "";
       }
     },
+    checkTags(){
+      if (this.formData.tags.length < 3) {
+          var payload = {
+            japan:this.formData.tag.japan,
+            english:this.formData.tag.english
+          }
+          this.formData.tags.push(payload);
+          this.formData.tags.push();
+      }
+      return true
+    },
+    // ここからは完成してる-------------------------------------------------------------------------
     generateImage: function() {
       var type = "image/jpeg";
       let compressionRate = 0.2;
@@ -350,16 +380,28 @@ export default {
       console.log('DBに入れた画像名:' + payload.img)
       await this.addProduct({payload});
       this.check = 2;
+      // ここからタグ追加処理
+      const tag_datas = {
+        tag_data: this.formData.tags,
+        shop_id: payload.wsid
+      }
+      console.log(tag_datas);
+      await this.tag_add({tag_datas})
     },
-    ...mapActions("workshop_manage",["addProduct"]),
-    ...mapActions("persona",["uploadImage"])
+    // async tag_tuika(){
+    //   const tag_data = this.formData.tags;
+    //   console.log(tag_data);
+    //   await this.tag_add({tag_data})
+    // },
+    ...mapActions("workshop_manage",["addProduct","tag_add"]),
+    ...mapActions("persona",["uploadImage"]),
   },
   mounted() {
     Vue.use(Croppa);
     console.log(this.loginuserdata)
   },
   computed:{
-    ...mapGetters(["loginuserdata"])
+    ...mapGetters(["loginuserdata"]),
   }
 };
 </script>

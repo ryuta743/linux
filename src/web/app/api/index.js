@@ -4,7 +4,8 @@ import express from 'express'
 var app = express();
 
 const bodyParser = require('body-parser')
-
+// メール用
+var nodemailer = require('nodemailer')
 
 // var express = require('express');
 
@@ -27,6 +28,18 @@ app.use(
     bodyParser.json()
 )
 
+var smtpConfig = {
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // SSL
+  auth: {
+    user : 'tenshokuproject2020@gmail.com',
+    pass : 'tenshoku'
+  }
+};
+
+var transporter = nodemailer.createTransport(smtpConfig);
+
 // セッション登録用
 app.post('/sessionin', function (req, res) {
     console.log('セッションスタート');
@@ -46,5 +59,25 @@ app.post('/sessionin', function (req, res) {
 app.post('/logout', (req, res) => {
     delete req.session.loginuserdata
     res.json({ ok: true })
-  })
+})
 
+// メール送信用
+app.get('/send_mail', function (req,res) {
+    console.log('toujou')
+    // メッセージ
+    var message = {
+        from    : 'tenshokuproject2020@gmail.com',
+        to      : req.query.to,
+        subject : req.query.subject,
+        text    : req.query.mail
+    };
+    console.log(message)
+    // ここからメール送る関数
+    transporter.sendMail(message, function(err, response) {
+        if(err){
+            return res.json(0)
+        }else{
+            return res.json(1)
+        }
+    });
+})

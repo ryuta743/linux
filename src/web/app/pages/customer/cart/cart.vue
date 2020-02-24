@@ -16,6 +16,10 @@
           <v-divider></v-divider>
           <v-card-text style="min-height: 500px;">
             <v-layout row wrap>
+              <div id ="null_cart" v-if="getcartdata.length==0">
+                <img src="/grey_logo.png" style="width: 100px;">
+                <p>カートに商品がありません</p>
+              </div>
               <v-flex
                 xs12
                 md3
@@ -33,7 +37,7 @@
                   <div class="product_img">
                     <v-lazy-image :src="item.product_img" class="target" @click="$router.push(`/customer/product/${item.product_id}`)" style="width: 100%;height: 100%;object-fit: cover;" />
                   </div>
-                  <v-card-text class="target" @click="$router.push(`/customer/product/${item.product_id}`)" style="height: 10px;color: #707070;">{{item.product_name}}</v-card-text>
+                  <v-card-text class="target" @click="$router.push(`/customer/product/${item.product_id}`)" style="height: 10px;color: #707070;">{{truncate(item.product_name,16)}}</v-card-text>
                   <v-card-text class="target" @click="$router.push(`/customer/product/${item.product_id}`)">
                     <div class="product_price" style="color: #707070;">{{ '¥' + exprice(item.price) }}</div>
                     <div class="product_rate">
@@ -63,6 +67,7 @@
 import {mapActions,mapGetters} from 'vuex';
 
 export default {
+middleware: 'auth',
   data() {
     return {
       rate: 5,
@@ -164,6 +169,18 @@ export default {
 </script>
 
 <style scoped>
+#null_cart{
+  text-align: center;
+  font-size: 1em;
+  width:500px;
+  margin-left: 300px;
+  margin-top: 150px;
+}
+
+#null_cart img{
+  opacity: 0.3;
+}
+
 .target {
   cursor: pointer;
 }

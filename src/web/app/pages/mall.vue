@@ -2,41 +2,43 @@
   <v-layout row wrap style="">
     
     <dir id="random_body">
-      <div id="shopper" @click="shopper_click">
-        {{ mall[0] ? mall[0][0].shop_name:'' }}
-        <v-layout row wrap>
-          <div><img :src="products_data[0] ? products_data[0][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[0] ? products_data[0][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[0] ? products_data[0][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
+      <div id="shopper" @click="$router.push(`/customer/workshop/${mall[0][0].shop_id}`)">
+        <div class="shop_name">{{ mall[0] ? mall[0][0].shop_name:'' }}</div>
+        <v-layout row wrap class="hukidasi">
+          <div><img :src="products_data[0] ? products_data[0][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[0] ? products_data[0][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[0] ? products_data[0][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
         </v-layout>      
-        <img src="../static/man1.png" alt="行商人" style="width: 100%;object-fit: cover;">
+        <img src="../static/man1.gif" alt="行商人" style="width: 100%;object-fit: cover;">
       </div>
-      <div id="shopper2" @click="shopper_click">
-        {{ mall[1] ? mall[1][0].shop_name:'' }}
+      <div id="shopper2" @click="$router.push(`/customer/workshop/${mall[0][0].shop_id}`)">
+        <div class="shop_name">{{ mall[1] ? mall[1][0].shop_name:'' }}</div>
         <v-layout row wrap>
-          <div><img :src="products_data[1] ? products_data[1][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[1] ? products_data[1][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[1] ? products_data[1][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
+          <div><img :src="products_data[1] ? products_data[1][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[1] ? products_data[1][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[1] ? products_data[1][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
         </v-layout> 
-        <img src="../static/man2.png" alt="行商人" style="width: 100%;object-fit: cover;">
+        <img :src="mall[1] ? mall[1][0].shop_img:''" alt="" class="shop_img2">
+        <img src="../static/man1.gif" alt="行商人" style="width: 100%;object-fit: cover;">
       </div>
-      <div id="shopper3" @click="shopper_click">
-        {{ mall[2] ? mall[2][0].shop_name:'' }}
+      <div id="shopper3" @click="$router.push(`/customer/workshop/${mall[0][0].shop_id}`)">
+        <div class="shop_name">{{ mall[2] ? mall[2][0].shop_name:'' }}</div>
         <v-layout row wrap>
-          <div><img :src="products_data[2] ? products_data[2][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[2] ? products_data[2][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[2] ? products_data[2][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
+          <div><img :src="products_data[2] ? products_data[2][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[2] ? products_data[2][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[2] ? products_data[2][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
         </v-layout> 
-        <img src="../static/man1.png" alt="行商人" style="width: 100%;object-fit: cover;">
+        <img src="../static/man1.gif" alt="行商人" style="width: 100%;object-fit: cover;">
       </div>
-      <div id="shopper4" @click="shopper_click">
-        {{ mall[3] ? mall[3][0].shop_name:'' }}
+      <div id="shopper4" @click="$router.push(`/customer/workshop/${mall[0][0].shop_id}`)">
+        <div class="shop_name">{{ mall[3] ? mall[3][0].shop_name:'' }}</div>
         <v-layout row wrap>
-          <div><img :src="products_data[3] ? products_data[3][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[3] ? products_data[3][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
-          <div><img :src="products_data[3] ? products_data[3][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;"></div>
+          <div><img :src="products_data[3] ? products_data[3][0].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[3] ? products_data[3][1].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
+          <div><img :src="products_data[3] ? products_data[3][2].product_img:''" alt="商品1" style="width:  100px;height: 100px;object-fit: cover;" class="product_img"></div>
         </v-layout> 
-        <img src="../static/man2.png" alt="行商人" style="width: 100%;object-fit: cover;">
+        <img :src="mall[3] ? mall[3][0].shop_img:''" alt="" class="shop_img2">
+        <img src="../static/man1.gif" alt="行商人" style="width: 100%;object-fit: cover;">
       </div>
     </dir>
 
@@ -258,20 +260,25 @@ export default {
 }
 
 #random_body{
+  background-image: url(/random_back.jpg);
+  background-size: cover;
+  background-position: bottom;
   position: relative;
   width: 100%;
-  height: 80vh;
+  height: 90vh;
 }
 
 #shopper{
+  cursor: pointer;
   position: absolute;
   left: -300px;
-  top: 10px;
+  top: 160px;
   width: 300px;
   height: 400px;
 }
 
 #shopper2{
+  cursor: pointer;
   position: absolute;
   right: -300px;
   bottom: 0px;
@@ -281,20 +288,43 @@ export default {
 }
 
 #shopper3{
+  cursor: pointer;
   position: absolute;
   right: -2000px;
-  top: 20px;
+  top: 160px;
   width: 300px;
   height: 400px;
   z-index: 0;
 }
 
 #shopper4{
+  cursor: pointer;
   position: absolute;
   right: -2300px;
   bottom: 0px;
   width: 300px;
   height: 400px;
 }
+
+.shop_img2{
+  position: absolute;
+  top: 150px;
+  left: 125px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+}
+
+.product_img{
+  border-radius: 30px;
+  margin-right: 5px;
+}
+
+.shop_name{
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 
 </style>
