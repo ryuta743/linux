@@ -18,8 +18,8 @@ bw:
 	docker push ryutaterada/k8s-nodejs:1.1.3
 
 bd:
-	docker build -t ryutaterada/k8s-mysql:1.0.5 ./src/db
-	docker push ryutaterada/k8s-mysql:1.0.5
+	docker build -t ryutaterada/k8s-mysql:1.0.6 ./src/db
+	docker push ryutaterada/k8s-mysql:1.0.6
 
 a:
 	kubectl get all,pv,pvc,ingress
