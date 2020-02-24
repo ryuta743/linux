@@ -47,7 +47,7 @@ export const actions = {
         console.log('正都君素敵！！');
         console.log('天も頑張れ！！')
         console.log(payload.work_shop);
-        const shopdata = await this.$axios.$get(`http://api-workshop/workshop/get_shop?shop_data=${payload.work_shop}`);
+        const shopdata = await this.$axios.$get(`/api-workshop/workshop/get_shop?shop_data=${payload.work_shop}`);
         console.log('APIから戻ってきた');
         console.log(shopdata);
         commit("setShop_name", shopdata)
@@ -75,7 +75,7 @@ export const actions = {
         console.log(random_id)
         for (var i = 0; i < random_id.length; i++) {
             var shop_id = random_id[i]
-            var randomshop_data = await this.$axios.$get(`http://api-workshop/workshop/random_shop?shop_id=${shop_id}`);
+            var randomshop_data = await this.$axios.$get(`/api-workshop/workshop/random_shop?shop_id=${shop_id}`);
             console.log(randomshop_data)
             commit("setMall", randomshop_data)
         }
@@ -84,7 +84,7 @@ export const actions = {
         commit
     }) {
         console.log('正都はイケメンです')
-        let count_shop = await this.$axios.$get(`http://api-workshop/workshop/count_shop`);
+        let count_shop = await this.$axios.$get(`/api-workshop/workshop/count_shop`);
         let count = count_shop[0]
         console.log(count);
         commit("setShop_countdata", count)
@@ -98,7 +98,7 @@ export const actions = {
         console.log('頑張れ！！マサトmasato')
         const shop_id = shop_data.shop_id
         console.log(shop_id)
-        const workshopdata = await this.$axios.$get(`http://api-workshop/workshop/get_workshop_data?shop_id=${shop_id}`);
+        const workshopdata = await this.$axios.$get(`/api-workshop/workshop/get_workshop_data?shop_id=${shop_id}`);
         console.log(workshopdata)
         commit("setWorkshop_data", workshopdata[0])
     },
@@ -107,7 +107,7 @@ export const actions = {
     }, {
         user_id
     }) {
-        var favo_shop = await this.$axios.$get(`http://api-workshop/workshop/get_favoshop?user_id=${user_id}`);
+        var favo_shop = await this.$axios.$get(`/api-workshop/workshop/get_favoshop?user_id=${user_id}`);
         var favo_shops = [];
         for (var i = 0; i < favo_shop.length; i++) {
             favo_shops.push(favo_shop[i].shop_id);
@@ -121,7 +121,7 @@ export const actions = {
     }, {
         payload
     }) {
-        const result = await this.$axios.$get(`http://api-workshop/workshop/add_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
+        const result = await this.$axios.$get(`/api-workshop/workshop/add_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
         console.log('追加完了' + result)
     },
     async del_favoshop({
@@ -129,7 +129,7 @@ export const actions = {
     }, {
         payload
     }) {
-        const result = await this.$axios.$get(`http://api-workshop/workshop/del_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
+        const result = await this.$axios.$get(`/api-workshop/workshop/del_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
         console.log('削除完了' + result)
     }
 }

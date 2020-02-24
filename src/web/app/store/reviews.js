@@ -33,7 +33,7 @@ export const actions = {
         console.log(review_text)
         console.log(now)
         console.log('正都天才');
-        const reviews_res = await this.$axios.$get(`http://api-review/review/post_review?product_id=${product_id}&user_id=${user_id}&review_point=${review_point}&review_text=${review_text}&now=${now}`);
+        const reviews_res = await this.$axios.$get(`/api-review/review/post_review?product_id=${product_id}&user_id=${user_id}&review_point=${review_point}&review_text=${review_text}&now=${now}`);
         console.log(reviews_res)
     },
     async get_reviews({
@@ -44,7 +44,7 @@ export const actions = {
         const product_id = get_review_data.product_id;
         console.log('お前がナンバーワンだカカロット');
         console.log(product_id)
-        const reviews = await this.$axios.$get(`http://api-review/review/get_review?product_id=${product_id}`);
+        const reviews = await this.$axios.$get(`/api-review/review/get_review?product_id=${product_id}`);
         console.log(reviews)
         commit('setReviews_data', reviews)
     },

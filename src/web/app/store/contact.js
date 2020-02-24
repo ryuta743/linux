@@ -30,7 +30,7 @@ export const actions = {
         console.log(text)
         console.log(now)
         console.log('正都天才');
-        const contact = await this.$axios.$get(`http://api-contact/contact/post_contact?user_id=${user_id}&text=${text}&now=${now}`);
+        const contact = await this.$axios.$get(`/api-contact/contact/post_contact?user_id=${user_id}&text=${text}&now=${now}`);
         console.log(contact)
     },
 }

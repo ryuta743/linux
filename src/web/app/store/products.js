@@ -55,7 +55,7 @@ export const actions = {
         commit
     }) {
         console.log('正都は優しさが溢れてすごい人！！');
-        const new_productdata = await this.$axios.$get(`http://api-product/product/get_newdata`)
+        const new_productdata = await this.$axios.$get(`/api-product/product/get_newdata`)
         for (var i = 0; i < new_productdata.length; i++) {
             new_productdata[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${new_productdata[i].shop_id}%2Fproducts%2F${new_productdata[i].product_img}?alt=media`;
         }
@@ -69,14 +69,14 @@ export const actions = {
     }) {
         console.log('お前は最強だ正都様');
         console.log(payload.product);
-        var productname = await this.$axios.$get(`http://api-product/product/get_product?pro_data=${payload.product}`);
+        var productname = await this.$axios.$get(`/api-product/product/get_product?pro_data=${payload.product}`);
         console.log('APIから戻ってきた');
 
         for (var i = 0; i < productname.length; i++) {
             productname[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${productname[i].shop_id}%2Fproducts%2F${productname[i].product_img}?alt=media`;
         }
         console.log(productname);
-        /* for(var i=0 ; i<productname.length ; i++ ){        
+        /* for(var i=0 ; i<productname.length ; i++ ){
             productname[i].tags = await this.$axios.$get(`http://133.18.194.128:5000/product/get_product?pro_data=${productname[i].product_id}`);//product_idでタグを持ってくるAPI
         } */
         commit("setData", productname)
@@ -94,7 +94,7 @@ export const actions = {
     }) {
         console.log('タグ検索ストアまで届いた');
         console.log(payload)
-        var tags = await this.$axios.$get(`http://api-product/product/get_tags?tags=${payload.tags}`);
+        var tags = await this.$axios.$get(`/api-product/product/get_tags?tags=${payload.tags}`);
         console.log('APIから戻ってきた');
         for (var i = 0; i < tags.length; i++) {
             tags[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${tags[i].shop_id}%2Fproducts%2F${tags[i].product_img}?alt=media`;
@@ -109,7 +109,7 @@ export const actions = {
     }) {
         console.log('頑張れ正都！！');
         console.log(p_data.product_id);
-        const product_details = await this.$axios.$get(`http://api-product/product/get_details?id_data=${p_data.product_id}`);
+        const product_details = await this.$axios.$get(`/api-product/product/get_details?id_data=${p_data.product_id}`);
         product_details[0].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${product_details[0].shop_id}%2Fproducts%2F${product_details[0].product_img}?alt=media`;
         console.log('おかえり');
         console.log(product_details)
@@ -122,7 +122,7 @@ export const actions = {
     }) {
         console.log('ロード時のタグデータ取得');
         const product_id = p_data.product_id
-        const get_tag = await this.$axios.$get(`http://api-product/product/get_tag?product_id=${product_id}`);
+        const get_tag = await this.$axios.$get(`/api-product/product/get_tag?product_id=${product_id}`);
         console.log('おかえり');
         console.log(get_tag)
         commit('setTag_data', get_tag)
@@ -149,7 +149,7 @@ export const actions = {
         for (var c = 0; c < random_id.length; c++) {
             var shop_id = random_id[c]
             console.log(shop_id)
-            var product_data = await this.$axios.$get(`http://api-product/product/random_shop_products?shop_id=${shop_id}`);
+            var product_data = await this.$axios.$get(`/api-product/product/random_shop_products?shop_id=${shop_id}`);
             for (var i = 0; i < product_data.length; i++) {
                 product_data[i].product_img = `https://firebasestorage.googleapis.com/v0/b/tenshoku-9b0c8.appspot.com/o/images%2F${shop_id}%2Fproducts%2F${product_data[i].product_img}?alt=media`;
             }
@@ -174,7 +174,7 @@ export const actions = {
         console.log(favo_data);
         const user_id = favo_data.user_id
         const product_id = favo_data.product_id
-        const product_favo_data = await this.$axios.$get(`http://api-product/product/product_favo?user_id=${user_id}&product_id=${product_id}`);
+        const product_favo_data = await this.$axios.$get(`/api-product/product/product_favo?user_id=${user_id}&product_id=${product_id}`);
         console.log('おかえり');
         console.log(product_favo_data)
     },
@@ -186,7 +186,7 @@ export const actions = {
         console.log('お気に入り登録');
         console.log(user_data);
         const user_id = user_data.user_id
-        const product_favo = await this.$axios.$get(`http://api-product/product/favo_data?user_id=${user_id}`);
+        const product_favo = await this.$axios.$get(`/api-product/product/favo_data?user_id=${user_id}`);
         console.log('おかえり');
         console.log(product_favo)
         var product_favos = [];
@@ -205,7 +205,7 @@ export const actions = {
         console.log(del_data);
         const user_id = del_data.user_id
         const product_id = del_data.product_id
-        const del_product_favo = await this.$axios.$get(`http://api-product/product/del_favo_data?user_id=${user_id}&product_id=${product_id}`);
+        const del_product_favo = await this.$axios.$get(`/api-product/product/del_favo_data?user_id=${user_id}&product_id=${product_id}`);
         console.log('おかえり');
         console.log(del_product_favo)
     },
