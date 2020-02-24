@@ -1,7 +1,8 @@
-import express from 'express';
-const cors = require('cors')
+var express = require('express');
 const router = express.Router();
-router.use(cors())
+const cors = require('cors');
+router.use(cors());
+
 // sqlを読み込む
 var mysql = require('mysql');
 
@@ -12,11 +13,10 @@ export default {
 
 // mysqlと接続する
 var db = mysql.createConnection({
-    host: 'db-service', //後で変える
+    host: 'localhost', //後で変える
     user: 'root',
     password: 'root',
-    database: 'tenshoku',
-    port: 3306
+    database: 'tensyoku'
 });
 
 router.get('/createuser', function (req, res) {

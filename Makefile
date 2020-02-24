@@ -10,8 +10,8 @@ down:
 	docker-compose down
 
 ba:
-	docker build -t ryutaterada/k8s-express:1.1.9 ./src/api
-	docker push ryutaterada/k8s-express:1.1.9
+	docker build -t ryutaterada/k8s-express:1.2.0 ./src/api
+	docker push ryutaterada/k8s-express:1.2.0
 
 bw:
 	docker build -t ryutaterada/k8s-nodejs:1.1.3 ./src/web
@@ -75,6 +75,9 @@ cd2:
 
 ce:
 	kubectl delete -f eco.yaml
+
+capi:
+	kubectl delete -f ./k8s
 
 mm:
 	kubectl run -it --rm --image=ryutaterada/k8s-mysql --restart=Never mysql-client -- mysql -h db-service -proot

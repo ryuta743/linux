@@ -1,8 +1,10 @@
 var express = require('express');
-var router = express.Router();
-const cors = require('cors')
+const router = express.Router();
+const cors = require('cors');
+router.use(cors());
+
 var mysql = require('mysql');
-router.use(cors())
+
 // MySQLの設定情報
 var mysql_setting = {
     host: 'db-service',
@@ -292,9 +294,10 @@ router.get('/newest_product', function (req, res) {
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    const sql = 'SELECT product_id FROM product_lists ORDER BY record_date DESC LIMIT 1';
+    const shop_id = req.query.shop_id
+    const sql = 'SELECT product_id FROM product_lists WHERE shop_id=? ORDER BY product_id DESC LIMIT 1';
     console.log(sql)
-    connection.query(sql, function (error, results) {
+    connection.query(sql, shop_id, function (error, results) {
         console.log(results)
         if (error) return res.json(error);
         if (results.length > 0) return res.json(results);
@@ -312,16 +315,11 @@ router.get('/tag_add', (req, res, next) => {
     const tag_en = req.query.tag_en
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO product_tags VALUES(?,?,?)', [product_id, tag_jp, tag_en],
-        function (error) {
-            if (error == null) {
-                return res.status(200);
-            } else {
-                console.log('エラーはいてるよ' + error)
-                return res.status(504)
-            }
-        })
-    console.log('完了')
+    const sql = `INSERT INTO product_tags VALUES (?,?,?);`;
+    connection.query(sql, [product_id, tag_jp, tag_en], function (error) {
+        if (error) return res.json(error);
+        res.json(1);
+    })
     connection.end();
 });
 

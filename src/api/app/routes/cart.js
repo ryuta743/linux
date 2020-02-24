@@ -1,7 +1,7 @@
 var express = require('express');
-const cors = require('cors')
 const router = express.Router();
-router.use(cors())
+const cors = require('cors');
+router.use(cors());
 
 // sqlを読み込む
 var mysql = require('mysql');
@@ -71,7 +71,7 @@ router.get('/cart_upd', function (req, res) {
   const user_data = req.query.user_id;
   const product_data = req.query.product_id;
   const new_count = req.query.new_count;
-  const sql = `UPDATE cart_list SET count=? WHERE user_id=? AND product_id=?;;`;
+  const sql = `UPDATE cart_list SET count=? WHERE user_id=? AND product_id=?;`;
   console.log(sql)
   connection.query(sql, [new_count, user_data, product_data], function (error) {
     if (error) return res.json(error);

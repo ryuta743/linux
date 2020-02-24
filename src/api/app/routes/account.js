@@ -1,7 +1,7 @@
 var express = require('express');
-const cors = require('cors')
+const cors = require('cors');
 const router = express.Router();
-router.use(cors())
+router.use(cors());
 
 // sqlを読み込む
 var mysql = require('mysql');
@@ -89,3 +89,52 @@ function haveWs(res, user_data) {
   })
   connection.end();
 }
+
+router.get('/upd_account', function (req, res) {
+  console.log('API届いたよ')
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  var connection = mysql.createConnection(mysql_setting);
+  connection.connect();
+  const flg = req.query.flg
+  const user_id = req.query.user_id
+  const change_data = req.query.change_data
+  if (flg == 0) {
+    const sql = `UPDATE user_lists SET user_name=? WHERE user_id=?`
+    console.log(sql)
+    connection.query(sql, [change_data, user_id], function (error) {
+      if (error) return res.json(error);
+      res.json(1);
+    })
+  } else if (flg == 1) {
+    const sql = `UPDATE user_lists SET nationality=? WHERE user_id=?`
+    console.log(sql)
+    connection.query(sql, [change_data, user_id], function (error) {
+      if (error) return res.json(error);
+      res.json(1);
+    })
+  } else if (flg == 2) {
+    const sql = `UPDATE user_lists SET gender=? WHERE user_id=?`
+    console.log(sql)
+    connection.query(sql, [change_data, user_id], function (error) {
+      if (error) return res.json(error);
+      res.json(1);
+    })
+  } else if (flg == 3) {
+    const sql = `UPDATE user_lists SET user_mail=? WHERE user_id=?`
+    console.log(sql)
+    connection.query(sql, [change_data, user_id], function (error) {
+      if (error) return res.json(error);
+      res.json(1);
+    })
+  } else if (flg == 4) {
+    const sql = `UPDATE user_lists SET user_type=? WHERE user_id=?`
+    console.log(sql)
+    connection.query(sql, [change_data, user_id], function (error) {
+      if (error) return res.json(error);
+      res.json(1);
+    })
+  }
+  connection.end();
+})

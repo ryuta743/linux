@@ -16,6 +16,8 @@ var product = require('./routes/product');
 var workshop = require('./routes/workshop');
 var cart = require('./routes/cart');
 var buy = require('./routes/buy');
+var review = require('./routes/review');
+var contact = require('./routes/contact');
 
 var session = require('express-session');
 var app = express();
@@ -48,11 +50,13 @@ app.use('/users', usersRouter);
 app.use('/hello', hello);
 app.use('/linebot', linebot);
 app.use('/workshopManage', workshopManage);
-app.use('/account' , account);
-app.use('/product' , product);
-app.use('/workshop' , workshop);
-app.use('/cart' , cart);
-app.use('/buy' , buy);
+app.use('/account', account);
+app.use('/product', product);
+app.use('/workshop', workshop);
+app.use('/cart', cart);
+app.use('/buy', buy);
+app.use('/review', review);
+app.use('/contact', contact);
 
 // Crossを有効
 app.use((req, res, next) => {
