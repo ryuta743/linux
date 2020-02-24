@@ -24,8 +24,8 @@ bd:
 a:
 	kubectl get all,pv,pvc,ingress
 
-d:
-	kubectl get all,pv,pvc,ingress -n database
+w:
+	kubectl get all,ingress -n w
 
 i:
 	kubectl get all,pv,pvc,ingress -n istio-system
