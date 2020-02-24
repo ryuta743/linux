@@ -211,13 +211,13 @@ module.exports = {
       }
     },
     '/api-workshop': {
-      target: 'http://express-workshop-service.default.svc.cluster.local',
+      target: 'http://express-ws-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-workshop': '/'
       }
     },
     '/api-workshopManage': {
-      target: 'http://express-workshopManage-service.default.svc.cluster.local',
+      target: 'http://express-wsm-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-workshopManage': '/'
       }

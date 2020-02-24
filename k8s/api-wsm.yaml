@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: express-workshop
+  name: express-wsm
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: express-workshop
+      app: express-wsm
       version: v1
   template:
     metadata:
       labels:
-        app: express-workshop
+        app: express-wsm
         version: v1
     spec:
       containers:
-        - name: express-workshop-container
+        - name: express-wsm-container
           image: ryutaterada/k8s-express:1.1.9
           resources:
             limits:
@@ -23,16 +23,16 @@ spec:
               memory: 1000Mi
           ports:
             - containerPort: 5000
-              name: express-workshop
+              name: express-wsm
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: express-workshop-service
+  name: express-wsm-service
 spec:
   type: ClusterIP
   selector:
-    app: express-workshop
+    app: express-wsm
   ports:
     - port: 80
       targetPort: 5000
