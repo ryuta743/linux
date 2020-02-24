@@ -168,72 +168,54 @@ module.exports = {
         '^/api-account': '/'
       },
     },
-  },
-  proxy: {
     '/api-buy': {
       target: 'http://express-buy-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-buy': '/'
       },
     },
-  },
-  proxy: {
     '/api-cart': {
       target: 'http://express-cart-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-cart': '/'
       },
     },
-  },
-  proxy: {
     '/api-buy': {
       target: 'http://express-contact-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-contact': '/'
       },
     },
-  },
-  proxy: {
     '/api-linebot': {
       target: 'http://express-linebot-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-linebot': '/'
       },
     },
-  },
-  proxy: {
     '/api-product': {
       target: 'http://express-product-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-product': '/'
       },
     },
-  },
-  proxy: {
     '/api-review': {
       target: 'http://express-review-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-review': '/'
       },
     },
-  },
-  proxy: {
     '/api-users': {
       target: 'http://express-users-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-users': '/'
       },
     },
-  },
-  proxy: {
     '/api-workshop': {
       target: 'http://express-ws-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-workshop': '/'
       },
     },
-  },
-  proxy: {
     '/api-workshopManage': {
       target: 'http://express-wsm-service.default.svc.cluster.local',
       pathRewrite: {
