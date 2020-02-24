@@ -25,7 +25,7 @@ a:
 	kubectl get all,pv,pvc,ingress
 
 w:
-	kubectl get all,ingress -n w
+	kubectl get all,ingress -n web
 
 i:
 	kubectl get all,pv,pvc,ingress -n istio-system
