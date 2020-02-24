@@ -19,8 +19,8 @@ spec:
           image: ryutaterada/k8s-express:1.1.9
           resources:
             limits:
-              cpu: "1"
-              memory: 1000Mi
+              cpu: 100m
+              memory: 100Mi
           ports:
             - containerPort: 5000
               name: express-linebot
