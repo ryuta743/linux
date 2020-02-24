@@ -18,8 +18,8 @@ bw:
 	docker push ryutaterada/k8s-nodejs:1.1.8
 
 bd:
-	docker build -t ryutaterada/k8s-mysql:1.0.8 ./src/db
-	docker push ryutaterada/k8s-mysql:1.0.8
+	docker build -t ryutaterada/k8s-mysql:1.0.9 ./src/db
+	docker push ryutaterada/k8s-mysql:1.0.9
 
 a:
 	kubectl get all,pv,pvc,ingress
@@ -80,7 +80,7 @@ capi:
 	kubectl delete -f ./k8s
 
 mm:
-	kubectl run -it --rm --image=ryutaterada/k8s-mysql:1.0.7 --restart=Never mysql-client -- mysql -h db-service -proot
+	kubectl run -it --rm --image=ryutaterada/k8s-mysql:1.0.8 --restart=Never mysql-client -- mysql -h db-service -proot
 
 ww:
 	kubectl exec -it web-6b64674b66-cncjl --container web-container /bin/sh

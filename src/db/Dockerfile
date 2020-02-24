@@ -1,6 +1,6 @@
 #FROM mysql:latest
-#FROM mysql:5.6
-FROM mysql:5.7
+FROM mysql:5.6
+#FROM mysql:5.7
 #FROM mariadb
 
 #COPY /cnf/my.cnf /etc/mysql/conf.d
