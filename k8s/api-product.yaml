@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: express-product-container
-          image: ryutaterada/k8s-express:1.1.9
+          image: ryutaterada/k8s-express:1.2.0
           resources:
             limits:
               cpu: 100m
