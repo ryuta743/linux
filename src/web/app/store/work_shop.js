@@ -84,7 +84,7 @@ export const actions = {
         commit
     }) {
         console.log('正都はイケメンです')
-        let count_shop = await this.$axios.$get(`/api-workshop/workshop/count_shop`);
+        let count_shop = await this.$axios.$get(`/api-account/workshop/count_shop`);
         let count = count_shop[0]
         console.log(count);
         commit("setShop_countdata", count)
@@ -98,7 +98,7 @@ export const actions = {
         console.log('頑張れ！！マサトmasato')
         const shop_id = shop_data.shop_id
         console.log(shop_id)
-        const workshopdata = await this.$axios.$get(`/api-workshop/workshop/get_workshop_data?shop_id=${shop_id}`);
+        const workshopdata = await this.$axios.$get(`/api-account/workshop/get_workshop_data?shop_id=${shop_id}`);
         console.log(workshopdata)
         commit("setWorkshop_data", workshopdata[0])
     },
@@ -107,7 +107,7 @@ export const actions = {
     }, {
         user_id
     }) {
-        var favo_shop = await this.$axios.$get(`/api-workshop/workshop/get_favoshop?user_id=${user_id}`);
+        var favo_shop = await this.$axios.$get(`/api-account/workshop/get_favoshop?user_id=${user_id}`);
         var favo_shops = [];
         for (var i = 0; i < favo_shop.length; i++) {
             favo_shops.push(favo_shop[i].shop_id);
@@ -121,7 +121,7 @@ export const actions = {
     }, {
         payload
     }) {
-        const result = await this.$axios.$get(`/api-workshop/workshop/add_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
+        const result = await this.$axios.$get(`/api-account/workshop/add_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
         console.log('追加完了' + result)
     },
     async del_favoshop({
@@ -129,7 +129,7 @@ export const actions = {
     }, {
         payload
     }) {
-        const result = await this.$axios.$get(`/api-workshop/workshop/del_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
+        const result = await this.$axios.$get(`/api-account/workshop/del_favoshop?user_id=${payload.user_id}&shop_id=${payload.shop_id}`);
         console.log('削除完了' + result)
     }
 }
