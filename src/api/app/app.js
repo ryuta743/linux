@@ -8,7 +8,6 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var hello = require('./routes/hello');
 var linebot = require('./routes/linebot');
 var workshopManage = require('./routes/workshopManage');
 var account = require('./routes/account');
@@ -47,7 +46,6 @@ app.use(session(session_opt));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/hello', hello);
 app.use('/linebot', linebot);
 app.use('/workshopManage', workshopManage);
 app.use('/account', account);
