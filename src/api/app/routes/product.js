@@ -1,6 +1,6 @@
 var express = require('express');
-const router = express.Router();
 const cors = require('cors');
+const router = express.Router();
 router.use(cors());
 
 // sqlを読み込む
@@ -50,7 +50,7 @@ router.get('/get_tags', function (req, res) {
   // 俺は悪くない
   const tags = req.query.tags;
   console.log(tags);
-  const sql = 'SELECT * FROM product_lists INNER JOIN product_tags ON product_lists.product_id = product_tags.product_id WHERE product_tags.tag=? ';
+  const sql = 'SELECT product_lists.product_id AS product_id,product_lists.shop_id AS shop_id,product_lists.product_name AS product_name,product_lists.product_name_en AS product_name_en, product_lists.product_number AS product_number, product_lists.price AS price, product_lists.record_date AS recode_date, product_lists.product_detail AS product_detail, product_lists.product_img AS product_img, product_lists.stock AS stock, product_lists.safety AS safety, product_lists.size AS size, product_lists.material AS material, product_lists.weight AS weight , COALESCE(AVG(reviews.evaluation),0) AS rate FROM product_lists LEFT OUTER JOIN reviews ON product_lists.product_id = reviews.product_id INNER JOIN product_tags ON product_lists.product_id = product_tags.product_id WHERE product_tags.tag=? GROUP BY product_lists.product_id';
   console.log(sql)
   connection.query(sql, tags, function (error, results) {
     console.log(results)

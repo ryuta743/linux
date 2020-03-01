@@ -3,9 +3,12 @@ const router = express.Router();
 const cors = require('cors');
 router.use(cors());
 
+// sqlを読み込む
 var mysql = require('mysql');
 
-// MySQLの設定情報
+module.exports = router;
+
+// mysqlと接続する
 var mysql_setting = {
     host: 'db-service',
     user: 'root',
@@ -45,7 +48,7 @@ router.get('/getOrderlist', (req, res, next) => {
     const shop_id = req.query.shop_id;
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('SELECT * from order_lists where shop_id=?', shop_id,
+    connection.query('SELECT * from order_lists where shop_id=? ORDER BY buy_date DESC', shop_id,
         function (error, results, fields) {
             if (error == null) {
                 if (results.length > 0) {
@@ -323,4 +326,46 @@ router.get('/tag_add', (req, res, next) => {
     connection.end();
 });
 
+//発送済みのやーつ
+router.get('/shipping_end', function (req, res) {
+    console.log('発送済みにするAPI')
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    const order_number = req.query.order_number;
+    const sql = `UPDATE order_lists SET status=1 WHERE order_number=?`;
+    console.log(sql)
+    connection.query(sql, order_number, function (error) {
+        if (error) return res.json(error);
+        res.json(1);
+    })
+    connection.end();
+})
+
 module.exports = router;
+
+router.get('/get_order_lists', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+    const shop_id = req.query.shop_id;
+    const order_num = req.query.order_number
+    var connection = mysql.createConnection(mysql_setting);
+    connection.connect();
+    connection.query('SELECT * from order_lists  WHERE shop_id=? && order_number=?', [shop_id, order_num],
+        function (error, results, fields) {
+            if (error == null) {
+                if (results.length > 0) {
+                    return res.json(results);
+                } else {
+                    return res.status(403)
+                }
+            } else {
+                console.log('エラーはいてるよ' + error)
+                return res.status(504)
+            }
+        })
+    connection.end();
+});

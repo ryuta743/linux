@@ -1,11 +1,14 @@
 var express = require('express');
-const router = express.Router();
 const cors = require('cors');
+const router = express.Router();
 router.use(cors());
 
+// sqlを読み込む
 var mysql = require('mysql');
 
-// MySQLの設定情報
+module.exports = router;
+
+// mysqlと接続する
 var mysql_setting = {
     host: 'db-service',
     user: 'root',
