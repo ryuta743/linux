@@ -51,22 +51,22 @@ INSERT INTO `workshop_lists` VALUES
 (NULL,"中村工房",5,"人に優しく自分に厳しくをモットーにしています。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/nakamura.jpg?alt=media&token=35eccc27-f11e-4c11-b671-b2929c945d5e","6743136","宮崎県某所","kuwataka07@gmail.com");
 
 INSERT INTO `workshop_lists` VALUES
-(NULL,"桑畑工房",6,"我が道をゆきます。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/kuwahata.jpg?alt=media&token=4f7a2251-77a6-4339-9ed8-c1ec54eb4a2f","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
+(NULL,"桑畑工房",6,"納得のいくものができるまで何度も作り直します。我が道をゆきます。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/kuwahata.jpg?alt=media&token=4f7a2251-77a6-4339-9ed8-c1ec54eb4a2f","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
 
 INSERT INTO `workshop_lists` VALUES
 (NULL,"正都工房",2,"この工房は誰のためにあるのかそれを常に考えお客様のことをいつも思っています。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/masato.jpg?alt=media&token=52d1038b-6a8a-4ca5-8feb-a1254e860c84","8891902","愛知県名古屋市中村区烏森町三丁目85","azjtomppl376@icloud.com");
 
 INSERT INTO `workshop_lists` VALUES
-(NULL,"ナイアガラ工房",7,"私日本大好きでーす。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/nai.jpg?alt=media&token=d16ede7d-5273-4599-878f-f2aaf469c7dc","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
+(NULL,"東山工房",7,"野生の感覚を研ぎ澄まし、焼き物を中心に作っており焼き方にこだわりを持っています","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/nai.jpg?alt=media&token=d16ede7d-5273-4599-878f-f2aaf469c7dc","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
 
 INSERT INTO `workshop_lists` VALUES
 (NULL,"紫陽花工房",8,"大きくて立派なアジサイの花を意識した焼き物を多数用意しています。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/ajisai.jpg?alt=media&token=901cbd62-d7be-46a8-abcb-4f75f6a23ba2","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
 
 INSERT INTO `workshop_lists` VALUES
-(NULL,"ユーラシア大陸工房",9,"日本とユーラシアを足した新しい工芸品です","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/yurasia.jpeg?alt=media&token=b267eeb3-bfea-4920-801f-323dad3090fe","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
+(NULL,"愛知工房",9,"愛知県を賑わしたい！！その気持ちでいっぱいです。ぜひ一度商品を見ていってください","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/yurasia.jpeg?alt=media&token=b267eeb3-bfea-4920-801f-323dad3090fe","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
 
 INSERT INTO `workshop_lists` VALUES
-(NULL,"田辺工房",10,"なんでもできる工房です。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/tanabe.jpg?alt=media&token=e62793bb-7d8a-4a85-bb3d-569624e336e4","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
+(NULL,"田辺工房",10,"私の工房でできないことなんてありません。なんでもできる工房です。","2020/02/07","https://firebasestorage.googleapis.com/v0/b/hackmdbase-57369.appspot.com/o/tanabe.jpg?alt=media&token=e62793bb-7d8a-4a85-bb3d-569624e336e4","8891902","宮崎県都城五本松13-2","kuwataka07@gmail.com");
 
 INSERT INTO `order_lists` VALUES
 ("1",1,"takashi",1,"2019/12/28","日本(Japan)","8891902","宮崎県三股町五本松13-2",1200,0,1,"azjtomppl376@icloud.com","08058104248");
@@ -588,13 +588,55 @@ INSERT INTO `reviews` VALUES
 (NULL,36,9,5,'素晴らしいです','2020/02/28');
 
 INSERT INTO `order_lists` VALUES
-('as577281832',1,'桑畑天',2,'2019/02/16','日本',0000000,'田辺の家',5000,0,0,'takashi@hal.co.jp',08090509926);
+('as577281832',2,'加藤正都',1,'2020/02/26','日本',4530855,'愛知県名古屋市中村区烏森町3-85',160120,0,0,'masato@hal.co.jp',08090509926);
 
 INSERT INTO `order_details` VALUES
-('as577281832',2,1,'桑畑天',4,'白遊花人',5000,1,0);
+('as577281832',1,2,'加藤正都',1,'レザーチェア 本革',121000,1,0);
+
+INSERT INTO `order_details` VALUES
+('as577281832',1,2,'加藤正都',3,'天職コップ',1500,1,0);
+
+INSERT INTO `order_details` VALUES
+('as577281832',1,2,'加藤正都',5,'フラワートレー２ヶ入り',4290,3,0);
+
+INSERT INTO `order_details` VALUES
+('as577281832',1,2,'加藤正都',7,'ソラミズイロ -酒器＆猪口-',8250,1,0);
+
+INSERT INTO `order_details` VALUES
+('as577281832',1,2,'加藤正都',9,'箸置き -結び-',5500,3,0);
 
 INSERT INTO `order_lists` VALUES
-('k3929334242',1,'桑畑天',2,'2020/02/16','日本',0000000,'田辺の家',2530,0,0,'takashi@hal.co.jp',08090509926);
+('k3929334242',2,'加藤正都',1,'2020/02/27','日本',4530855,'愛知県名古屋市中村区烏森町3-85',26680,0,0,'masato@hal.co.jp',08058104248);
 
 INSERT INTO `order_details` VALUES
-('k3929334242',2,1,'桑畑天',5,'花巾着',2530,1,0);
+('k3929334242',1,2,'加藤正都',2,'天職小皿',1200,5,0);
+
+INSERT INTO `order_details` VALUES
+('k3929334242',1,2,'加藤正都',6,'ココハレカップ -れもん-',3520,4,0);
+
+INSERT INTO `order_details` VALUES
+('k3929334242',1,2,'加藤正都',8,'TSUNE -てん箸-',2200,3,0);
+
+INSERT INTO `order_lists` VALUES
+('jl462345334',4,'寺田竜太',1,'2020/02/28','日本',4660057,'愛知県名古屋市昭和区高辻町６−８',248600,0,2,'ryuta@hal.co.jp',00013211123);
+
+INSERT INTO `order_details` VALUES
+('jl462345334',1,4,'寺田竜太',1,'レザーチェア 本革',121000,2,0);
+
+INSERT INTO `order_details` VALUES
+('jl462345334',1,4,'寺田竜太',8,'TSUNE -てん箸-',2200,3,0);
+
+INSERT INTO `order_lists` VALUES
+('jnkd02452343',5,'天職修',1,'2020/02/28','日本',4500002,'愛知県名古屋市中村区中村区名駅４丁目２７−１総合校舎スパイラルタワーズ',135740,0,1,'tenshoku@hal.co.jp',09043426868);
+
+INSERT INTO `order_details` VALUES
+('jnkd02452343',1,5,'天職修',7,'ソラミズイロ -酒器＆猪口-',8250,1,0);
+
+INSERT INTO `order_details` VALUES
+('jnkd02452343',1,5,'天職修',1,'レザーチェア 本革',121000,1,0);
+
+INSERT INTO `order_details` VALUES
+('jnkd02452343',1,5,'天職修',8,'TSUNE -てん箸-',2200,1,0);
+
+INSERT INTO `order_details` VALUES
+('jnkd02452343',1,5,'天職修',5,'フラワートレー２ヶ入り',4290,1,0);

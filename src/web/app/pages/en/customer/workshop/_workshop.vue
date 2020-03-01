@@ -110,7 +110,7 @@
           <div id="products">
             <div id="no_products" v-if="products[0] ? products.length == 0:''">
               <div id="no_product">
-                <img src="../../../static/grey_logo.png" width="100px" alt="no-product" />
+                <img src="/grey_logo.png" width="100px" alt="no-product" />
                 <p>検索結果が見つかりませんでした</p>
               </div>
             </div>
@@ -190,19 +190,19 @@
                   <td class="sawarabi">
                     <b>創業年度</b>
                   </td>
-                  <td class="sawarabi">1860年</td>
+                  <td class="sawarabi">2019年</td>
                 </tr>
                 <tr>
                   <td class="sawarabi">
                     <b>代表工芸品</b>
                   </td>
-                  <td class="sawarabi">レザーチェア 本革</td>
+                  <td class="sawarabi">あああ</td>
                 </tr>
                 <tr>
                   <td class="sawarabi">
                     <b>経歴・歴史</b>
                   </td>
-                  <td class="sawarabi">伊勢神宮奉納</td>
+                  <td class="sawarabi">ドン勝5連続獲得</td>
                 </tr>
               </table>
             </div>

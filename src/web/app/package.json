@@ -1,7 +1,7 @@
 {
-  "name": "hew2020",
+  "name": "tenshoku",
   "version": "1.0.0",
-  "description": "My majestic Nuxt.js project",
+  "description": "メイドインジャパンの工芸品が工房から直接購入できるショッピングサイト！",
   "author": "takashi",
   "private": true,
   "scripts": {

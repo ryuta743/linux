@@ -1,11 +1,11 @@
 <template>
   <v-layout row wrap id="product_body">
     <div id="bread_list"> <!-- パンくずリスト -->
-      <div class="bread"><v-icon>mdi-home</v-icon>トップ</div>
+      <div class="bread"><v-icon>mdi-home</v-icon>TOP</div>
       <div class="bread">></div>
-      <div class="bread">ショップ</div>
+      <div class="bread">SHOP</div>
       <div class="bread">></div>
-      <div class="bread">工房名</div>
+      <div class="bread">{{ productdetails ? truncate(productdetails.product_name_en,10):'' }}</div>
     </div>
     <div id="fullimage">
       <div
@@ -31,7 +31,7 @@
       </div>
       <div id="product_details">
         <div id="product_titles">
-          <div id="product_title">{{productdetails ? productdetails.product_name:''}}</div>
+          <div id="product_title">{{productdetails ? productdetails.product_name_en:''}}</div>
           <div id="product_rate">
             <v-rating
                 color="yellow darken-3"
@@ -51,7 +51,7 @@
           <!-- <div class="product_tag">重い</div> -->
         </div>
         <div id="product_price">
-          {{ productdetails.price ? exprice(productdetails.price):'' }} 円 <span>(税抜)</span>
+          {{ productdetails.price ? exprice(productdetails.price):'' }} 円
           <div id="product_favo">
             <v-hover v-slot:default="{ hover }" v-if="product_favos.indexOf(productdetails.product_id) == -1 ? true:false">
               <v-btn :color="hover ? '#F8CE38':'grey'" icon @click="product_favo_Req">
@@ -69,17 +69,17 @@
         </div>
         <div id="product_ui">
           <div id="product_selector">
-            <div>在庫 <span>{{ productdetails ? productdetails.stock + '個':'' }}</span></div>
-            <div>数量 
+            <div>stock <span>{{ productdetails ? productdetails.stock:'' }}</span></div>
+            <div>count 
               <span>
                 <select v-model="count">
-                  <option :value="item" v-for="(item, index) in stock" :key="index">{{ item + '個' }}</option>
+                  <option :value="item" v-for="(item, index) in stock" :key="index">{{ item }}</option>
                 </select>
               </span>
             </div>
           </div>
           <div style="width:55%;">
-            <v-btn color="success" style="width: 100%;height: 50px;" depressed　@click="cart_upreq">カートに入れる</v-btn>
+            <v-btn color="success" style="width: 100%;height: 50px;" depressed　@click="cart_upreq">Add to cart</v-btn>
           </div>
         </div>
         <div id="workshop_info">
@@ -110,24 +110,24 @@
 
     <div id="any_info">
       <div id="info_table">
-        <div style="font-size: 22px;margin-bottom: 15px;">商品の情報</div>
+        <div style="font-size: 22px;margin-bottom: 15px;">Information</div>
         <table>
           <tr>
-            <td class="th">サイズ</td>
+            <td class="th">Size</td>
             <td>{{ productdetails ? productdetails.size:'' }}</td>
           </tr>
           <tr>
-            <td class="th">素材</td>
+            <td class="th">Material</td>
             <td>{{ productdetails ? productdetails.material:'' }}</td>
           </tr>
           <tr>
-            <td class="th">重量</td>
+            <td class="th">Weight</td>
             <td>{{ productdetails ? productdetails.weight:'' }}</td>
           </tr>
           <tr>
-            <td class="th">評価</td>
+            <td class="th">Rate</td>
             <td v-if="reviews_data.length>0">
-              <p style="padding-left: 8px;">{{avg}}点</p>
+              <p style="padding-left: 8px;">{{avg}}</p>
               <v-rating
                 color="yellow darken-3"
                 background-color="grey darken-1"
@@ -138,17 +138,17 @@
               ></v-rating>
             </td>
             <td v-else>
-              <p style="padding-top: 15px;">評価がされていません</p>
+              <p style="padding-top: 15px;">Review is not defind.</p>
             </td>
           </tr>
         </table>
       </div>
       <div id="any_search">
-        <div style="font-size: 22px;margin-bottom: 15px;">他の商品を探す</div>
+        <div style="font-size: 22px;margin-bottom: 15px;">Look for other</div>
         <div id="workshop_btn">
-          <v-btn @click="$router.push(`/customer/workshop/${workshop_data.shop_id}`)" color="#DC3739" style="color: white;width: 65%;height: 65px;font-size: 20px;" class="sawarabi" depressed>同じ工房の商品を見る</v-btn>
+          <v-btn @click="$router.push(`/customer/workshop/${workshop_data.shop_id}`)" color="#DC3739" style="color: white;width: 65%;height: 65px;font-size: 13px;" class="sawarabi" depressed>This workshop products</v-btn>
         </div>
-        <div id="tag_search_title" class="sawarabi">タグで探す</div>
+        <div id="tag_search_title" class="sawarabi">Look for tags</div>
         <div id="search_tags">
           <div class="search_tag" v-for="(item, index) in tag_data" :key="index">{{item.tag}}</div>
         </div>
@@ -159,14 +159,14 @@
       <v-card flat>
         <v-divider></v-divider>
         <v-card-text>
-          <v-subheader>この商品を評価する</v-subheader>
+          <v-subheader>This product review</v-subheader>
           <v-rating v-model="review_point"></v-rating>
           <v-layout row wrap justify-center>
             <v-flex xs9 md11>
-              <v-text-field label placeholder="商品レビュー" outlined v-model="review_text"></v-text-field>
+              <v-text-field label placeholder="reviews" outlined v-model="review_text"></v-text-field>
             </v-flex>
             <v-flex xs2 md1>
-              <v-btn color="success" style="height: 55px;width: 100%;" @click="in_review">送信</v-btn>
+              <v-btn color="success" style="height: 55px;width: 100%;" @click="in_review" depressed>send</v-btn>
             </v-flex>
           </v-layout>
           <v-divider />
@@ -262,20 +262,19 @@ import {mapActions,mapGetters} from 'vuex';
 
 export default {
 middleware: 'auth',
+  layout: 'default_en',
   head() {
     return {
-      script: [
-        { src: "https://fyu.se/embed?v=2.0" },
-        { src: "https://cdn.scaleflex.it/plugins/js-cloudimage-360-view/2/js-cloudimage-360-view.min.js" }
-      ],
-      title: this.productdetails.product_name
+      title: this.productdetails.product_name_en
     };
   },
 
   async mounted() {
     await this.getproductdetailreq();
     await this.get_reviewsReq()
-    this.getShopdata({wsid:this.productdetails.shop_id})
+    console.log(this.productdetails.shop_id)
+    console.log('こうおぶID',this.productdetails.shop_id)
+    await this.getShopdata({wsid:this.productdetails.shop_id})
     console.log(this.workshop_data)
     for(var i = 0; i<this.productdetails.stock ; i++){
       this.stock.push(i+1);
@@ -287,7 +286,7 @@ middleware: 'auth',
     console.log('商品ID達',this.product_favos)
     await this.get_avg()
     if(process.client){
-      await window.CI360.init();
+      window.CI360.init();
     }
   },
 
@@ -646,7 +645,7 @@ a {
 }
 
 #product_price span{
-  font-size: 12px;
+  font-size: 9px;
   padding-top: 10px;
   margin-left: 10px;
 }

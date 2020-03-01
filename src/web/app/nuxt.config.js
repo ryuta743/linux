@@ -12,12 +12,11 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    //title: process.env.npm_package_name || '',
     htmlAttrs: {
       prefix: 'og: http://ogp.me/ns#'
     },
-    titleTemplate: '%s - HackmdBase',
+    titleTemplate: '天職 - %s',
     meta: [{
         charset: 'utf-8'
       },
@@ -37,7 +36,7 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！'
+        content: 'メイドインジャパンの工芸品が工房から直接購入できるショッピングサイト！'
       },
       {
         hid: 'og:site_name',
@@ -62,7 +61,7 @@ module.exports = {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！'
+        content: 'メイドインジャパンの工芸品が工房から直接購入できるショッピングサイト！'
       },
       {
         hid: 'og:image',
@@ -87,7 +86,7 @@ module.exports = {
       },
       {
         name: 'twitter:description',
-        content: 'メイドインジャパンの工芸品が工房から直接帰るショッピングサイト！'
+        content: 'メイドインジャパンの工芸品が工房から直接購入できるショッピングサイト！'
       },
       {
         name: 'twitter:image',
@@ -118,6 +117,13 @@ module.exports = {
       //https://fonts.googleapis.com/css?family=Sawarabi+Mincho
       //<link href="https://fonts.googleapis.com/earlyaccess/hannari.css" rel="stylesheet">
       //<link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+    ],
+    script: [{
+        src: "https://cdn.scaleflex.it/plugins/js-cloudimage-360-view/2/js-cloudimage-360-view.min.js"
+      },
+      {
+        src: "http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+      }
     ]
   },
   /*
@@ -180,7 +186,7 @@ module.exports = {
         '^/api-cart': '/'
       },
     },
-    '/api-buy': {
+    '/api-contact': {
       target: 'http://express-contact-service.default.svc.cluster.local',
       pathRewrite: {
         '^/api-contact': '/'
@@ -210,16 +216,16 @@ module.exports = {
         '^/api-users': '/'
       },
     },
-    '/api-workshop': {
+    '/api-ws': {
       target: 'http://express-ws-service.default.svc.cluster.local',
       pathRewrite: {
-        '^/api-workshop': '/'
+        '^/api-ws': '/'
       },
     },
-    '/api-workshopManage': {
+    '/api-wm': {
       target: 'http://express-wsm-service.default.svc.cluster.local',
       pathRewrite: {
-        '^/api-workshopManage': '/'
+        '^/api-wm': '/'
       },
     },
   },

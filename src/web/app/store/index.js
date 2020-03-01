@@ -68,23 +68,18 @@ export const actions = {
             commit('setOrder', order)
             if (event.results[0].isFinal) {
                 if (order.match('トップ') || order.match('top') || order.match('とっぷ') || order.match('最初')) {
-                    alert('トップページに移動します')
                     this.$router.push('/')
                 }
                 if (order.match('工房') || order.match('ショップ') || order.match('自分の') || order.match('管理')) {
-                    alert('工房管理ページに移動します')
                     this.$router.push('/client/myshop/myshop')
                 }
                 if (order.match('ショップ') || order.match('検索') || order.match('ショップ') || order.match('shop')) {
-                    alert('ショプページに移動します')
                     this.$router.push('/shop')
                 }
-                if (order.match('モール') || order.match('ランダム') || order.match('楽しい') || order.match('面白い')) {
-                    alert('ランダムモールに移動します')
+                if (order.match('街へ出る') || order.match('ランダム') || order.match('楽しい') || order.match('面白い') || order.match('街')) {
                     this.$router.push('/mall')
                 }
                 if (order.match('問い合わせ') || order.match('コンタクト') || order.match('連絡') || order.match('メール')) {
-                    alert('お問い合わせページに移動します')
                     this.$router.push('/contact')
                 }
                 if (order.match('ログイン') || order.match('サインイン') || order.match('認証') || order.match('アカウントイン')) {

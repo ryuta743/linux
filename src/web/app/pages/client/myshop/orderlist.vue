@@ -52,7 +52,7 @@
           </thead>
           <tbody>
             <tr v-for="(item, index) in orderlist" :key="index">
-              <td>{{item.order_number}}</td>
+              <td>{{orderlist[0] ? orderlist.length - index:''}}</td>
               <td>{{item.user_name}}</td>
               <td>{{item.buy_date}}</td>
               <td>{{item.status==1 ? '発送済み':'未発送'}}</td>

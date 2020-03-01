@@ -18,12 +18,12 @@
               <h2>お届け先情報</h2>
               <div class="person">
                 <p>国名：{{checkdata[0].country ? checkdata[0].country:''}}</p>
-                <p>郵便番号：〒{{checkdata[0].address_01 ? checkdata[0].address_01:''}}</p>
                 <tr>
-                  <td class="address">住所：{{checkdata[0].address_02 ? checkdata[0].address_02:''}}</td>
-                  <td class="address">{{checkdata[0].address_03 ? checkdata[0].address_03:''}}</td>
-                  <td class="address">{{checkdata[0].address_04 ? checkdata[0].address_04:''}}</td>
-                  <td class="address">{{checkdata[0].address_05 ? checkdata[0].address_05:''}}</td>
+                  <td>住所：{{checkdata[0].address_01 ? checkdata[0].address_01:''}}</td>
+                  <td>{{checkdata[0].address_02 ? checkdata[0].address_02:''}}</td>
+                  <td>{{checkdata[0].address_03 ? checkdata[0].address_03:''}}</td>
+                  <td>{{checkdata[0].address_04 ? checkdata[0].address_04:''}}</td>
+                  <td>{{checkdata[0].address_05 ? checkdata[0].address_05:''}}</td>
                 </tr>
               </div>
             </div>
@@ -31,7 +31,7 @@
             <div class="mboss">
               <h2>購入方法</h2>
               <div class="person">
-                <p>お支払い方法：{{buytype[checkdata[0].buy_type]}}</p>
+                <p>{{buytype[checkdata[0].buy_type]}}</p>
                 <p v-if="checkdata[0].buy_type==1">カード番号：{{checkdata[1].card_num}}</p>
                 <p v-if="checkdata[0].buy_type==1">カード有効期限(年)：{{years[checkdata[1].year]}}</p>
                 <p v-if="checkdata[0].buy_type==1">カード有効期限(月)：{{months[checkdata[1].month]}}</p>
@@ -114,7 +114,7 @@ export default {
       ]
       try{
         await this.insert_buy({buydata})
-        this.buy_mail({buydata})
+        await this.buy_mail({buydata})
         if(this.buy_data === 7){
           this.$router.push(`/customer/cart/cartBuy_end`)
         }
@@ -163,7 +163,7 @@ export default {
     margin-bottom: 40px;
   }
   .mboss{
-    width: 400px;
+    width: 360px;
     height: 200px;
     padding: 20px;
   }

@@ -14,12 +14,12 @@ ba:
 	docker push ryutaterada/k8s-express:1.2.2
 
 bw:
-	docker build -t ryutaterada/k8s-nodejs:1.2.1 ./src/web
-	docker push ryutaterada/k8s-nodejs:1.2.1
+	docker build -t ryutaterada/k8s-nodejs:1.2.2 ./src/web
+	docker push ryutaterada/k8s-nodejs:1.2.2
 
 bd:
-	docker build -t ryutaterada/k8s-mysql:1.1.0 ./src/db
-	docker push ryutaterada/k8s-mysql:1.1.0
+	docker build -t ryutaterada/k8s-mysql:1.1.1 ./src/db
+	docker push ryutaterada/k8s-mysql:1.1.1
 
 a:
 	kubectl get all,pv,pvc,ingress

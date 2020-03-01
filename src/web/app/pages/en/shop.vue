@@ -9,13 +9,13 @@
 
     <v-container grid-list-xs>
       <v-content style="padding-top: 15px;border-radius: 4px;">
-        <h4 style="width: 100%;text-align: center;">詳細検索</h4>
+        <h4 style="width: 100%;text-align: center;">ADVANCED SEARCH</h4>
 
         <v-layout row wrap justify-center style="padding-top: 10px;">
           <v-flex xs12 md6>
             <form @submit.prevent>
               <v-layout row wrap>
-                <v-text-field outlined label="キーワード" v-model="select_data" color="grey" background-color="#fff"></v-text-field>
+                <v-text-field outlined label="keywords" v-model="select_data" color="grey" background-color="#fff"></v-text-field>
                 <v-btn type="submit" color="grey" style="height: 55px;" @click="get_select" depressed>
                   <v-icon>mdi-magnify</v-icon>
                 </v-btn>
@@ -23,24 +23,24 @@
             </form>
           </v-flex>
           <div id="advance">
-                <label>検索対象:</label>
+                <label>target:</label>
                 <select v-model="selected" id="search_select">
-                  <option disabled value="">未選択</option>
-                  <option value="0">商品</option>
-                  <option value="1">工房</option>
-                  <option value="2">タグ</option>
+                  <option disabled value="">unselect</option>
+                  <option value="0">products</option>
+                  <option value="1">workshops</option>
+                  <option value="2">tag</option>
                 </select>
-                <label style="margin-left: 40px;">表示順(商品):</label>
+                <label style="margin-left: 40px;">order(products):</label>
                 <select v-model="howdisp_p" id="search_select">
-                  <option disabled value="">未選択</option>
-                  <option value="0">価格が安い順</option>
-                  <option value="1">評価が高い順</option>
+                  <option disabled value="">unselect</option>
+                  <option value="0">low price</option>
+                  <option value="1">high rate</option>
                 </select>
-                <label style="margin-left: 40px;">表示順(工房):</label>
+                <label style="margin-left: 40px;">order(workshops):</label>
                 <select v-model="howdisp_w" id="search_select">
-                  <option disabled value="">未選択</option>
-                  <option value="0">新しい順</option>
-                  <option value="1">評価が高い順</option>
+                  <option disabled value="">unselect</option>
+                  <option value="0">newer</option>
+                  <option value="1">high rate</option>
                 </select>
             </div>
         </v-layout>
@@ -52,17 +52,17 @@
         <v-layout row wrap id="products">
           
             <div id="products_header">
-                <div id="search_word">{{ search_word ? search_word:'新規商品一覧' }}</div>
-                <div id="search_count" v-if="selected==1">{{ '-全' + counter + '件' }}</div>
-                <div id="search_count" v-else>{{ '-全' + counter + '件' }}</div>
+                <div id="search_word">{{ search_word ? search_word:'New Products' }}</div>
+                <div id="search_count" v-if="selected==1">{{ '-Hit:' + counter }}</div>
+                <div id="search_count" v-else>{{ '-Hit:' + counter }}</div>
             </div>
 
-            <v-card id="product" @click="$router.push(`/customer/product/${item.product_id}`)" flat v-for="(item, index) in data" :key="index">
+            <v-card id="product" @click="$router.push(`/en/customer/product/${item.product_id}`)" flat v-for="(item, index) in data" :key="index">
               <div id="product_img">
                 <v-lazy-image :src="item.product_img" style="width: 100%;object-fit: cover;height: 100%;vertical-align:bottom"/>
               </div>
               <v-card-text style="heigh: 150px;">
-                <div id="product_name">{{truncate(item.product_name,16)}}</div>
+                <div id="product_name">{{truncate(item.product_name_en,25)}}</div>
                 <div id="product_price">¥{{exprice(item.price)}}</div>
                 <div id="product_rate">
                   <v-rating
@@ -110,9 +110,10 @@ import {mapActions,mapGetters} from 'vuex';
 import { toUnicode } from 'punycode';
 
 export default {
+  layout: 'default_en',
   head() {
     return {
-      title: 'ショップページ'
+      title: 'SHOP'
     }
   },
   async mounted() {

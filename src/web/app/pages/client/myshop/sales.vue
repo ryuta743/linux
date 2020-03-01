@@ -52,7 +52,7 @@
                     <v-lazy-image :src="item.product_img" style="width: 50px;height: 50px;object-fit: cover;" />
                   </td>
                   <td>{{item.product_name}}</td>
-                  <td>{{item.price}}円</td>
+                  <td>{{exprice(item.price)}}円</td>
                   <td>{{item.count}}個</td>
                   <td>{{item.record_date}}</td>
                 </tr>
@@ -99,6 +99,9 @@ middleware: 'auth',
       console.log(this.order_sales)
     },
     methods:{
+      exprice(val){
+      return val.toLocaleString();
+    },
       ...mapActions('workshop_manage',['getOrderSales'])
     },
     computed:{
