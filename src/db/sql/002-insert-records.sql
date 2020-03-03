@@ -5,34 +5,34 @@ INSERT INTO `mydata` (id, name, mail, age) VALUES
 (NULL, "mami", "mami@mumemo", 9);
 
 INSERT INTO `user_lists` VALUES
-(NULL, "桑畑天","root","takashi@hal.co.jp","001","0","1999/12/07","1","2019/12/26");
+(NULL, "桑畑天","root","takashi@hal.co.jp","000","0","1999/12/07","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "加藤正都","root","masato@hal.co.jp","001","0","2000/01/27","1","2019/12/26");
+(NULL, "加藤正都","root","masato@hal.co.jp","000","0","2000/01/27","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "馬渕満","root","mitsuru@hal.co.jp","001","0","2000/03/28","1","2019/12/26");
+(NULL, "馬渕満","root","mitsuru@hal.co.jp","000","0","2000/03/28","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "寺田竜太","root","ryuta@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "寺田竜太","root","ryuta@hal.co.jp","004","2","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職修","root","tenshoku@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職修","root","tenshoku@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職修二","root","tenshoku2@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職修二","root","tenshoku2@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職一郎","root","tenshoku3@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職一郎","root","tenshoku3@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職二郎","root","tenshoku4@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職二郎","root","tenshoku4@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職三郎","root","tenshoku5@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職三郎","root","tenshoku5@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `user_lists` VALUES
-(NULL, "天職四郎","root","tenshoku6@hal.co.jp","001","0","1999/07/15","1","2019/12/26");
+(NULL, "天職四郎","root","tenshoku6@hal.co.jp","000","0","1999/07/15","1","2019/12/26");
 
 INSERT INTO `line_link` VALUES
 (1,"U7b58e7191e83ae6345c9e3e40754d78a");

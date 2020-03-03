@@ -1,20 +1,14 @@
 var express = require('express');
-const router = express.Router();
-const cors = require('cors');
-router.use(cors());
+var router = express.Router();
 
-// sqlを読み込む
 var mysql = require('mysql');
 
-module.exports = router;
-
-// mysqlと接続する
+// MySQLの設定情報
 var mysql_setting = {
-    host: 'db-service',
+    host: 'db',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'tenshoku',
-    port: 3306
 };
 
 //ショップ情報をショップidから引き出す
@@ -72,7 +66,7 @@ router.get('/getOrderdetail', (req, res, next) => {
     const order_num = req.query.order_number
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('SELECT * from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id where order_details.shop_id=? && order_details.order_number=?', [shop_id, order_num],
+    connection.query('SELECT * from order_details INNER JOIN product_lists ON order_details.product_id = product_lists.product_id where order_details.shop_id=? && order_details.order_number=?', [shop_id,order_num],
         function (error, results, fields) {
             if (error == null) {
                 if (results.length > 0) {
@@ -95,7 +89,8 @@ router.get('/getProducts', (req, res, next) => {
     const shop_id = req.query.shop_id;
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('SELECT * from product_lists WHERE shop_id=? ', shop_id,
+    connection.query(' SELECT product_lists.product_id AS product_id,product_lists.shop_id AS shop_id,product_lists.product_name AS product_name,product_lists.product_name_en AS product_name_en, product_lists.product_number AS product_number, product_lists.price AS price, product_lists.record_date AS recode_date, product_lists.product_detail AS product_detail, product_lists.product_img AS product_img, product_lists.stock AS stock, product_lists.safety AS safety, product_lists.size AS size, product_lists.material AS material, product_lists.weight AS weight , COALESCE(AVG(reviews.evaluation),0) AS rate FROM product_lists LEFT OUTER JOIN reviews ON product_lists.product_id = reviews.product_id WHERE product_lists.shop_id=? GROUP BY product_lists.product_id ORDER BY product_lists.product_id DESC', shop_id,
+    // SELECT * from product_lists WHERE shop_id=? ', shop_id,
         function (error, results, fields) {
             if (error == null) {
                 if (results.length > 0) {
@@ -222,7 +217,7 @@ router.get('/addSale', (req, res, next) => {
     const sale_name = req.query.sale_name;
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO discount VALUES(?,?,?,?,?)', [sale_id, product_id, shop_id, rate, sale_name],
+    connection.query('INSERT INTO discount VALUES(?,?,?,?,?)', [sale_id,product_id,shop_id,rate,sale_name],
         function (error) {
             if (error == null) {
                 return res.status(200);
@@ -253,7 +248,7 @@ router.get('/addProduct', (req, res, next) => {
     const weight = req.query.weight
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)', [shop_id, product_name, product_name_en, product_number, price, record_date, product_detail, product_img, stock, safety, size, mate, weight],
+    connection.query('INSERT INTO product_lists VALUES(null,?,?,?,?,?,?,?,?,?,?,?,?,?)', [shop_id,product_name,product_name_en,product_number,price,record_date,product_detail,product_img,stock,safety,size,mate,weight],
         function (error) {
             if (error == null) {
                 return res.status(200);
@@ -276,7 +271,7 @@ router.get('/proccessUp', (req, res, next) => {
     const which = req.query.which;
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('UPDATE order_details SET proccess=? WHERE order_number=? AND product_id=?', [which, order_number, product_id],
+    connection.query('UPDATE order_details SET proccess=? WHERE order_number=? AND product_id=?', [which,order_number,product_id],
         function (error) {
             if (error == null) {
                 return res.status(200);
@@ -300,11 +295,11 @@ router.get('/newest_product', function (req, res) {
     const shop_id = req.query.shop_id
     const sql = 'SELECT product_id FROM product_lists WHERE shop_id=? ORDER BY product_id DESC LIMIT 1';
     console.log(sql)
-    connection.query(sql, shop_id, function (error, results) {
-        console.log(results)
-        if (error) return res.json(error);
-        if (results.length > 0) return res.json(results);
-        return res.json(results);
+    connection.query(sql,shop_id, function (error,results) {
+      console.log(results)
+      if (error) return res.json(error);
+      if(results.length > 0) return res.json(results);
+      return res.json(results);
     })
     connection.end();
 });
@@ -319,14 +314,14 @@ router.get('/tag_add', (req, res, next) => {
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
     const sql = `INSERT INTO product_tags VALUES (?,?,?);`;
-    connection.query(sql, [product_id, tag_jp, tag_en], function (error) {
+    connection.query(sql,[product_id,tag_jp,tag_en], function (error) {
         if (error) return res.json(error);
         res.json(1);
     })
     connection.end();
 });
 
-//発送済みのやーつ
+//発送済みのやーつ 
 router.get('/shipping_end', function (req, res) {
     console.log('発送済みにするAPI')
     res.header('Access-Control-Allow-Origin', '*');
@@ -337,12 +332,12 @@ router.get('/shipping_end', function (req, res) {
     const order_number = req.query.order_number;
     const sql = `UPDATE order_lists SET status=1 WHERE order_number=?`;
     console.log(sql)
-    connection.query(sql, order_number, function (error) {
-        if (error) return res.json(error);
-        res.json(1);
+    connection.query(sql,order_number, function (error) {
+      if (error) return res.json(error);
+      res.json(1);
     })
     connection.end();
-})
+  })
 
 module.exports = router;
 
@@ -354,7 +349,7 @@ router.get('/get_order_lists', (req, res, next) => {
     const order_num = req.query.order_number
     var connection = mysql.createConnection(mysql_setting);
     connection.connect();
-    connection.query('SELECT * from order_lists  WHERE shop_id=? && order_number=?', [shop_id, order_num],
+    connection.query('SELECT * from order_lists  WHERE shop_id=? && order_number=?', [shop_id,order_num],
         function (error, results, fields) {
             if (error == null) {
                 if (results.length > 0) {

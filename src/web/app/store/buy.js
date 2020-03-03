@@ -1,5 +1,6 @@
 import moment from '~/plugins/moment';
 
+
 export const state = () => ({
     checkdata: null,
     buy_data: null,
@@ -132,6 +133,9 @@ export const actions = {
         const get_buy_his = await this.$axios.$get(`/api-buy/buy/get_buy_history?user_id=${user_id}`);
         console.log('おかえり');
         console.log(get_buy_his)
+        for (var a = 0; a < get_buy_his.length; a++) {
+            get_buy_his[a].buy_date = moment(get_buy_his[a].buy_date).format("YYYY年MM月DD日");
+        }
         commit('setBuyhis_data', get_buy_his)
     },
 }

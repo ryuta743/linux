@@ -167,10 +167,7 @@
         <div id="finding">
           <div class="contents_title">商品を見つける</div>
           <div id="genres">
-            <div
-              class="genre"
-              style="background-image : url(../syuki.jpg); background-size:cover;"
-            >
+            <div class="genre" style="background-image : url(../syuki.jpg); background-size:cover;">
               <div class="carvon">酒器</div>
             </div>
             <div class="genre" style="background-image : url(../hasi.jpg); background-size:cover;">
@@ -191,16 +188,10 @@
             <div class="genre" style="background-image : url(../sara.jpg); background-size:cover;">
               <div class="carvon">皿</div>
             </div>
-            <div
-              class="genre"
-              style="background-image : url(../wainn.png); background-size:cover;"
-            >
+            <div class="genre" style="background-image : url(../wainn.png); background-size:cover;">
               <div class="carvon">ワイン</div>
             </div>
-            <div
-              class="genre"
-              style="background-image : url(../sensu.jpg); background-size:cover;"
-            >
+            <div class="genre" style="background-image : url(../sensu.jpg); background-size:cover;">
               <div class="carvon">扇子</div>
             </div>
             <div
@@ -209,10 +200,7 @@
             >
               <div class="carvon">マフラー</div>
             </div>
-            <div
-              class="genre"
-              style="background-image : url(../wasi.jpg); background-size:cover;"
-            >
+            <div class="genre" style="background-image : url(../wasi.jpg); background-size:cover;">
               <div class="carvon">和紙</div>
             </div>
             <div
@@ -233,10 +221,7 @@
             >
               <div class="carvon">津軽</div>
             </div>
-            <div
-              class="genre"
-              style="background-image : url(../piasu.jpg); background-size:cover;"
-            >
+            <div class="genre" style="background-image : url(../piasu.jpg); background-size:cover;">
               <div class="carvon">ピアス</div>
             </div>
             <div
@@ -352,7 +337,7 @@ export default {
       newproducts: [
         {
           product_id: 1,
-          product_name: "陶器01",
+          product_name: "本格湯呑み",
           product_img:
             "https://ichi-point.jp/wp-content/uploads/2018/08/IM_KG02001-01.jpg",
           rating: 4.5,
@@ -362,7 +347,7 @@ export default {
         },
         {
           product_id: 1,
-          product_name: "やばいこけし",
+          product_name: "花皿",
           product_img:
             "https://ichi-point.jp/wp-content/uploads/2017/05/HR71009-2-600x600.jpg",
           rating: 2.5,
@@ -404,7 +389,7 @@ export default {
       popproducts: [
         {
           product_id: 1,
-          product_name: "陶器01",
+          product_name: "本格湯呑み",
           product_img:
             "https://ichi-point.jp/wp-content/uploads/2018/08/IM_KG02001-01.jpg",
           rating: 4.5,
@@ -414,7 +399,7 @@ export default {
         },
         {
           product_id: 1,
-          product_name: "やばいこけし",
+          product_name: "花皿",
           product_img:
             "https://ichi-point.jp/wp-content/uploads/2017/05/HR71009-2-600x600.jpg",
           rating: 2.5,
@@ -571,14 +556,14 @@ export default {
   padding-left: 8px;
 }
 
-.carvon{
+.carvon {
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   border-radius: 3px;
 }

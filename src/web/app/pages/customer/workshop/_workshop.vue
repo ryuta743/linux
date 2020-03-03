@@ -133,12 +133,12 @@
                   <v-rating
                     color="yellow darken-3"
                     background-color="grey darken-1"
-                    v-model="rating"
+                    v-model="item.rate"
                     readonly
                     size="15px"
                     half-increments
                   ></v-rating>
-                  <p class="product_rate_count">(6)</p>
+                  <p class="product_rate_count">({{item.rate}})</p>
                 </div>
               </div>
             </div>

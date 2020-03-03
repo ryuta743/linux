@@ -68,7 +68,11 @@ import {mapGetters,mapActions} from 'vuex'
 
 export default {
 middleware: 'auth',
-
+  head() {
+    return {
+      title: '工房管理'
+    }
+  },
     data(){
         return{
             items:[

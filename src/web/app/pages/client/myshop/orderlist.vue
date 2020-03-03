@@ -60,7 +60,7 @@
                 <v-btn
                   color="primary"
                   outlined
-                  @click="$router.push(`order/${item.order_number}`)"
+                  @click="$router.push(`order/${item.order_number}?number=${orderlist.length - index}`)"
                 >注文明細をみる</v-btn>
               </td>
             </tr>

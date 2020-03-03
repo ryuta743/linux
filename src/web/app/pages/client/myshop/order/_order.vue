@@ -35,7 +35,7 @@
       <v-btn color="info" icon :loading="loading" v-if="loading" large></v-btn>
       <v-content v-if="!loading">
         <div id="sub_title">
-          <h3>注文No.{{$route.params.order}}</h3>
+          <h3>注文No.{{$route.query.number}}</h3>
           <div class="flex-grow-1"></div>
           <v-btn
             color="success"
@@ -136,7 +136,7 @@
           <v-card-actions>
             <!-- v-if="orderlist[0] ? checkStatus:''" -->
             <v-layout row wrap justify-center v-if="end_data[0] ? checkStatus:''">
-            <!-- <v-layout row wrap justify-center v-if="this.end_data[0].status == 0 ? this.end_data[0].status:null"> -->
+              <!-- <v-layout row wrap justify-center v-if="this.end_data[0].status == 0 ? this.end_data[0].status:null"> -->
               <v-btn color="success" @click="dialog = true" depressed>発送完了</v-btn>
             </v-layout>
           </v-card-actions>
@@ -191,7 +191,11 @@
 import { mapActions, mapGetters } from "vuex";
 export default {
   middleware: "auth",
-
+  head() {
+    return {
+      title: "工房管理"
+    };
+  },
   data() {
     return {
       loading: true,
@@ -221,13 +225,13 @@ export default {
     exprice(val) {
       return val.toLocaleString();
     },
-    async get_order_listsReq(){
+    async get_order_listsReq() {
       let order_data = {
         order_num: this.$route.params.order,
         shop_id: this.details[0].shop_id
-      }
-      console.log(order_data)
-      await this.get_order_lists({order_data});
+      };
+      console.log(order_data);
+      await this.get_order_lists({ order_data });
     },
     async processcheck(i) {
       //削除アップデート
@@ -259,7 +263,7 @@ export default {
         try {
           console.log(shipping_data.data);
           await this.shipping_comp({ shipping_data });
-          this.complete_dialog = true
+          this.complete_dialog = true;
         } catch (e) {
           console.log("エラー発生");
           console.log(e);
@@ -278,7 +282,12 @@ export default {
     checkStatus() {
       return this.end_data[0].status == 0 ? true : false;
     },
-    ...mapGetters("workshop_manage", ["workshop_data", "orderlist", "details", "end_data"]),
+    ...mapGetters("workshop_manage", [
+      "workshop_data",
+      "orderlist",
+      "details",
+      "end_data"
+    ]),
     ...mapGetters(["loginuserdata"])
   }
 };
