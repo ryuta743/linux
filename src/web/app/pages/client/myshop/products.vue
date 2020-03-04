@@ -36,7 +36,7 @@
 
       　<v-card>
             <v-card-text>
-
+                
             <v-layout row wrap>
               <v-flex
                 xs12

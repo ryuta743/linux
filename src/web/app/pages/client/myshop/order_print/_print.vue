@@ -12,7 +12,7 @@
       </div>
       <div id="paybox">
         <div class="mincho" style="width: 100px;text-align: center;font-weight: bold;">税込金額</div>
-        <div id="money" class="mincho">¥ {{exprice(details[0].price)}}-</div>
+        <div id="money" class="mincho">¥ {{exprice(details[0].price_all + (details[0].price_all * tax) )}}-</div>
       </div>
       <div id="description">
         <div style="margin-bottom: 20px;width: 100%;" class="mincho">但</div>
@@ -49,7 +49,8 @@ middleware: 'auth',
       ordernumber: this.$route.params.print,
       year: null,
       month: null,
-      day: null
+      day: null,
+      tax: 0.1,
     };
   },
   async mounted() {

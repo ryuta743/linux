@@ -7,7 +7,7 @@
       <div class="bread">></div>
       <div class="bread">工房名</div>
     </div>
-    <div id="fullimage">
+    <div id="fullimage" v-if="productdetails.product_id == 1">
       <div
         class="cloudimage-360"
         data-folder="https://scaleflex.ultrafast.io/https://scaleflex.airstore.io/demo/chair-360-72/"

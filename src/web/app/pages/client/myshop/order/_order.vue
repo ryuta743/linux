@@ -3,31 +3,31 @@
     <div style="min-height: 100vh;width: 15%;" id="workshop_nav">
       <ul>
         <li @click="$router.push('/client/myshop/myshop')">
-          <v-icon>mdi-home</v-icon>管理ツールトップ
+          <v-icon>mdi-home</v-icon> 管理ツールトップ
         </li>
         <li @click="$router.push('/client/myshop/orderlist')" class="check">
-          <v-icon>mdi-format-list-checks</v-icon>注文一覧
+          <v-icon>mdi-format-list-checks</v-icon> 注文一覧
         </li>
         <li @click="$router.push('/client/myshop/sales')">
-          <v-icon>mdi-chart-bar</v-icon>売上一覧
+          <v-icon>mdi-chart-bar</v-icon> 売上一覧
         </li>
         <li @click="$router.push('/client/myshop/sales_trend')">
-          <v-icon>mdi-chart-arc</v-icon>売上傾向表
+          <v-icon>mdi-chart-arc</v-icon> 売上傾向表
         </li>
         <li @click="$router.push('/client/myshop/products')">
-          <v-icon>mdi-format-list-bulleted</v-icon>商品一覧・在庫状況
+          <v-icon>mdi-format-list-bulleted</v-icon> 商品一覧・在庫状況
         </li>
         <li @click="$router.push('/client/myshop/discount')">
-          <v-icon>mdi-cash-usd</v-icon>セット割引
+          <v-icon>mdi-cash-usd</v-icon> セット割引
         </li>
         <li @click="$router.push('/client/myshop/productadd')">
-          <v-icon>mdi-plus</v-icon>新規商品登録
+          <v-icon>mdi-plus</v-icon> 新規商品登録
         </li>
         <li @click="$router.push('/client/myshop/productdel')">
-          <v-icon>mdi-close</v-icon>商品編集・削除
+          <v-icon>mdi-close</v-icon> 商品編集・削除
         </li>
         <li @click="$router.push('/client/myshop/chat')">
-          <v-icon>mdi-chat</v-icon>チャットメッセージ
+          <v-icon>mdi-chat</v-icon> チャットメッセージ
         </li>
       </ul>
     </div>
@@ -136,7 +136,7 @@
           <v-card-actions>
             <!-- v-if="orderlist[0] ? checkStatus:''" -->
             <v-layout row wrap justify-center v-if="end_data[0] ? checkStatus:''">
-              <!-- <v-layout row wrap justify-center v-if="this.end_data[0].status == 0 ? this.end_data[0].status:null"> -->
+            <!-- <v-layout row wrap justify-center v-if="this.end_data[0].status == 0 ? this.end_data[0].status:null"> -->
               <v-btn color="success" @click="dialog = true" depressed>発送完了</v-btn>
             </v-layout>
           </v-card-actions>
@@ -193,8 +193,8 @@ export default {
   middleware: "auth",
   head() {
     return {
-      title: "工房管理"
-    };
+      title: '工房管理'
+    }
   },
   data() {
     return {
@@ -225,13 +225,13 @@ export default {
     exprice(val) {
       return val.toLocaleString();
     },
-    async get_order_listsReq() {
+    async get_order_listsReq(){
       let order_data = {
         order_num: this.$route.params.order,
         shop_id: this.details[0].shop_id
-      };
-      console.log(order_data);
-      await this.get_order_lists({ order_data });
+      }
+      console.log(order_data)
+      await this.get_order_lists({order_data});
     },
     async processcheck(i) {
       //削除アップデート
@@ -263,7 +263,7 @@ export default {
         try {
           console.log(shipping_data.data);
           await this.shipping_comp({ shipping_data });
-          this.complete_dialog = true;
+          this.complete_dialog = true
         } catch (e) {
           console.log("エラー発生");
           console.log(e);
@@ -282,12 +282,7 @@ export default {
     checkStatus() {
       return this.end_data[0].status == 0 ? true : false;
     },
-    ...mapGetters("workshop_manage", [
-      "workshop_data",
-      "orderlist",
-      "details",
-      "end_data"
-    ]),
+    ...mapGetters("workshop_manage", ["workshop_data", "orderlist", "details", "end_data"]),
     ...mapGetters(["loginuserdata"])
   }
 };
